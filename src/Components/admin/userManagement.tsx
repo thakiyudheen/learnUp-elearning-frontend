@@ -1,4 +1,6 @@
-import React from 'react';
+import { useAppDispatch } from '@/hooks/hooke';
+import { getAllStudentAction } from '@/redux/store/actions/admin/getAllStudentAction';
+import React, { useEffect } from 'react';
 
 interface Product {
   name: string;
@@ -11,6 +13,8 @@ interface Product {
 }
 
 const UserTable: React.FC = () => {
+
+  const dispatch = useAppDispatch()
   const products: Product[] = [
     {
       name: 'Quantum Laptop Pro',
@@ -40,7 +44,14 @@ const UserTable: React.FC = () => {
       verified: true,
     },
     // Add more product objects as needed
+    
+
+
   ];
+
+  useEffect(() => {
+    const Students = dispatch(getAllStudentAction())
+  })
 
   return (
     <>
