@@ -1,0 +1,373 @@
+// // src/components/Signup.tsx
+// import React, { useState ,useRef } from 'react';
+// import { Formik, Field, Form, ErrorMessage } from 'formik';
+// import SignupSVG from '../../assets/signup.svg';
+// import LearnUp from '../../assets/LearnUp.png';
+// import GoogleLogo from '../../assets/google/google.svg'
+// import { useTheme } from '../../Components/ui/theme-provider';
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { useAppDispatch } from '../../hooks/hooke';
+// import { findEmailAction } from '../../redux/store/actions/auth/findEmailAction';
+// import { findUsernameAction } from '../../redux/store/actions/auth/findUsernameAction';
+// import LoadingIndicator from '../../Components/common/skelton/loading';
+// import { SignupSchema } from '../../validation-schema';
+// import Navbar from '../../Components/common/user/navbar/Navbar';
+// import { GoogleLogin } from '@react-oauth/google';
+// import { googleAuthAction } from '../../redux/store/actions/auth/googleAuthAction';
+
+
+
+// const Signup: React.FC = () => {
+//   const dispatch = useAppDispatch()
+//   const navigator =useNavigate()
+//   const {theme}=useTheme()
+//   const location = useLocation()
+//   const [isLoading, setLoading] = useState<boolean>( false )
+  
+
+//   const [isEmailExist, setEmailExist] = useState<boolean>(false);
+//   const [isUsernameExist, setUsernameExist] = useState<boolean>(false);
+
+// const handleSubmit= async ( values : any )=>{
+
+//   setLoading(true)
+  
+//   const respose1 = await dispatch( findEmailAction(values.email) )
+//   console.log('this is respose1 ', respose1.payload)
+//    if(!respose1.payload || !respose1.payload.success ){
+//     setLoading(false)
+//     return setEmailExist(true)
+//    }else{
+//     setEmailExist(false)
+//    }
+
+//   const respose2 = await dispatch( findUsernameAction(values.username) )
+//   console.log('this is respose2 ', respose2.payload)
+//    if(!respose2.payload || !respose2.payload.success ){
+//      setLoading(false)
+//      return  setUsernameExist(true)
+//    }else{
+//       setUsernameExist(false)
+//    }
+   
+//    if(values?.role=='student'){
+//     navigator('/userRegister',{ state : values })
+//    }else{
+//     navigator('/instructorRegister',{ state : values })
+//    }
+  
+
+// }
+// const googleAuthHandle = async ( credentials : any ) => {
+
+//   const response = await dispatch(googleAuthAction(credentials));
+
+//         if(response.payload.existingUser){
+
+//           navigator('/')
+//           return
+
+//         }
+
+//         const signUpData : any = {
+//           role: location.state.role,
+//           email: response.payload.data.email,
+//           password: response.payload.data.password,
+//           username : response.payload.username,
+//           isGauth: true
+//       };
+
+//       navigator(location.state.role == 'student'?'/userRegister':'/instructorRegister' , { state : signUpData})
+
+
+
+// } 
+
+//   return (
+//     <>
+//     <Navbar/>
+//       <div className="w-full flex items-center justify-evenly h-screen font-sans">
+//         <img className='absolute md:h-[12%] h-[9%] top-0 left-0 md:left-4' src={LearnUp} alt="" />
+//         <img className=' h-[70%]' src={SignupSVG} alt="" />
+//         {isLoading && <LoadingIndicator/>}
+//         <div className={`max-w-md w-full  p-10 rounded-[10px] md:shadow-md absolute m-3 md:relative md:space-y-4 ${theme === 'light' ? 'bg-white' : 'bg-gray-800' }`}>
+//           <h2 className="text-2xl font-bold text-blue-500 mb-5 text-center">Sign Up</h2>
+//           <Formik
+//             initialValues={{
+//               username: '',
+//               email: '',
+//               password: '',
+//               confirmPassword: '',
+//               role:location?.state?.role ,
+//             }}
+//             validationSchema={SignupSchema}
+//             onSubmit={(values, { setSubmitting }) => {
+//               console.log('this is values')
+//               setTimeout(() => {
+                
+//                 setSubmitting(false);
+//               }, 400);
+//               handleSubmit(values)
+//             }}
+//           >
+//             {({ isSubmitting }) => (
+//               <Form className="space-y-4">
+//                 <small className='text-[red]'>{isEmailExist&&"Email is exist!!"} {isUsernameExist&&"username is not available"}</small>
+//                 <div>
+//                   <Field
+//                     type="text"
+//                     name="username"
+//                     placeholder="Username"
+//                     className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800' } border-b-[1px] focus:outline-none border-[grey] text-sm`}
+//                   />
+//                   <ErrorMessage name="username" component="div" className="text-red-500 text-[12px]" /> {/* Updated error message size */}
+//                 </div>
+//                 <div>
+//                   <Field
+//                     type="email"
+//                     name="email"
+//                     placeholder="Email"
+//                     className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800' } border-b-[1px] focus:outline-none border-[grey] text-sm`}
+//                   />
+//                   <ErrorMessage name="email" component="div" className="text-red-500 text-[12px]" /> {/* Updated error message size */}
+//                 </div>
+//                 <div>
+//                   <Field
+//                     type="password"
+//                     name="password"
+//                     placeholder="Password"
+//                     className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800' } border-b-[1px] focus:outline-none border-[grey] text-sm`}
+//                   />
+//                   <ErrorMessage name="password" component="div" className="text-red-500 text-[12px]" /> {/* Updated error message size */}
+//                 </div>
+//                 <div>
+//                   <Field
+//                     type="password"
+//                     name="confirmPassword"
+//                     placeholder="Confirm Password"
+//                     className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800' } border-b-[1px] focus:outline-none border-[grey] text-sm`}
+//                   />
+//                   <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-[12px]" /> {/* Updated error message size */}
+//                 </div>
+//                 <div className="">
+//                   <button
+//                     type="submit"
+//                     disabled={isSubmitting}
+//                     className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+//                   >
+//                     {isSubmitting ? 'Signing up...' : 'Sign Up'}
+//                   </button>
+//                   <div className="flex items-center mt-2">
+//                     <span className="text-sm text-[grey]">If you have an account, </span>
+//                     <a onClick={()=>navigator('/login', { state: location.state})} className="text-blue-500 text-sm font-bold">sign in</a> 
+//                   </div>
+//                 </div>
+//                 <div className="flex items-center justify-center">
+//                   {/* <img src={GoogleLogo} alt="Google Auth" className="h-8 mr-2" />
+//                   <span className="text-sm text-blue-500 font-bold cursor-pointer"   onClick={handleGoogleSignUp}>Sign up with Google</span> */}
+//                   <div className="" >
+//                     <GoogleLogin
+//                       onSuccess={googleAuthHandle}
+//                       onError={() => {
+//                         console.log('Login Failed');
+//                       }}
+//                     />
+//                   </div>
+//                 </div>
+//               </Form>
+//             )}
+//           </Formik>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Signup;
+
+// src/components/Signup.tsx
+import React, { useState } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import SignupSVG from '../../assets/signup.svg';
+import LearnUp from '../../assets/LearnUp.png';
+import { useTheme } from '../../Components/ui/theme-provider';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/hooke';
+import { findEmailAction } from '../../redux/store/actions/auth/findEmailAction';
+import { findUsernameAction } from '../../redux/store/actions/auth/findUsernameAction';
+import LoadingIndicator from '../../Components/common/skelton/loading';
+import { SignupSchema } from '../../validation-schema';
+import Navbar from '../../Components/common/user/navbar/Navbar';
+import { GoogleLogin } from '@react-oauth/google';
+import { googleAuthAction } from '../../redux/store/actions/auth/googleAuthAction';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+const Signup: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigator = useNavigate();
+  const { theme } = useTheme();
+  const location = useLocation();
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  const [isEmailExist, setEmailExist] = useState<boolean>(false);
+  const [isUsernameExist, setUsernameExist] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const handleSubmit = async (values: any) => {
+    setLoading(true);
+
+    const response1 = await dispatch(findEmailAction(values.email));
+    if (!response1.payload || !response1.payload.success) {
+      setLoading(false);
+      return setEmailExist(true);
+    } else {
+      setEmailExist(false);
+    }
+
+    const response2 = await dispatch(findUsernameAction(values.username));
+    if (!response2.payload || !response2.payload.success) {
+      setLoading(false);
+      return setUsernameExist(true);
+    } else {
+      setUsernameExist(false);
+    }
+
+    if (values.role === 'student') {
+      navigator('/userRegister', { state: values });
+    } else {
+      navigator('/instructorRegister', { state: values });
+    }
+  };
+
+  const googleAuthHandle = async (credentials: any) => {
+    const response = await dispatch(googleAuthAction(credentials));
+
+    if (response.payload.existingUser) {
+      navigator('/');
+      return;
+    }
+
+    const signUpData: any = {
+      role: location.state.role,
+      email: response.payload.data.email,
+      password: response.payload.data.password,
+      username: response.payload.username,
+      isGauth: true,
+    };
+
+    navigator(location.state.role === 'student' ? '/userRegister' : '/instructorRegister', { state: signUpData });
+  };
+
+  return (
+    <>
+      <Navbar />
+      <div className="w-full flex items-center justify-evenly h-screen font-sans">
+        <img className='absolute md:h-[12%] h-[9%] top-0 left-0 md:left-4' src={LearnUp} alt="" />
+        <img className='h-[70%]' src={SignupSVG} alt="" />
+        {isLoading && <LoadingIndicator />}
+        <div className={`max-w-md w-full p-10 rounded-[10px] md:shadow-md absolute m-3 md:relative md:space-y-4 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}>
+          <h2 className="text-[20px] font-bold text-blue-500 mb-5 text-center">Sign Up</h2>
+          <Formik
+            initialValues={{
+              username: '',
+              email: '',
+              password: '',
+              confirmPassword: '',
+              role: location?.state?.role,
+            }}
+            validationSchema={SignupSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 400);
+              handleSubmit(values);
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="space-y-4">
+                <small className='text-[red]'>{isEmailExist && "Email is exist!!"} {isUsernameExist && "username is not available"}</small>
+                <div>
+                  <Field
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                  />
+                  <ErrorMessage name="username" component="div" className="text-red-500 text-[12px]" />
+                </div>
+                <div>
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                  />
+                  <ErrorMessage name="email" component="div" className="text-red-500 text-[12px]" />
+                </div>
+                <div className="relative">
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                  <ErrorMessage name="password" component="div" className="text-red-500 text-[12px]" />
+                </div>
+                <div className="relative">
+                  <Field
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                  <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-[12px]" />
+                </div>
+                <div className="">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  >
+                    {isSubmitting ? 'Signing up...' : 'Sign Up'}
+                  </button>
+                  <div className="flex items-center mt-2">
+                    <span className="text-sm text-[grey]">If you have an account, </span>
+                    <a onClick={() => navigator('/login', { state: location.state })} className="text-blue-500 text-[14px] font-bold">sign in</a>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center">
+                  <div className="">
+                    <GoogleLogin
+                      onSuccess={googleAuthHandle}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Signup;
+
