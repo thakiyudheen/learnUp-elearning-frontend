@@ -230,6 +230,7 @@ const OtpForm: React.FC = () => {
     const response = await dispatch(
       verifyOtpAction({ email: location.state.email, otp: values?.otp?.join('') })
     );
+    console.log('this is otp response ', response.payload.success)
 
     if (!response.payload || !response.payload.success) {
       setError(true);
@@ -246,6 +247,7 @@ const OtpForm: React.FC = () => {
       );
 
       if (!response1.error && response1.payload.success) {
+        console.log('let me go ')
         navigate(signupData.role === 'student' ? '/' : '/');
       }
     }

@@ -58,7 +58,7 @@ const FormComponent: React.FC = () => {
           linkedIn: allData.social,
         },
       },
-      isVerified: allData.isVerified,
+      isVerified:false,
       profession: allData.profession,
       isGauth : allData?.isGauth
     };

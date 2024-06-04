@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { CgProfile } from "react-icons/cg";
+import { AiFillBell } from "react-icons/ai";
 import { FaChalkboardTeacher, FaBook, FaUserGraduate, FaSignOutAlt, FaThList } from 'react-icons/fa';
 import { RxDashboard } from "react-icons/rx";
 import Learnup from '../../../../assets/LearnUp.png';
@@ -52,6 +52,10 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
             <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaChalkboardTeacher className="mr-4" />
               Instructors
+            </NavLink>
+            <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
+            <AiFillBell className="mr-4"/>
+              requests
             </NavLink>
             <NavLink to="categories" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaThList className="mr-4" />

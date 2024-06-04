@@ -2,17 +2,19 @@ import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-export const getAllStudentAction = createAsyncThunk(
-    'user/getAll-students',
+export const getRequestAction = createAsyncThunk(
+    'user/getAll-requests',
     async ( _ , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/user/getAll-students`,
+            const response = await api_client.get(`/api/user/getAll-requests`,
 
                 {
                     withCredentials : true
                 }
             )
-            console.log('this is finded students',response.data.data)
+            console.log('this is finded requests',response.data.data)
+
+            
             if(response.data.success){
 
                 return response.data

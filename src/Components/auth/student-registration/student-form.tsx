@@ -55,7 +55,7 @@ const FormComponent: React.FC = () => {
           linkedIn: allData.social,
         },
       },
-      isVerified: allData.isVerified,
+      isVerified: true,
       profession: allData.profession,
       isGauth: allData.isGauth
     };
@@ -98,7 +98,7 @@ const FormComponent: React.FC = () => {
           validationSchema={studentSchema}
           onSubmit={handleSubmit}
         >
-          {({ isValid }) => (
+          {({  }) => (
             <Form>
               {step === 1 ? < FirstStep /> : < SecondStep />}
               {step === 1 && (
@@ -123,10 +123,8 @@ const FormComponent: React.FC = () => {
                   </button>
                   <button
                     type="submit"
-                    className={`bg-blue-600 text-white py-2 px-4 rounded-[2rem] shadow-lg hover:bg-blue-700 ${
-                      isValid ? '' : 'opacity-50 cursor-not-allowed'
-                    }`}
-                    disabled={!isValid}
+                    className={`bg-blue-600 text-white py-2 px-4 rounded-[2rem] shadow-lg hover:bg-blue-700 `}
+                    
                   >
                     Submit
                   </button>
@@ -141,3 +139,5 @@ const FormComponent: React.FC = () => {
 };
 
 export default FormComponent;
+
+

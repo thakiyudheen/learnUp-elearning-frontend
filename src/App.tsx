@@ -9,6 +9,7 @@ import UserRegister from './Pages/student/registration';
 import InstructorRegister from './Pages/instructor/registration';
 import Otp from './Pages/auth/otp';
 import Dashboard from './Components/admin/dashboard';
+import Requests from './Components/admin/instructorRequests';
 import UserTable from './Components/admin/userManagement';
 import InstructorTable from './Components/admin/instructorManagement';
 import AdminNavbar from './Pages/admin/admin-nav';
@@ -57,6 +58,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard/>} />
         <Route path="students" element={<UserTable/>} />
         <Route path="instructors" element={<InstructorTable/>} />
+        <Route path="requests" element={<Requests/>} />
         
       </Route>
       
