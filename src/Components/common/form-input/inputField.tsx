@@ -8,9 +8,11 @@ interface InputFieldProps {
   placeholder: string;
   value?: string;
   name: string;
+  defaultValue?: string ;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name }) => {
+const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name ,defaultValue
+ }) => {
   const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
         value={value}
         id={name}
         name={name}
+        defaultValue={defaultValue}
       />
       {type === 'password' && (
         <button

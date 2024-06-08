@@ -2,10 +2,12 @@ import { SignupFormData } from '../../../types/ISignupData';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { signupAction } from '../actions/auth/signupAction';
 import { getUserDataAction } from '../actions/auth/getUserDataAction';
+import { logoutAction } from '../actions/auth/logoutAction';
+import { loginUserAction } from '../actions/auth/loginUserAction';
 
 export interface UserState {
     loading: boolean;
-    data: SignupFormData | null;
+    data: any | null;
     error: string | null;
     temp: SignupFormData | null;
 }
@@ -66,6 +68,40 @@ const userSlice = createSlice({
             state.data =null ;
             state.error = action.error.message || 'get user failed';
         })
+        
+        // handle logout ---------------------------------------------
+        .addCase(logoutAction.pending , (state : UserState) =>{
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(logoutAction.fulfilled , (state : UserState , action ) =>{
+            state.loading = false;
+            state.data = null;
+            state.error = null;
+        })
+        .addCase(logoutAction.rejected,(state : UserState , action ) =>{
+            state.loading = true ; 
+            state.data =null ;
+            state.error = action.error.message || 'get user failed';
+        })
+
+        // login data handle -----------------------------------------
+        
+        .addCase(loginUserAction.pending , (state : UserState) =>{
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(loginUserAction.fulfilled , (state : UserState , action : PayloadAction<SignupFormData>) =>{
+            state.loading = false;
+            state.data = action.payload;
+            state.error = null;
+        })
+        .addCase(loginUserAction.rejected,(state : UserState , action ) =>{
+            state.loading = true ; 
+            state.data =null ;
+            state.error = action.error.message || 'Login failed';
+        })
+
     },
 });
 

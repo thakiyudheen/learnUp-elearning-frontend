@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AiFillBell } from "react-icons/ai";
@@ -10,12 +12,12 @@ import { RiMenu4Line } from "react-icons/ri";
 import { useAppDispatch } from '../../../../hooks/hooke';
 import { logoutAction } from '../../../../redux/store/actions/auth/logoutAction';
 
-interface AdminSideNavProps {
+interface userSideNavProps {
   isOpen: boolean;
   toggleSidebar: () => void;
 }
 
-const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) => {
+const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
   const { theme } = useTheme();
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const dispatch = useAppDispatch()
@@ -98,4 +100,4 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
   );
 };
 
-export default AdminSideNav;
+export default instructorSideNav;

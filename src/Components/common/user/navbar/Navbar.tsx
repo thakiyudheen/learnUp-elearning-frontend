@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LearnUp from '../../../../assets/LearnUp.png';
 import { ModeToggle } from '../../../ui/mode-toggle';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../../ui/theme-provider';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooke';
+import { RootState } from '../../../../redux/store';
+import DropdownMenu from '../dropDownMenu/dropDownMenu';
 
 const Navbar: React.FC = () => {
   const { theme } = useTheme();
   const [selected, setSelected] = useState<string>('Home');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const { data } = useAppSelector((state: RootState) => state.user)
+ 
 
   const handleButtonClick = (buttonName: string) => {
     setSelected(buttonName);
@@ -82,18 +88,18 @@ const Navbar: React.FC = () => {
             </li>
           ))}
         </ul>
-        <ul className="hidden md:flex md:items-center md:space-x-4 mr-10">
+        {!data?.data?(<ul className="hidden md:flex md:items-center md:space-x-4 mr-10">
           <li className="pl-1">
             <button onClick={() => navigate('/login')} className={`text-sm font-semi-bold rounded-md px-3 py-1  border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 ${theme=='light'?'bg-white':'bg-gray-800'}`}>
               Login
             </button>
           </li>
           <li className="pl-1">
-            <button onClick={() => navigate('/signup')} className="text-sm rounded-md px-3 py-1 bg-blue-500 text-white hover:bg-blue-600 border border-blue-500 hover:text-white hover:border-blue-600">
+            <button onClick={() => navigate('/enrollment')} className="text-sm rounded-md px-3 py-1 bg-blue-500 text-white hover:bg-blue-600 border border-blue-500 hover:text-white hover:border-blue-600">
               Signup
             </button>
           </li>
-        </ul>
+        </ul>):<DropdownMenu/>}
         <div className="absolute right-3 md:relative hidden md:block">
           <ModeToggle />
         </div>

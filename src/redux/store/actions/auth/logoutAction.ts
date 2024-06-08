@@ -3,11 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { config } from "../../../../common/configuration";
 import { AxiosError } from "axios";
 
-export const getUserDataAction = createAsyncThunk(
-    'user/logout',
+export const logoutAction = createAsyncThunk(
+    'user/get-userData',
     async ( _ , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/auth/get-user`, config )
+            const response = await api_client.get(`/api/auth/logout`, config )
 
             console.log('its get user response',response.data)
 

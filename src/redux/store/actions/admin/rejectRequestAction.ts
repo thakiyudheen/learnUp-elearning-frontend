@@ -1,15 +1,18 @@
+import { config } from "../../../../common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { config } from "../../../../common/configuration";
 import { AxiosError } from "axios";
 
-export const getUserDataAction = createAsyncThunk(
-    'user/logout',
-    async ( _ , { rejectWithValue }) => {
-        try {
-            const response = await api_client.get(`/api/auth/get-user`, config )
 
-            console.log('its get user response',response.data)
+interface data {
+    email : string ,
+    isVerified : boolean
+}
+export const rejectRequestAction = createAsyncThunk(
+    'user/reject-request',
+    async ( data : data , { rejectWithValue }) => {
+        try {
+            const response = await api_client.patch(`/api/user/reject-request`,data,config)
 
             if(response.data.success){
 

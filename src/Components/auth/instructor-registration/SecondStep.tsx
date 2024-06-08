@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { useTheme } from '../../ui/theme-provider';
+import { PdfUpload } from "../../../utils/cloudinary/uploadPdf";
+
 
 const SecondStep = () => {
   const { theme } = useTheme();
@@ -22,12 +24,28 @@ const SecondStep = () => {
       event.preventDefault();
       setDragging(false);
       const file = event.dataTransfer.files[0];
+     
       form.setFieldValue(field.name, file);
     };
 
-    const handleChange = (event : any) => {
+    const handleChange = async (event : any) => {
       const file = event.currentTarget.files[0];
-      form.setFieldValue(field.name, file);
+      console.log('this is field name',field.name)
+      // form.setFieldValue(field.name, file);
+
+      try {
+
+        console.log('this is file', file)
+         const imageUrl = await PdfUpload(file)
+         form.setFieldValue(field.name, imageUrl)
+         console.log('image upload url', imageUrl)
+
+         if(!imageUrl){
+           throw Error('"PDF upload failed"');
+         }
+      } catch ( error : any ) {
+         console.log('cloudinary error')
+      }
     };
 
     return (

@@ -39,7 +39,7 @@ const FormComponent: React.FC = () => {
     setLoading(true)
     const allData = {...values,...location.state,isVerified:true}
     
-
+    console.log('this is all data', allData)
     const signupData : SignupFormData  =  {
       firstName: allData.firstName,
       lastName: allData.lastName,
@@ -47,7 +47,7 @@ const FormComponent: React.FC = () => {
       email: allData.email,
       password: allData.password,
       role:allData.role,
-      cv : allData.cv.name,
+      cv : allData.cv,
       profile: {
         dateOfBirth:allData.dateOfBirth,
         gender: allData.gender,
@@ -63,7 +63,7 @@ const FormComponent: React.FC = () => {
       isGauth : allData?.isGauth
     };
     
-    
+    console.log('the added new data',signupData)
     
     if( signupData.isGauth ){
       
