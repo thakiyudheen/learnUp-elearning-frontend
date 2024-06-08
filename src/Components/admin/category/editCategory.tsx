@@ -3,6 +3,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputField from "../../common/form-input/inputField"; // Adjust the path as needed
 import { useTheme } from "../../ui/theme-provider";
+import { useAppDispatch } from "@/hooks/hooke";
+import { useNavigate } from "react-router-dom";
+import { editCategoryAction } from "@/redux/store/actions/course/editCategoryAction";
+import { findCategoryAction } from "@/redux/store/actions/course/findCategoryAction";
 
 // Define validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -15,16 +19,40 @@ interface FormValues {
 interface AddCategoryProps {
     handleSubmit: (values: FormValues) => void;
     onClose: () => void;
-    initialName :string
+    data :{initialName : string , isBlocked : boolean , _id : string } 
 }
 
 
-const EditCategory: React.FC<AddCategoryProps> = ({handleSubmit ,onClose ,initialName  }) => {
+const EditCategory: React.FC<AddCategoryProps> = ({onClose , data }) => {
     const { theme } = useTheme();
     const [open, setOpen] = useState<boolean>(false);
-    console.log('this is initial ', initialName)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const [isError , setError ] = useState<boolean>(false)
+    
 
-    const initialValues: FormValues = { categoryName:initialName};
+    const handleSubmit = async ( updated :{categoryName: string}) =>{
+        
+        const update = {
+            categoryName : updated.categoryName ,
+            _id : data._id ,
+            isBlocked : data.isBlocked
+        }
+
+        const response = await dispatch(findCategoryAction(updated))
+
+        if(response.payload&&response.payload.success){
+            setError(true)
+        }else{
+            setError(false)
+            const response = await  dispatch(editCategoryAction(update))
+            if(response.payload&&response.payload.success){
+                onClose()
+            }
+        }
+    }
+
+    const initialValues: FormValues = { categoryName:data.initialName ||'' };
 
     return (
         <div className="relative min-h-screen">
@@ -44,7 +72,7 @@ const EditCategory: React.FC<AddCategoryProps> = ({handleSubmit ,onClose ,initia
                             {() => (
                                 <Form className="flex flex-col gap-4">
                                     <div className="flex flex-col gap-2">
-                                        <InputField name="categoryName" type="text" defaultValue={initialName} placeholder="Category Name" />
+                                        <InputField name="categoryName" type="text" defaultValue={data.initialName} placeholder="Category Name" />
                                     </div>
                                     <div className="flex flex-row gap-4 mt-4">
                                         <button type="button" onClick={onClose} className="flex-1 py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white font-bold text-lg rounded-lg">
