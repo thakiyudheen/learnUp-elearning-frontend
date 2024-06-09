@@ -24,6 +24,7 @@ import StudentRoutes from './routes/studentRoutes';
 import ProcessingPage from './Components/common/errPages/processPage';
 import RejectPage from './Components/common/errPages/rejectPages';
 import Addcat from './Components/admin/category/addCategoryModal';
+import NotFontError from './Components/common/errPages/notFontError';
 
 
 
@@ -94,7 +95,7 @@ function App() {
 						/>}
           
         />
-        <Route
+        {/* <Route
 					path="/instructor/*"
           element={
 					<Protected
@@ -103,7 +104,7 @@ function App() {
               
 						/>}
           
-        />
+        /> */}
 
         {/* pubic routes  */}
         <Route path="/login" element={<PublicRoute element={<Login/>}/> } />
@@ -116,8 +117,13 @@ function App() {
         <Route path="/enrollment" element={<PublicRoute element={<Enrollment/>}/> } />
         <Route path="/resetPassword" element={<PublicRoute element={<ResetPassword/>}/> } />
         <Route path="/confirmMail" element={<PublicRoute element={<ConfirmEmail/>}/> } />
-        <Route path="/modal" element={<Addcat/>} />
+        
         <Route path="/admin/*" element={<AdminRoutes/>} />
+        <Route path="/instructor/*" element={<InstructorRoutes />} />
+
+        <Route path="*" element={<NotFontError/>} />
+
+        
          
       
       

@@ -9,9 +9,10 @@ interface InputFieldProps {
   value?: string;
   name: string;
   defaultValue?: string ;
+  background?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name ,defaultValue
+const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name ,defaultValue, background
  }) => {
   const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -23,13 +24,15 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
   return (
     <div className='flex flex-col relative'>
       <Field
-        className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+        className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : (background ? background : 'bg-gray-800')} border-b-[1px] focus:outline-none border-[g`
+}
         type={showPassword ? 'text' : type}
         placeholder={placeholder}
         value={value}
         id={name}
         name={name}
         defaultValue={defaultValue}
+        
       />
       {type === 'password' && (
         <button

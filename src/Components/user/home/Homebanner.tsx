@@ -43,13 +43,13 @@ function Homebanner() {
         </div>
       </motion.div> */}
        <motion.div
-      className="text flex-[1] md:ml-[10rem] ml-[5rem]"
+      className="text flex-[1] md:ml-[10rem] ml-[5rem] mt-[4rem] p-4 md:mt-0"
       variants={textContainer}
       initial="hidden"
       animate="visible"
     >
       <motion.h1
-        className="font-bold text-[2rem] w-[90%] md:w-[75%]"
+        className="font-bold md:text-[35px] text-[2rem] w-[94%] md:w-[75%]"
         variants={textItem}
       >
         Grow up your skills by online courses with{' '}
@@ -66,13 +66,13 @@ function Homebanner() {
         variants={textItem}
       >
         <button
-          className="bg-blue-700 rounded-[2rem] shadow-lg text-[1rem] py-2 px-3 text-white"
+          className="bg-blue-700 bg-gradient-to-r from-blue-400 to-blue-900 rounded-[2rem] shadow-lg text-[1rem] py-2 px-8 text-white"
           onClick={() => navigate('/enrollment')}
         >
           Join Now
         </button>
         <button
-          className="bg-gray-500 ml-3 rounded-[2rem] shadow-lg text-[1rem] py-2 px-5 text-white"
+          className="bg-gray-500 ml-3 bg-gradient-to-r from-gray-400 to-gray-700  rounded-[2rem] shadow-lg text-[1rem] py-2 px-5 text-white"
         >
           View
         </button>
@@ -81,7 +81,7 @@ function Homebanner() {
       
       {/* Motion for Image (Right to Left) */}
       <motion.div
-        className="image w-full text-[1rem] md:mr-[5rem] flex-[1] mt-4 md:mt-0 flex justify-center relative"
+        className="image w-full text-[1rem] md:mr-[5rem] flex-[1] mt-4 md:mt-10 flex justify-center relative"
         initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -99,10 +99,10 @@ function Homebanner() {
         
 
         <dotlottie-player
-        src="https://lottie.host/1680d42c-0d0e-462d-b0c3-842451b12ef0/DuB8bN35Pn.json"
+        src="https://lottie.host/da0e13ce-8e92-48b2-a4e5-de886d3ba9de/ZxURYoKHcB.json"
         background="transparent"
         speed="1"
-        style={{ width: '500px', height: '500px' }}
+        style={{ width: '400px', height: '400px' }}
         className='mt-10'
         loop
         autoplay

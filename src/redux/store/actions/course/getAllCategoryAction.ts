@@ -3,12 +3,12 @@ import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-export const editCategoryAction = createAsyncThunk(
-    'user/find-category',
-    async (data:{ categoryName : string , isBlocked : boolean , _id : string} , { rejectWithValue }) => {
+export const getAllCategoryAction = createAsyncThunk(
+    'user/get-all-category',
+    async (_ , { rejectWithValue }) => {
         try {
-            console.log('edit category name reached')
-            const response = await api_client.patch(`/api/course/update-category`,data,config )
+           
+            const response = await api_client.get(`/api/course/getAll-category`,config)
 
             if(response.data.success){
 

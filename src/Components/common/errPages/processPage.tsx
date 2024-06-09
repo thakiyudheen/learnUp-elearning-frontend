@@ -6,8 +6,8 @@ const ProcessingPage: React.FC = () => {
   return (
     <>
     <Navbar/>
-    <div className='flex justify-center items-center h-[38rem] '>
-    <div className="flex flex-col items-center justify-center h-screen shadow-lg  w-[70%] h-[25rem] mt-[10%]">
+    <div className='flex justify-center items-center min-h-screen  '>
+    <div className="flex flex-col items-center justify-center h-[50%] mt-[2%] rounded-lg p-8   w-[70%] ">
       <dotlottie-player 
         src="https://lottie.host/02a55678-c52e-461d-b662-81565a3d67f5/m54wbccbib.json" 
         background="transparent" 

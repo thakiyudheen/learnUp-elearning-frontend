@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/hooks/hooke";
 import { useNavigate } from "react-router-dom";
 import { editCategoryAction } from "@/redux/store/actions/course/editCategoryAction";
 import { findCategoryAction } from "@/redux/store/actions/course/findCategoryAction";
+import LoadingIndicator from "@/Components/common/skelton/loading";
 
 // Define validation schema using Yup
 const validationSchema = Yup.object().shape({
@@ -16,23 +17,30 @@ const validationSchema = Yup.object().shape({
 interface FormValues {
     categoryName: string;
 }
+interface Data {
+    categoryName : string ,
+    _id : string 
+}
 interface AddCategoryProps {
     handleSubmit: (values: FormValues) => void;
+    handleEditCategory : ( data : Data)=> void;
     onClose: () => void;
     data :{initialName : string , isBlocked : boolean , _id : string } 
 }
 
 
-const EditCategory: React.FC<AddCategoryProps> = ({onClose , data }) => {
+const EditCategory: React.FC<AddCategoryProps> = ({onClose , data ,handleEditCategory}) => {
     const { theme } = useTheme();
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [isError , setError ] = useState<boolean>(false)
+    const [isLoading ,setLoading]= useState<boolean>(false)
     
 
     const handleSubmit = async ( updated :{categoryName: string}) =>{
         
+        setLoading(true)
         const update = {
             categoryName : updated.categoryName ,
             _id : data._id ,
@@ -40,14 +48,28 @@ const EditCategory: React.FC<AddCategoryProps> = ({onClose , data }) => {
         }
 
         const response = await dispatch(findCategoryAction(updated))
-
+        console.log('res',response.payload)
         if(response.payload&&response.payload.success){
+            console.log('ressadfs')
             setError(true)
+            setTimeout(() => {
+                setLoading(false)
+            }, 2000);
+            
         }else{
             setError(false)
             const response = await  dispatch(editCategoryAction(update))
             if(response.payload&&response.payload.success){
+                console.log()
+                const data : Data = {
+                    categoryName :response.payload.data.categoryName.toUpperCase(),
+                    _id : response.payload.data._id,
+                }
+                
+                handleEditCategory(data)
                 onClose()
+                setLoading(false)
+                
             }
         }
     }
@@ -66,11 +88,13 @@ const EditCategory: React.FC<AddCategoryProps> = ({onClose , data }) => {
                             onSubmit={(values: FormValues) => {
                                 console.log(values);
                                 handleSubmit(values)
-                                onClose()
+                                
                             }}
                         >
                             {() => (
                                 <Form className="flex flex-col gap-4">
+                                    {isError&&<small className="text-[red]">Category is Exist</small>}
+                                    {isLoading && <LoadingIndicator/>}
                                     <div className="flex flex-col gap-2">
                                         <InputField name="categoryName" type="text" defaultValue={data.initialName} placeholder="Category Name" />
                                     </div>
@@ -78,7 +102,7 @@ const EditCategory: React.FC<AddCategoryProps> = ({onClose , data }) => {
                                         <button type="button" onClick={onClose} className="flex-1 py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white font-bold text-lg rounded-lg">
                                             Close
                                         </button>
-                                        <button type="submit" className="flex-1 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg rounded-lg">
+                                        <button type="submit" className="flex-1 py-2 px-4 bg-blue-800 bg-opacity-60 hover:bg-blue-600  text-white font-bold text-lg rounded-lg">
                                             Save
                                         </button>
                                     </div>
