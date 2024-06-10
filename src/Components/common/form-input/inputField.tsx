@@ -24,8 +24,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
   return (
     <div className='flex flex-col relative'>
       <Field
-        className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : (background ? background : 'bg-gray-800')} border-b-[1px] focus:outline-none border-[g`
-}
+        className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : (background ? background : 'bg-gray-800')} border-b-[1px] focus:outline-none rouded-lg ${theme != 'light' ? 'border-gray-600' :'border-gray-800'}`}
         type={showPassword ? 'text' : type}
         placeholder={placeholder}
         value={value}

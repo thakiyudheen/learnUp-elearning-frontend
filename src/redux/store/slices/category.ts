@@ -11,7 +11,7 @@ export interface category {
 }
 export interface categoryState {
     loading: boolean;
-    data: category | null;
+    data: any | null;
     error: string | null;
 }
 

@@ -120,10 +120,11 @@ function App() {
         
         <Route path="/admin/*" element={<AdminRoutes/>} />
         <Route path="/instructor/*" element={<InstructorRoutes />} />
-
+        {/* <InstructorRoutes /> */}
         <Route path="*" element={<NotFontError/>} />
 
         
+         
          
       
       
