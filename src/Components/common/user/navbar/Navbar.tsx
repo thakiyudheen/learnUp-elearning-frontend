@@ -22,6 +22,8 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(false);
     if(buttonName=='Home'){
       navigate('/')
+    }else if(buttonName=='Course'){
+      navigate('/course-listing')
     }
   };
 

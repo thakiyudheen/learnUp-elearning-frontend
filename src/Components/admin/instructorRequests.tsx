@@ -8,6 +8,7 @@ import Modal from '../modal/modal';
 import { rejectRequestAction } from '../../redux/store/actions/admin/rejectRequestAction';
 import { format } from 'date-fns';
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import { PaginationControls } from '../common/skelton';
 
 interface data {
   email : string ,
@@ -25,10 +26,7 @@ const InstructorRequest: React.FC = () => {
   const [isModal , setModal] = useState< boolean >(false);
   const [isRejectModal , setRejectModal] = useState< boolean >(false);
   const [currentData ,setCurrentData]=useState<{ email: string; isVerified: boolean } | null>(null);
-
   
-
- 
 
  
   useEffect(() => {
@@ -57,9 +55,20 @@ const InstructorRequest: React.FC = () => {
         setLoading(false)
       }
     };
-
     fetchStudents();
   }, [dispatch]);
+
+  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(7);
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return requests.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(requests.length / itemsPerPage);
+
 
   const handleRequestVerification = async (data: { email: string; isVerified: boolean }) => {
     setCurrentData(data);
@@ -148,7 +157,7 @@ const InstructorRequest: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {requests.map((request, index) => (
+              {getPaginatedData().map((request, index) => (
                 <tr key={index} className="text-center border-b">
                   <td className="px-4 py-2 border">{index + 1}</td>
                   <td className="px-4 py-2 border">{request?.firstName}</td>
@@ -188,7 +197,9 @@ const InstructorRequest: React.FC = () => {
                     {!request.isVerified && (
                       <button
                         className={`border font-bold py-1 px-2 ml-2 rounded-lg ${
-                          'hover:bg-red-600 hover:text-white border-red-600 text-red-600'
+                          !request?.isReject
+                            ? 'hover:bg-red-600 hover:text-white border-red-600 text-red-600'
+                            : 'hover:bg-red-900 hover:text-white border-red-900 text-red-900'
                         }`}
                         disabled={request.isReject}
                         onClick={() => handleReject({ email: request.email, isVerified: true })}
@@ -201,8 +212,12 @@ const InstructorRequest: React.FC = () => {
               ))}
             </tbody>
           </table>
+          <PaginationControls currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
         </div>
       </div>
+     
+     
+    
     </>
   );
   

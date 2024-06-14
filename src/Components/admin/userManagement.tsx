@@ -3,6 +3,7 @@ import { getAllStudentAction } from '../../redux/store/actions/admin/getAllStude
 import React, { useEffect, useState } from 'react';
 import LoadingIndicator from '../common/skelton/loading';
 import { blockUnblockAction } from '../../redux/store/actions/admin/blockUnblockAction';
+import { PaginationControls } from '../common/skelton';
 
 interface data {
   _id : string ,
@@ -65,6 +66,15 @@ const UserTable: React.FC = () => {
     fetchStudents();
   }, [dispatch]);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(7);
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return students.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(students.length / itemsPerPage);
  
   
 
@@ -108,6 +118,7 @@ const UserTable: React.FC = () => {
             ))}
           </tbody>
         </table>
+        <PaginationControls currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
       </div>
     </div>
     </>

@@ -10,9 +10,10 @@ interface InputFieldProps {
   name: string;
   defaultValue?: string ;
   background?: string;
+  disabled?:boolean;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name ,defaultValue, background
+const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name ,defaultValue, background,disabled
  }) => {
   const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
         id={name}
         name={name}
         defaultValue={defaultValue}
+        disabled={disabled}
         
       />
       {type === 'password' && (

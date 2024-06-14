@@ -88,7 +88,7 @@ const FormComponent: React.FC = () => {
   return (
     <div className="md:flex justify-evenly items-center min-h-screen w-full">
       <div className="md:w-1/2">
-        <h1 className='text-center text-[26px] md:mr-[8rem] font-bold text-blue-500 md:mt-0 md:p-0 mt-[4rem] p-2'>Student <span className='text-blue-900'>Registration</span>  </h1>
+        <h1 className='text-center text-[26px] md:relative top-[4rem] md:mr-[8rem] font-bold text-blue-500 md:mt-0 md:p-0 mt-[4rem] p-2'>Student <span className='text-blue-900'>Registration</span>  </h1>
         <img src={Register} alt="registration" className="w-[50%] ml-[6rem] mt-[4rem] md:w-[80] h-auto" />
       </div>
       {isLoading && <LoadingIndicator/>}

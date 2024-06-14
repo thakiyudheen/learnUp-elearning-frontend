@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../hooks/hooke';
 import InstructorSchema, { FormValues } from '../../../validation-schema/Instructor-reg-schema';
 import { signupAction } from '../../../redux/store/actions/auth/signupAction';
 import { SignupFormData } from '../../../types/ISignupData';
+import LoadingIndicator from '@/Components/common/skelton/loading';
 
 
 
@@ -91,7 +92,7 @@ const FormComponent: React.FC = () => {
   return (
     <div className="md:flex justify-evenly items-center min-h-screen w-full">
       <div className="md:w-1/2">
-      <h1 className='text-center text-[26px] md:mr-[8rem] font-bold text-blue-500 md:mt-0 md:p-0 md:mt-[3rem]  mt-[4rem] p-2'> Instructor <span className='text-blue-900'>Registration</span>  </h1>
+      <h1 className='text-center text-[26px] md:mr-[8rem] font-bold md:relative top-[5rem] text-blue-500 md:mt-0 md:p-0 md:mt-[3rem]  mt-[4rem] p-2'> Instructor <span className='text-blue-900'>Registration</span>  </h1>
         <img src={Register1} alt="registration" className="w-[60%] ml-[5rem] mt-[4rem] md:w-[65%] h-auto" />
       </div>
       <div className={`md:w-1/2 max-w-md p-6 md:mt-[2rem] rounded-lg md:shadow-lg md:p-[3rm] md:mt-[6rem] md:mr-[4rem] ${theme=='light'?'bg-white':'bg-gray-800'} `}>
@@ -123,6 +124,7 @@ const FormComponent: React.FC = () => {
                   >
                     Back
                   </button>
+                  {isLoading&&<LoadingIndicator/>}
                   <button
                     type="submit"
                     className={`bg-blue-600 text-white py-2 px-4 rounded-[2rem] shadow-lg hover:bg-blue-700 ${

@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Formik, Form, FieldArray, Field, ErrorMessage } from 'formik';
 import { useDropzone } from 'react-dropzone';
 import InputField from '../../common/form-input/inputField';
-import { instructorCourseSchema } from '@/validation-schema/instructorCourseSchema';
 import { FileUpload } from '@/utils/cloudinary/imgVideoUpload';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FiTrash2 } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useTheme } from '@/Components/ui/theme-provider';
 import { AddLessonSchema } from '@/validation-schema/addLessonSchema';
+import { ClipLoader,BounceLoader , BarLoader,ClimbingBoxLoader, PacmanLoader} from 'react-spinners';
+import { GrCloudUpload } from "react-icons/gr";
 
 // Initial form values
 const initialValues = {
@@ -25,19 +26,57 @@ const initialValues = {
 
 interface DropzoneFieldProps {
   setFieldValue: (fieldName: string, file: File) => void;
+  previewType :'image' | 'video';
   fieldName: string;
   accept: string;
+  index:number;
 }
 
-const DropzoneField: React.FC<DropzoneFieldProps> = ({ setFieldValue, fieldName, accept }) => {
+const DropzoneField: React.FC<DropzoneFieldProps> = ({ setFieldValue, fieldName, accept , previewType,index}) => {
   const [preview, setPreview] = useState<string | null>(null);
+  const [loading ,setLoading]=useState<boolean>(false)
+  const [previewtype ,setPreviewType]=useState<string|null >(null)
 
+
+  // const onDrop = async (acceptedFiles: File[]) => {
+  //   const file = acceptedFiles[0];
+  //   if (file) {
+  //     const fileUrl = await FileUpload(file);
+  //     setFieldValue(fieldName, fileUrl);
+  //     setPreview(URL.createObjectURL(file));
+  //   }
+  // };
   const onDrop = async (acceptedFiles: File[]) => {
+    console.log('this is dropped file ', acceptedFiles[0])
     const file = acceptedFiles[0];
     if (file) {
-      const fileUrl = await FileUpload(file);
-      setFieldValue(fieldName, fileUrl);
-      setPreview(URL.createObjectURL(file));
+      setLoading(true); // Start loading
+      try {
+        const imageUrl = await FileUpload(file);
+        setFieldValue(fieldName, imageUrl);
+        console.log('image or video upload url', imageUrl);
+
+        if (!imageUrl) {
+          throw Error('image or video upload failed');
+        }
+
+        setPreview(URL.createObjectURL(file));
+        setPreviewType(file.type.startsWith('image') ? 'image' : 'video'); 
+
+
+        const videoElement = document.createElement('video');
+        videoElement.src = URL.createObjectURL(file);
+        videoElement.onloadedmetadata = () => {
+          const duration = videoElement.duration;
+          const durationFormatted = new Date(duration * 1000);
+          setFieldValue(`lessons[${index}].duration`, duration);
+         };
+         
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false); 
+      }
     }
   };
 
@@ -47,18 +86,39 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({ setFieldValue, fieldName,
   });
 
   return (
-    <div {...getRootProps()} className="border-2 border-dotted border-gray-400 rounded-md h-48 flex items-center justify-center mb-4">
-      <input {...getInputProps()} />
-      {preview ? (
-        <video
+    <div
+    {...getRootProps()}
+    className="border-2 border-gray-500 border-dashed rounded-md h-48 flex items-center justify-center"
+  >
+    <input {...getInputProps()} />
+    {loading ? (
+      <div className="flex items-center justify-center">
+        <BarLoader color="#4A90E2" loading={loading}  /> {/* Loading spinner */}
+      </div>
+    ) : preview ? (
+      previewType === 'image' ? (
+        <img
           src={preview}
+          alt="Preview"
           className="h-full w-full object-cover"
-          controls
         />
       ) : (
-        <span className="text-gray-400">Drag & drop or click to upload</span>
-      )}
-    </div>
+        <iframe
+          src={preview}
+          title="Video Preview"
+          className="h-full w-full object-cover border-2 border-gray-200 rounded-md"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      )
+    ) : (
+      <>
+        <GrCloudUpload className="text-bold text-[2rem] text-gray-400" />
+        <br />
+        <span className="text-gray-400">click to upload</span>
+      </>
+    )}
+  </div>
   );
 };
 
@@ -169,6 +229,8 @@ const LessonForm: React.FC = () => {
                             setFieldValue={setFieldValue}
                             fieldName={`lessons[${index}].video`}
                             accept="video/*"
+                            previewType={'video'}
+                            index={index} 
                           />
                           <ErrorMessage name={`lessons[${index}].video`} component="div" className="text-red-500 text-sm" />
                         </div>

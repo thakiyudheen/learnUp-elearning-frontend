@@ -5,13 +5,15 @@ import InstructorDashboard from '../Pages/instructor/instructorDashbord';
 import CourseForm from '@/Components/instructor/course/addCourseForm';
 import AddLessonForm from '@/Components/instructor/course/addLessonForm';
 import AddAttachmentForm from '@/Components/instructor/course/addAttachments';
+import CourseListing from '@/Components/instructor/course/courseListing';
 
 const instructorRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<InstructorDashboard/>}>
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="courses" element={<CourseForm/>} />
+        <Route path="courses" element={<CourseListing/>} />
+        <Route path="add-courses" element={<CourseForm/>} />
         <Route path="Add-lesson" element={<AddLessonForm/>} />
         <Route path="Add-attachment" element={<AddAttachmentForm/>} />
           

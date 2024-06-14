@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import LoadingIndicator from '../common/skelton/loading';
 import { blockUnblockAction } from '../../redux/store/actions/admin/blockUnblockAction';
 import { getAllInstructorsAction } from '../../redux/store/actions/admin/getAllInstructorsAction';
+import { PaginationControls } from '../common/skelton';
 
 interface data {
   _id : string ,
@@ -66,7 +67,15 @@ const instructorTable: React.FC = () => {
     fetchStudents();
   }, [dispatch]);
 
- 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(7);
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return instructors.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(instructors.length / itemsPerPage);
   
 
   return (
@@ -89,7 +98,7 @@ const instructorTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {instructors.map(( instructor ,index) => (
+            {getPaginatedData().map(( instructor ,index) => (
               <tr key={index} className="text-center border-b">
                 <td className="px-4 py-2 border">{index + 1}</td>
                 <td className="px-4 py-2 border">{instructor?.firstName}</td>
@@ -109,6 +118,7 @@ const instructorTable: React.FC = () => {
             ))}
           </tbody>
         </table>
+        <PaginationControls currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
       </div>
     </div>
     </>

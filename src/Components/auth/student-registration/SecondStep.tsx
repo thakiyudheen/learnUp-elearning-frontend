@@ -30,23 +30,7 @@ const SecondStep = () => {
           />
         <ErrorMessage name="dateOfBirth" component="div" className="text-red-500 text-[14px]" />
       </div>
-      <div className="mb-4">
-        <label htmlFor="profession"  className={`block ${theme=='light'?'text-gray-700':'text-gray-500' } text-gray-700 font-bold mb-2`}>
-          Profession
-        </label>
-        <Field
-          as="select"
-          id="profession"
-          name="profession"
-          className={`${theme=='light'?'bg-white':'bg-gray-800'} border-b-[1px] border-gray-700 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-          >
-          <option value="">Select Profession</option>
-          <option value="student">Student</option>
-          <option value="working">Working</option>
-          
-        </Field>
-        <ErrorMessage name="profession" component="div" className="text-red-500 text-[14px]" />
-      </div>
+      
       <div className="mb-4">
         <label htmlFor="qualification"  className={`block ${theme=='light'?'text-gray-700':'text-gray-500' } text-gray-700 font-bold mb-2`}>
           Qualification

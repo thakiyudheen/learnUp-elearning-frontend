@@ -18,7 +18,9 @@ module.exports = {
     },
     fontFamily: {
       Poppins: ["var(--font-Poppins)"],
-      Josefin: ["var(--font-Josefin)"],
+      Titillium: ['"Titillium Web"', 'sans-serif'],
+      josefin:['"Josefin Sans"', 'sans-serif'],
+      monoko :["Source Code Pro", 'monospace']
     },
     fontSize:{
        xsmall:["1rem"],

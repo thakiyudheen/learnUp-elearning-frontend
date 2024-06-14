@@ -25,6 +25,10 @@ import ProcessingPage from './Components/common/errPages/processPage';
 import RejectPage from './Components/common/errPages/rejectPages';
 import Addcat from './Components/admin/category/addCategoryModal';
 import NotFontError from './Components/common/errPages/notFontError';
+import { getAllCourseAction } from './redux/store/actions/course/getAllCourseAction';
+import PromoSection from './Components/user/course/courseListing';
+import CourseCard from './Components/user/course/course';
+import CoursePage from './Pages/student/coursePage';
 
 
 
@@ -48,7 +52,7 @@ function App() {
   useEffect( () => {
 
     if(!data){
-
+    
          dispatch( getUserDataAction() )
 
     }
@@ -77,7 +81,7 @@ function App() {
 						/>
 					}
 				/>
-        {/* <Route
+        <Route
 					path="/admin/*"
           element={
 					<Protected
@@ -85,7 +89,7 @@ function App() {
 							element={<AdminRoutes/>}
 						/>}
           
-        /> */}
+        />
         <Route
 					path="/student/*"
           element={
@@ -95,7 +99,7 @@ function App() {
 						/>}
           
         />
-        {/* <Route
+        <Route
 					path="/instructor/*"
           element={
 					<Protected
@@ -104,7 +108,7 @@ function App() {
               
 						/>}
           
-        /> */}
+        />
 
         {/* pubic routes  */}
         <Route path="/login" element={<PublicRoute element={<Login/>}/> } />
@@ -117,9 +121,15 @@ function App() {
         <Route path="/enrollment" element={<PublicRoute element={<Enrollment/>}/> } />
         <Route path="/resetPassword" element={<PublicRoute element={<ResetPassword/>}/> } />
         <Route path="/confirmMail" element={<PublicRoute element={<ConfirmEmail/>}/> } />
+        <Route path="/course-listing" element={<PromoSection/> } />
+
+
+        <Route path="/course" element={<CoursePage/> } />
+  
         
-        <Route path="/admin/*" element={<AdminRoutes/>} />
-        <Route path="/instructor/*" element={<InstructorRoutes />} />
+
+        {/* <Route path="/admin/*" element={<AdminRoutes/>} /> */}
+        {/* <Route path="/instructor/*" element={<InstructorRoutes />} /> */}
         {/* <InstructorRoutes /> */}
         <Route path="*" element={<NotFontError/>} />
 
