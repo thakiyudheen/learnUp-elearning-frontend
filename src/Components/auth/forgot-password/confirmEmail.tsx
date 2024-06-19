@@ -35,7 +35,7 @@ const YourComponent: React.FC = () => {
     const response = await dispatch(findEmailAction( values.email )) 
     
     console.log('here hea',response.payload)
-    if(response.payload.success) { 
+    if(response.payload && response.payload.success) { 
       
       return setError(true)
 

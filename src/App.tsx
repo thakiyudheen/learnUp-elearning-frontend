@@ -29,6 +29,9 @@ import { getAllCourseAction } from './redux/store/actions/course/getAllCourseAct
 import PromoSection from './Components/user/course/courseListing';
 import CourseCard from './Components/user/course/course';
 import CoursePage from './Pages/student/coursePage';
+import UserProfile from './Components/user/profile/userProfile';
+import UserDetails from './Components/user/profile/UserDetails';
+import Profile from './Pages/student/profile';
 
 
 
@@ -132,6 +135,7 @@ function App() {
         {/* <Route path="/instructor/*" element={<InstructorRoutes />} /> */}
         {/* <InstructorRoutes /> */}
         <Route path="*" element={<NotFontError/>} />
+        <Route path="/user-profile" element={<Profile/>} />
 
         
          

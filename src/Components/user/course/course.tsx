@@ -1,18 +1,25 @@
 import { useTheme } from '@/Components/ui/theme-provider';
-import { useAppDispatch } from '@/hooks/hooke';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { getCourseByIdAction } from '@/redux/store/actions/course/getCourseByIdAction';
 import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
+import { FaRupeeSign, FaLock, FaSync } from 'react-icons/fa';
+import { RootState } from '@/redux/store';
 
 
 const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
-
+    const { data } = useAppSelector((state: RootState) => state.user)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
     const [course, setCourse] = useState<any>({})
     const { theme } = useTheme()
+    const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
+
+    const handleVideoClick = (lessonId: string) => {
+      setSelectedLesson(lessonId === selectedLesson ? null : lessonId);
+    };
 
 
 
@@ -31,12 +38,12 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
 
     return (
-        <div className=" mx-auto border border-gray-200 font-Poppins   shadow-md">
+        <div className=" mx-auto font-Poppins   shadow-md">
 
-            <div className="h-[26rem] flex bg-gradient-to-r from-gray-800 to-gray-700 bg-opacity-40 p-6 items-center relative">
+            <div className="h-[26rem] flex bg-gradient-to-r from-gray-800 to-gray-700  bg-opacity-40 p-6 items-center relative">
                 <div className="text-left w-3/4 z-10 p-10">
                     <h2 className="text-[2rem] font-bold text-white">{course?.courseTitle}</h2>
-                    <h4 className="text-lg w-3/4 text-gray-300 mt-2">{course.subTitle}</h4>
+                    <h4 className="text-lg w-3/4 text-gray-300 mt-2">{course?.subTitle}</h4>
                     <div className="mt-4 text-gray-300">
                         <span>{"rating"} ⭐⭐⭐⭐⭐</span> ({5} ratings) {'10000'} students
                     </div>
@@ -51,10 +58,10 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
             <div className="flex justify-between ">
                 <div className="w-3/4 p-6 ">
 
-                    <div className="flex items-center w-[86%] mb-3 shadow-md rounded-t-lg justify-between p-2  text-black">
+                    <div className="flex items-center w-[86%] dark:text-gray-400 mb-3 shadow-md dark:bg-gray-800 rounded-t-lg justify-between p-2  text-black">
                         <div className="flex items-center ">
                             <img
-                                src={"https://imgv3.fotor.com/images/blog-richtext-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"} // Replace with the actual profile image URL
+                                src={course?.instructorRef?.profile?.avatar} // Replace with the actual profile image URL
                                 alt="Profile"
                                 className="w-12 h-12 rounded-full"
                             />
@@ -73,29 +80,53 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
                     </div>
                     <hr className='w-[86%]' />
 
-                    <div className="mb-6 border bg-white border-gary-600 p-7 mt-4 w-[86%]">
+                    <div className="mb-6 border bg-white border-gary-600 dark:bg-gray-800 p-7 mt-4 w-[86%]">
                         <h3 className="text-xl font-semibold text-[20px] mb-4">What you'll learn</h3>
                         <p className='text-sm w-[100%]'>{course.description}</p>
                     </div>
 
-                    <div className="mb-6  p-7 w-[86%] *:">
-                        <h3 className="text-xl font-semibold text-[20px]">This course includes:</h3>
-                        {course?.lessons?.map((item: any, index: any) => (
-                            <div className="collapse collapse-arrow bg-white text-gray-800 mt-2" key={index}>
-                                <input type="radio" name="course-accordion" />
-                                <div className="collapse-title text-xl font-medium bg-gray-100 shadow-sm">
-                                    {item.title}
-                                </div>
-                                <div className="collapse-content bg-white">
-                                    <ul className="list-disc list-inside text-gray-800">
+        
 
-                                        <li key={index} className="mt-1"><small>{item.description}</small></li>
+    <div className="mb-6 p-7 w-[86%] dark:bg-gray-800 bg-white border border-gray-300">
+      <h3 className="text-xl font-semibold text-[20px]">This course includes:</h3>
+      {course?.lessons?.map((item: any, index: number) => (
+        <div className="collapse collapse-arrow bg-white text-gray-700 mt-2" key={index}>
+          <input type="radio" name="course-accordion" />
+          <div className="collapse-title text-xl dark:text-white font-medium dark:bg-gray-700 bg-gray-100 shadow-sm">
+            {item.title}
+          </div>
+          <div className="collapse-content dark:bg-gray-700">
+            <ul className="list-disc list-inside text-black dark:text-gray-100">
+              <li key={index} className="mt-1 mb-5">
+                <small>{item.description}</small>
+              </li>
+              {data.data.role=='admin'&&
+                selectedLesson === item.id && (
+                    <>                  
+                    <video controls className="w-[50%]" src={item.video} type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                   
+                 </>
+                 
 
-                                    </ul>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                )}
+             <li className='mt-5'>
+                 <button className="text-blue-500 hover:text-blue-700" onClick={() => handleVideoClick(item.id)}>
+                   <small>{selectedLesson === item.id ? 'Hide Video' : 'Show Video'}</small>
+                 </button>
+               </li>
+             
+              
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  
+
+
+
                     <div className="border border-gray-300 p-4 md:p-10 lg:p-8 w-[86%]">
                         <h2 className="text-lg  md:text-xl lg:text-2xl font-bold mb-2">
                             Top companies offer this course to their employees
@@ -124,14 +155,14 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
                     <div className=" z-10 text-center ">
                         <h1 className='text-center font-bold text-[17px] mt-4'>Subscribe to LearnUp's top courses</h1>
-                        <ul className='text-start mt-2 p-3  bg-gray-200 rounded-md '>
-                            <li><small> Monthly fee required</small></li>
-                            <li><small>Exclusive content access</small></li>
-                            <li><small>Auto-renewal option</small></li>
+                        <ul className='text-start mt-2 p-3 bg-gray-200 dark:bg-gray-700 rounded-md'>
+                            <li><small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small></li>
+                            <li><small><FaLock className='inline mr-2' /> Exclusive content access</small></li>
+                            <li><small><FaSync className='inline mr-2' /> Auto-renewal option</small></li>
                         </ul>
 
-                        <p className="text-[20px] font-bold text-black text-left mt-4">
-                            {course.pricing == 'free' ? 'Free !!' : `${"2"} ${course.priceAmound}`}
+                        <p className="text-[20px] font-bold text-black dark:text-gray-300 text-left mt-4">
+                            {course.pricing == 'free' ? 'Free !!' : `₹ ${course.priceAmount}`}
                         </p>
                         <div className='flex w-full justify-center flex-col '>
                             <button className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-gray-200 bg-blue-700">

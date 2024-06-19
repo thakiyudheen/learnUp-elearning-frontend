@@ -93,7 +93,7 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({ setFieldValue, fieldName,
       <input {...getInputProps()} />
       {loading ? (
         <div className="flex items-center justify-center">
-          <BarLoader color="#4A90E2" loading={loading}  /> {/* Loading spinner */}
+          <BarLoader color="#4A90E2" loading={loading}  />
         </div>
       ) : preview ? (
         previewType === 'image' ? (

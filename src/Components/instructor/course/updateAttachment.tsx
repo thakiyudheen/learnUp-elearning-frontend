@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, FieldArray, Field, ErrorMessage } from 'formik';
 import { FiTrash2 } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -10,8 +10,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { createCourseAction } from '@/redux/store/actions/course/createCourseAction';
 import LoadingIndicator from '@/Components/common/skelton/loading';
 import { PdfUpload } from '@/utils/cloudinary/uploadPdf';
+import { updateAllCourseAction } from '@/redux/store/actions/course/updateAllCourseAction';
 
-const AttachmentField: React.FC = () => {
+const UpdateAttachment: React.FC = () => {
   const { theme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,26 +35,32 @@ const AttachmentField: React.FC = () => {
   const user = useAppSelector((state: RootState) => state.user);
 
   const handleSubmit = async (values: any) => {
-    console.log('attachmien',values)
+    console.log('attachments', values);
     setLoading(true);
-    console.log( 'instructorr id',user?.data?.data?._id)
-    let allData = { ...values, ...location.state, instructorRef: user?.data?.data?._id || 'usernotFont' };
-
-    const response = await dispatch(createCourseAction(allData));
-    console.log('from abroad  ', response.payload.data);
+    console.log('instructor id', user?.data?.data?._id);
+    let allData = { ...values, ...location.state.allData,_id:location.state.course._id, instructorRef: user?.data?.data?._id || 'usernotFound' };
+    console.log('the every data ',allData)
+    const response = await dispatch(updateAllCourseAction(allData));
+    console.log('response', response.payload.data);
     if (response.payload && response.payload.data) {
       setLoading(false);
-      navigate('/instructor');
+      navigate('/instructor/courses');
     }
   };
 
-  
+  useEffect(() => {
+    if (location.state.course.attachments) {
+      setPdfUrls(location.state.course.attachments.map((attachment: any) => attachment.url));
+    }
+  }, [location.state.course.attachments]);
+
+  console.log('attachments',location.state.course.attachments)
 
   return (
     <div className="max-w-4xl mx-auto py-8 min-h-screen">
       <h2 className="text-white mb-4">Attachments</h2>
       <Formik
-        initialValues={{ attachments: [{ title: '', url: null }] }}
+        initialValues={{ attachments: location.state.course.attachments || [{ title: '', url: null }] }}
         onSubmit={(values) => handleSubmit(values)}
         validationSchema={validationSchema}
       >
@@ -63,14 +70,14 @@ const AttachmentField: React.FC = () => {
             <FieldArray name="attachments">
               {({ push, remove }) => (
                 <>
-                  {values.attachments.map((attachment, index) => (
+                  {values.attachments.map((attachment : any, index : any ) => (
                     <div key={index} className="mb-4">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex-grow mr-2">
                           <Field
                             type="text"
                             placeholder="Resource Title"
-                            className={`border-b border-gray-500 w-full py-2 ${theme === 'light' ? 'bg-white' : 'bg-[#1D232A]'} text-white outline-none`}
+                            className={`border-b border-gray-500 w-full py-2 ${theme === 'light' ? 'bg-white text-black' : 'bg-[#1D232A]'}  outline-none`}
                             name={`attachments[${index}].title`}
                           />
                           <ErrorMessage name={`attachments[${index}].title`} component="small" className="text-red-500 text-sm mt-1" />
@@ -80,8 +87,8 @@ const AttachmentField: React.FC = () => {
                             <input
                               type="file"
                               accept="application/pdf"
-                              onChange={async (event : any) => {
-                                const file  = event?.currentTarget?.files[0];
+                              onChange={async (event: any) => {
+                                const file = event?.currentTarget?.files[0];
                                 if (file) {
                                   const url = await PdfUpload(file);
                                   setFieldValue(`attachments[${index}].url`, url);
@@ -106,7 +113,7 @@ const AttachmentField: React.FC = () => {
                               ></iframe>
                             )}
                           </div>
-                          <ErrorMessage name={`attachments[${index}].file`} component="small" className="text-red-500 text-sm mt-1" />
+                          <ErrorMessage name={`attachments[${index}].url`} component="small" className="text-red-500 text-sm mt-1" />
                         </div>
                         {values.attachments.length > 1 && (
                           <button
@@ -125,7 +132,7 @@ const AttachmentField: React.FC = () => {
                   ))}
                   <button
                     type="button"
-                    onClick={() => push({ title: '', file: null })}
+                    onClick={() => push({ title: '', url: null })}
                     className="text-blue-500 flex items-center"
                   >
                     <AiOutlinePlus size={20} className="mr-2" />
@@ -142,4 +149,4 @@ const AttachmentField: React.FC = () => {
   );
 };
 
-export default AttachmentField;
+export default UpdateAttachment;

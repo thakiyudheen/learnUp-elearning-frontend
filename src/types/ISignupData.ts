@@ -21,7 +21,7 @@ interface Contact {
     socialMedia: {
         linkedIn: string;
       };
-    address?: string
+    
 }
 
 interface Profile {
@@ -43,6 +43,8 @@ export interface SignupFormData {
     contact?: Contact,
     profession?: Profession,
     qualification?: string,
+    address?:string,
+    avatar?:string,
     role?: Role,
     isVerified: boolean,
     isGauth?: boolean,

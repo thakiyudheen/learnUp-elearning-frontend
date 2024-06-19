@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import StudentDashboard from '../Pages/student/studentDashbord';
 import Dashboard from '../Components/user/Dashboard/Dashboard';
+import UserDetails from '@/Components/user/profile/UserDetails';
 
 
 
@@ -9,7 +10,10 @@ const studentRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<StudentDashboard/>}>
-        <Route path="dashboard" element={<Dashboard/>} />
+        <Route index  element={<Dashboard/>} />
+        <Route index path='/user-profile' element={<UserDetails/>} />
+
+
         
       </Route>
     </Routes>

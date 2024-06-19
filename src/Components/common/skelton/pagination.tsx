@@ -21,10 +21,10 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
       <button
         onClick={() => setCurrentPage((prevPage: any) => Math.max(prevPage - 1, 1))}
         disabled={currentPage === 1}
-        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-200 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 dark:text-white uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
         <HiArrowLeft className="w-4 h-4" />
-        Prev
+       <small> Prev</small>
       </button>
       <div className="flex items-center gap-2">
         {pages.map((page) => (
@@ -32,7 +32,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
             key={page}
             onClick={() => setCurrentPage(page)}
             className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase ${
-              currentPage === page ? 'bg-gray-400 text-white shadow-md shadow-gray-900/10' : 'text-white hover:bg-gray-900/10 active:bg-gray-900/20'
+              currentPage === page ? 'bg-blue-600 text-white shadow-md shadow-gray-900/10' : 'text-white hover:bg-gray-900/10 active:bg-gray-900/20'
             } transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
             disabled={currentPage === page}
             type="button"
@@ -44,9 +44,9 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
       <button
         onClick={() => setCurrentPage((prevPage: any) => Math.min(prevPage + 1, totalPages))}
         disabled={currentPage === totalPages}
-        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-200 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center dark:text-white text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
-        Next
+        <small> Next</small>
         <HiArrowRight className="w-4 h-4" />
       </button>
     </div>

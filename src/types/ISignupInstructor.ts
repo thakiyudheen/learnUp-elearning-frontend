@@ -1,6 +1,7 @@
 interface Profile {
     dateOfBirth: string;
     gender: string;
+    avatar:string;
   }
   
   interface Contact {

@@ -17,6 +17,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
  }) => {
   const { theme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
+  console.log('this is default value',defaultValue)
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -31,7 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, placeholder, value, name 
         value={value}
         id={name}
         name={name}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue || ""}
         disabled={disabled}
         
       />

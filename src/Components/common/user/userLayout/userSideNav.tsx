@@ -57,9 +57,9 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
               <RxDashboard className="mr-4" />
               Dashboard
             </NavLink>
-            <NavLink to="courses" className={({ isActive }) => getNavItemClass(isActive)}>
+            <NavLink to="user-profile" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaBook className="mr-4 " />
-              Courses
+              Profile
             </NavLink>
             <NavLink to="students" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaUserGraduate className="mr-4" />

@@ -48,16 +48,21 @@ const FormComponent: React.FC = () => {
       email: allData.email,
       password: allData.password,
       role:allData.role,
+      address:allData.address,
+      qualification:allData.qualification,
       cv : allData.cv,
       profile: {
         dateOfBirth:allData.dateOfBirth,
         gender: allData.gender,
+        avatar:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
       },
       contact: {
         phone:allData.phone,
         socialMedia: {
           linkedIn: allData.social,
+         
         },
+        
       },
       isVerified:false,
       profession: allData.profession,

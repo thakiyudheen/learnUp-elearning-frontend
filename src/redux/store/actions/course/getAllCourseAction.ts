@@ -5,9 +5,23 @@ import { AxiosError } from "axios";
 
 export const getAllCourseAction = createAsyncThunk(
     'user/get-all-course',
-    async (_ , { rejectWithValue }) => {
+    async ( data: { instructorRef ?: string } , { rejectWithValue }) => {
         try {
-           
+            console.log('instructor data',data)
+           if(data?.instructorRef){
+            const response = await api_client.get(`/api/course/getAll-course?instructorRef=${data.instructorRef}`,config)
+
+            if(response.data.success){
+
+                return response.data.data
+
+            } else {
+
+				return rejectWithValue(response.data.data);
+
+			}
+
+           }else{
             const response = await api_client.get(`/api/course/getAll-course`,config)
 
             if(response.data.success){
@@ -20,6 +34,10 @@ export const getAllCourseAction = createAsyncThunk(
 
 			}
 
+           }
+           
+
+            
 
 
 

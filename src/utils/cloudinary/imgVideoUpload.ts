@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { formatDuration } from 'date-fns';
 
 export const FileUpload = async (file: File) => {
   const presetKey = import.meta.env.VITE_REACT_APP_PRESET_KEY;
@@ -10,6 +11,7 @@ export const FileUpload = async (file: File) => {
     console.error('Cloudinary preset key or cloud name is missing');
     return null;
   }
+  
 
   const formData = new FormData();
   formData.append('file', file);
@@ -26,7 +28,7 @@ export const FileUpload = async (file: File) => {
     const isValidFormat = format === 'jpg' || format === 'png' || format === 'jpeg' || format === 'gif' || format === 'mp4' || format === 'avi' || format === 'mov';
 
     if (isValidFormat) {
-      return secure_url;
+      return res.data;
     } else {
       console.error('Uploaded file is not an image or video:', res.data);
       return null;
