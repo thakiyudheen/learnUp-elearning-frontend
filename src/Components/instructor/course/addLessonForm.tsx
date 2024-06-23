@@ -141,6 +141,7 @@ const LessonForm: React.FC = () => {
         onSubmit={(values: any) => {
           console.log(values);
           let allData = {...location.state,...values} ;
+          console.log(values);
           
           navigate('/instructor/Add-attachment', { state: allData });
         }}

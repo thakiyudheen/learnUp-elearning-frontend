@@ -1,12 +1,13 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 
 export const findUsernameAction = createAsyncThunk(
     'user/find-userName',
     async (username : string , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/auth/exist_username/${username}`,
+            const response = await api_client.get(`${auth}exist_username/${username}`,
 
                 {
                     withCredentials : true

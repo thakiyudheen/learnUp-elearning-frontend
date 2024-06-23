@@ -1,13 +1,14 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 
 export const forgetPasswordAction = createAsyncThunk(
     'user/forget-password',
     async (email : string , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/auth/forget-password/${email}`,
-
+            const response = await api_client.get(`${auth}forget-password/${email}`,
+ 
                 {
                     withCredentials : true
                 }

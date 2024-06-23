@@ -14,7 +14,7 @@ import { ClipLoader,BounceLoader , BarLoader,ClimbingBoxLoader, PacmanLoader} fr
 
 
 
-const Level = ['Biginner', 'Medium', 'Intermediate']
+const Level = ['Beginner', 'Medium', 'Intermediate']
 // Initial form values
 const initialValues = {
   courseTitle: '',
@@ -63,7 +63,7 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({ setFieldValue, fieldName,
       setLoading(true); // Start loading
       try {
         const imageUrl = await FileUpload(file);
-        setFieldValue(fieldName, imageUrl);
+        setFieldValue(fieldName, imageUrl.secure_url);
         console.log('image or video upload url', imageUrl);
 
         if (!imageUrl) {
@@ -292,14 +292,14 @@ const CourseForm: React.FC = () => {
               </div>
 
              {/* Pricing Section */}
-              <div className="mb-6 mt-10 ml-4">
+              <div className="mb-6 mt-8 w-2/4 ">
               {/* <label className="block text-sm font-medium text-gray-500 mb-1">
                 Pricing
               </label> */}
-              <div className="flex ">
+              <div className="flex w-full justify-between">
                 <button
                   type="button"
-                  className={`py-1 px-6 rounded-l-lg  ${!isPaid ? 'bg-blue-700 text-white border-2 border-blue-700' : 'border-2 border-blue-700 text-blue-700'}`}
+                  className={`py-2 px-6  w-1/2  ${!isPaid ? 'bg-blue-700 text-white border border-blue-700' : 'border border-blue-700 text-blue-700'}`}
                   onClick={() => {
                     setIsPaid(false);
                     setFieldValue('pricing', 'Free');
@@ -309,7 +309,7 @@ const CourseForm: React.FC = () => {
                 </button>
                 <button
                   type="button"
-                  className={`py-1 px-6 rounded-r-lg ${isPaid ? 'bg-blue-700 text-white border-2 border-blue-700' :  'border-2 border-blue-700 text-blue-700'}`}
+                  className={`py-2 px-6 w-1/2  ${isPaid ? 'bg-blue-700 text-white border border-blue-700' :  'border border-blue-700 text-blue-700'}`}
                   onClick={() => {
                     setIsPaid(true);
                     setFieldValue('pricing', 'Paid');

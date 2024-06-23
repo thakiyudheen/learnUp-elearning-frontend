@@ -3,6 +3,7 @@ import { api_client } from "../../../../axios";
 import { config } from "../../../../common/configuration";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 
 
 
@@ -11,7 +12,7 @@ export const googleAuthAction = createAsyncThunk(
     async ( credentials : IGoogleAuth ,{ rejectWithValue }) => {
         try {
             
-            const response = await api_client.post('/api/auth/google-auth',
+            const response = await api_client.post(`${auth}google-auth`,
             credentials,
             config
             )

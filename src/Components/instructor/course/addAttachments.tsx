@@ -70,7 +70,7 @@ const AttachmentField: React.FC = () => {
                           <Field
                             type="text"
                             placeholder="Resource Title"
-                            className={`border-b border-gray-500 w-full py-2 ${theme === 'light' ? 'bg-white' : 'bg-[#1D232A]'} text-white outline-none`}
+                            className={`border-b border-gray-500 w-full py-2 ${theme === 'light' ? 'bg-white text-black' : 'bg-[#1D232A] text-white'}  outline-none`}
                             name={`attachments[${index}].title`}
                           />
                           <ErrorMessage name={`attachments[${index}].title`} component="small" className="text-red-500 text-sm mt-1" />

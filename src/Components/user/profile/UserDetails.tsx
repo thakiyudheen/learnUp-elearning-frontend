@@ -123,8 +123,8 @@ const validationSchema = Yup.object().shape({
 
     return (
         <div className="p-10">
-            <h1 className="text-xl font-semibold mb-4">My Profile</h1>
-            <div className="flex items-center space-x-4 mt-2 mb-3 p-3 bg-gray-100 rounded-lg">
+            <h1 className="text-xl font-semibold mb-4 ">My Profile</h1>
+            <div className="flex items-center space-x-4 mt-2 mb-3 p-3 border   bg-gray-300 dark:bg-gray-800 rounded-lg">
                 <div className="relative">
                     <img
                         src={profileImage}
@@ -140,7 +140,7 @@ const validationSchema = Yup.object().shape({
                 </div>
                 <div>
                     <h2 className="text-lg font-semibold">{initialValues.firstName} {initialValues.lastName}</h2>
-                    <small className="text-sm text-gray-600">{initialValues.email}</small>
+                    <small className="text-sm text-gray-700 dark:text-gray-300">{initialValues.email}</small>
                 </div>
             </div>
             <hr />
@@ -151,15 +151,15 @@ const validationSchema = Yup.object().shape({
                 enableReinitialize
             >
                 {({ errors, touched, setFieldValue }) => (
-                    <Form className="space-y-4 mt-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Form className="space-y-4 mt-4 ">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-3  ">
                             <div>
-                                <label className="block text-sm font-medium">Username</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Username</label>
                                 <Field
                                     name="username"
                                     type="text"
                                     disabled
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
+                                    className={`mt-1 p-2 border text-[13px] rounded-lg border-gray-700 w-full dark:text-gray-400  bg-white focus:outline-none  dark:bg-[#1D232A]`}
                                 />
                                 <ErrorMessage name="username" component="small" className="text-red-500 text-[14px]" />
                             </div>
@@ -167,13 +167,13 @@ const validationSchema = Yup.object().shape({
                                 name="social"
                                 type="text"
                                 hidden
-                                className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
+                                className={`mt-1 p-2 border border-gray-600 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
                             />
                             <Field
                                 name="gender"
                                 type="text"
                                 hidden
-                                className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
+                                className={`mt-1 p-2 border-b border-gray-600 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
                             />
                             <input
                                 type="file"
@@ -184,42 +184,42 @@ const validationSchema = Yup.object().shape({
                                 onChange={(e) => handleFileChange(e.target.files?.[0] || null, setFieldValue)}
                             />
                             <div>
-                                <label className="block text-sm font-medium">First Name</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">First Name</label>
                                 <Field
                                     name="firstName"
                                     type="text"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border text-[13px] dark:text-gray-400 rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="firstName" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Last Name</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Last Name</label>
                                 <Field
                                     name="lastName"
                                     type="text"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border text-[13px] dark:text-gray-400 rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="lastName" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Email</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Email</label>
                                 <Field
                                     name="email"
                                     type="email"
                                     disabled
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
+                                    className={`mt-1 p-2 border text-[14px] dark:text-gray-400 rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A]`}
                                 />
                                 <ErrorMessage name="email" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Profession</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Profession</label>
                                 <Field
                                     name="profession"
                                     as="select"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border text-[14px] dark:text-gray-400 rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''} text-black dark:text-gray-600`}
                                 >
                                     <option value="working" >working</option>
                                     <option value="student"  >student</option>
@@ -227,42 +227,42 @@ const validationSchema = Yup.object().shape({
                                 <ErrorMessage name="profession" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Qualification</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Qualification</label>
                                 <Field
                                     name="qualification"
                                     type="text"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border dark:text-gray-400 dark:text-gray-400 text-[13px] rounded-lg border-gray-700 w-full focus:outline-none bg-white  dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="qualification" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Phone Number</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Phone Number</label>
                                 <Field
                                     name="phone"
                                     type="text"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border dark:text-gray-400 text-[13px] rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="phone" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Address</label>
+                                <label className="block text-sm dark:text-gray-400 font-medium">Address</label>
                                 <Field
                                     name="address"
                                     type="text"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border dark:text-gray-400 text-[13px] rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="address" component="div" className="text-red-500 text-[14px]" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium">Date of Birth</label>
+                                <label className="block dark:text-gray-400  font-medium">Date of Birth</label>
                                 <Field
                                     name="dateOfBirth"
                                     type="date"
                                     disabled={!isEditing}
-                                    className={`mt-1 p-2 border-b border-gray-300 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
+                                    className={`mt-1 p-2 border text-[13px] dark:text-gray-400 rounded-lg border-gray-700 w-full focus:outline-none bg-white dark:bg-[#1D232A] ${!isEditing ? 'bg-gray-100' : ''}`}
                                 />
                                 <ErrorMessage name="dateOfBirth" component="div" className="text-red-500 text-[14px]" />
                             </div>
@@ -271,14 +271,14 @@ const validationSchema = Yup.object().shape({
                             <button
                                 type="button"
                                 onClick={handleEditToggle}
-                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg "
+                                className="mt-4 px-4 py-1 bg-blue-600 text-white rounded-lg "
                             >
                                 {isEditing ? 'Cancel' : 'Edit'}
                             </button>
                             {isEditing && (
                                 <button
                                     type="submit"
-                                    className="mt-4 px-4 py-2 border border-blue-600 text-blue hover:bg-blue-600 hover:text-white rounded-md transition-all duration-300"
+                                    className="mt-4 px-4 py-1 border border-blue-600 text-blue hover:bg-blue-600 hover:text-white rounded-md transition-all duration-300"
                                 >
                                     Save Changes
                                 </button>

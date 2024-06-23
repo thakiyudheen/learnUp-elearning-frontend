@@ -1,6 +1,7 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { notification } from "../../../../common/endPoint";
 
 
 
@@ -8,7 +9,7 @@ export const sendOtpAction = createAsyncThunk(
     'user/send-otp',
     async ( email : string | undefined , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/notification/email-verification/${email}`,
+            const response = await api_client.get(`${notification}email-verification/${email}`,
 
                 {
                     withCredentials : true

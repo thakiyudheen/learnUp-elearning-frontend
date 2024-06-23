@@ -2,6 +2,7 @@ import { api_client } from "../../../../axios";
 import { config } from "../../../../common/configuration";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 interface data {
     email : string ;
     password : string
@@ -12,7 +13,7 @@ export const loginUserAction = createAsyncThunk(
     async ( data : data ,{ rejectWithValue }) => {
         try {
 
-            const response = await api_client.post('/api/auth/login',
+            const response = await api_client.post(`${auth}login`,
             data,
             config
             )

@@ -2,6 +2,8 @@ import { api_client } from "../../../../axios";
 import { config } from "../../../../common/configuration";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
+
 interface data {
     email : string ;
     otp : string
@@ -12,7 +14,7 @@ export const verifyOtpAction = createAsyncThunk(
     async ( data : data ,{ rejectWithValue }) => {
         try {
 
-            const response = await api_client.post('/api/auth/verify-otp',
+            const response = await api_client.post(`${auth}verify-otp`,
             data,
             config
             )

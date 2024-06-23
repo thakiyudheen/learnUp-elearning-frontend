@@ -27,11 +27,12 @@ import Addcat from './Components/admin/category/addCategoryModal';
 import NotFontError from './Components/common/errPages/notFontError';
 import { getAllCourseAction } from './redux/store/actions/course/getAllCourseAction';
 import PromoSection from './Components/user/course/courseListing';
-import CourseCard from './Components/user/course/course';
 import CoursePage from './Pages/student/coursePage';
 import UserProfile from './Components/user/profile/userProfile';
 import UserDetails from './Components/user/profile/UserDetails';
 import Profile from './Pages/student/profile';
+import PaymentSuccess from './Pages/payment/paymentSuccess';
+import { toast } from 'react-toastify';
 
 
 
@@ -40,7 +41,7 @@ import Profile from './Pages/student/profile';
 function App() {
   const dispatch = useAppDispatch()
 
-  const { data } = useAppSelector((state: RootState) => state.user)
+  const { data , error} = useAppSelector((state: RootState) => state.user)
 
   const renderInstructorRoutes = () => {
     if (data?.data.isReject) {
@@ -63,7 +64,6 @@ function App() {
   } , [ dispatch , data ] )
 
 
-  
   return (
 
     
@@ -112,6 +112,15 @@ function App() {
 						/>}
           
         />
+         <Route
+					path="/course-listing"
+          element={
+					<Protected
+							allowedRoles={["student"]}
+							element={<PromoSection/>}
+						/>}
+          
+        />
 
         {/* pubic routes  */}
         <Route path="/login" element={<PublicRoute element={<Login/>}/> } />
@@ -124,7 +133,7 @@ function App() {
         <Route path="/enrollment" element={<PublicRoute element={<Enrollment/>}/> } />
         <Route path="/resetPassword" element={<PublicRoute element={<ResetPassword/>}/> } />
         <Route path="/confirmMail" element={<PublicRoute element={<ConfirmEmail/>}/> } />
-        <Route path="/course-listing" element={<PromoSection/> } />
+        {/* <Route path="/course-listing" element={<PromoSection/> } /> */}
 
 
         <Route path="/course" element={<CoursePage/> } />
@@ -136,6 +145,7 @@ function App() {
         {/* <InstructorRoutes /> */}
         <Route path="*" element={<NotFontError/>} />
         <Route path="/user-profile" element={<Profile/>} />
+        <Route path="/payment-success" element={<PaymentSuccess/>} />
 
         
          

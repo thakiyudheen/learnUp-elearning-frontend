@@ -2,6 +2,7 @@ import { api_client } from "../../../../axios";
 import { config } from "../../../../common/configuration";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 interface data {
     token : string | null;
     password : string,
@@ -12,7 +13,7 @@ export const resetPasswordAction = createAsyncThunk(
     async ( data : data ,{ rejectWithValue }) => {
         try {
 
-            const response = await api_client.patch('/api/auth/reset-password',
+            const response = await api_client.patch(`${auth}reset-password`,
             data,
             config
             )

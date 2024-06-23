@@ -3,6 +3,8 @@ import homebanner from '../../../assets/homebanner/homebanner.png';
 import home from '../../../assets/homebanner/home.png';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '@/redux/store';
+import { useAppSelector } from '@/hooks/hooke';
 
 const textContainer = {
   hidden: { opacity: 1 },
@@ -25,6 +27,7 @@ const variants = {
 
 
 function Homebanner() {
+  const { data } = useAppSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   return (
     <div className=' md:flex justify-evenly items-center w-full md:h-[500px] font-josefin '>
@@ -51,14 +54,27 @@ function Homebanner() {
           className="flex mt-8"
           variants={textItem}
         >
+          {
+  !data?.data ? (
+    <button
+      className="bg-blue-700 bg-gradient-to-r from-blue-700 to-blue-700 rounded-[2rem] shadow-lg text-[1rem] py-2 px-8 text-white"
+      onClick={() => navigate('/enrollment')}
+    >
+      Join Now
+    </button>
+  ) : (
+    <button
+      className="bg-blue-700 bg-gradient-to-r from-blue-700 to-blue-700 rounded-[2rem] shadow-lg text-[1rem] py-2 px-8 text-white"
+      onClick={() => navigate('/course-listing')}
+    >
+      Explore More
+    </button>
+  )
+}
+
+          
           <button
-            className="bg-blue-700 bg-gradient-to-r from-blue-700 to-blue-700 rounded-[2rem] shadow-lg text-[1rem] py-2 px-8 text-white"
-            onClick={() => navigate('/enrollment')}
-          >
-            Join Now
-          </button>
-          <button
-            className="bg-gray-500 ml-3 bg-gradient-to-r from-gray-500 to-gray-600  rounded-[2rem] shadow-lg text-[1rem] py-2 px-5 text-white"
+            className="bg-gray-500 ml-3 bg-gradient-to-r from-gray-500 to-gray-600  rounded-[2rem] shadow-lg text-[1rem] py-2 px-9 text-white"
           >
             View
           </button>
@@ -77,7 +93,7 @@ function Homebanner() {
         <dotlottie-player
           src="https://lottie.host/da0e13ce-8e92-48b2-a4e5-de886d3ba9de/ZxURYoKHcB.json"
           background="transparent"
-          speed="1"
+          speed=".3"
           style={{ width: '400px', height: '400px' }}
           className='mt-10'
           loop

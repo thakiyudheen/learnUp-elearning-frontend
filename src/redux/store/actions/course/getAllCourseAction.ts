@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 export const getAllCourseAction = createAsyncThunk(
     'user/get-all-course',
-    async ( data: { instructorRef ?: string } , { rejectWithValue }) => {
+    async ( data: { instructorRef ?: string , isPublished?:boolean } , { rejectWithValue }) => {
         try {
             console.log('instructor data',data)
            if(data?.instructorRef){
@@ -21,8 +21,10 @@ export const getAllCourseAction = createAsyncThunk(
 
 			}
 
-           }else{
-            const response = await api_client.get(`/api/course/getAll-course`,config)
+           }else if(data?.isPublished){
+
+            
+            const response = await api_client.get(`/api/course/getAll-course?isPublished=${data.isPublished}`,config)
 
             if(response.data.success){
 
@@ -34,9 +36,20 @@ export const getAllCourseAction = createAsyncThunk(
 
 			}
 
-           }
-           
+           }else{
 
+                 const response = await api_client.get(`/api/course/getAll-course`,config)
+
+                if(response.data.success){
+
+                    return response.data.data
+
+                } else {
+
+                    return rejectWithValue(response.data.data);
+
+                }
+           }
             
 
 

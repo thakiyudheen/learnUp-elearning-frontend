@@ -2,13 +2,23 @@ import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "../../../../common/endPoint";
 
-export const getAllCategoryAction = createAsyncThunk(
-    'user/get-all-category',
-    async ( data :{page?:number,limit?:number}, { rejectWithValue }) => {
+
+interface EnrollmentQueryParams {
+    userId?: string;
+    page: number;
+    limit: number;
+    search?: string | null;
+    categories?: string[];
+    levels?: string[];
+    sort?: 'asc' | 'desc';
+  }
+export const getEnrollmentByIdAction = createAsyncThunk(
+    'user/getEnrollment',
+    async ( params : EnrollmentQueryParams , { rejectWithValue }) => {
         try {
-           
-            const response = await api_client.get(`/api/course/getAll-category`,{params:data})
+            const response = await api_client.get(`${course}getEnrollment-ById`,{params:params})
 
             if(response.data.success){
 

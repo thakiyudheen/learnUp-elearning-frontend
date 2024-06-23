@@ -1,16 +1,15 @@
+import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { config } from "../../../../common/configuration";
 import { AxiosError } from "axios";
-import { auth } from "../../../../common/endPoint";
+import { payment } from "../../../../common/endPoint";
 
-export const logoutAction = createAsyncThunk(
-    'user/get-userData',
-    async ( _ , { rejectWithValue }) => {
+
+export const createPaymentAction = createAsyncThunk(
+    'user/create-payment',
+    async ( data : any , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`${auth}logout`, config )
-
-            console.log('its get user response',response.data)
+            const response = await api_client.post(`${payment}create-payment`,data,config)
 
             if(response.data.success){
 

@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import StudentDashboard from '../Pages/student/studentDashbord';
 import Dashboard from '../Components/user/Dashboard/Dashboard';
 import UserDetails from '@/Components/user/profile/UserDetails';
+import EnrolledCourses from '@/Components/user/course/enrolledCourses';
+import VideoLayout from '@/Components/user/enrollment/videoLayout';
 
 
 
@@ -12,6 +14,8 @@ const studentRoutes: React.FC = () => {
       <Route path="/" element={<StudentDashboard/>}>
         <Route index  element={<Dashboard/>} />
         <Route index path='/user-profile' element={<UserDetails/>} />
+        <Route index path='/enrolled-courses' element={<EnrolledCourses/>} />
+        <Route index path='/view-video' element={<VideoLayout/>} />
 
 
         

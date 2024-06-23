@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api_client } from "../../../../axios";
 import { AxiosError } from "axios";
+import { auth } from "../../../../common/endPoint";
 
 
 export const findEmailAction = createAsyncThunk (
@@ -10,7 +11,7 @@ export const findEmailAction = createAsyncThunk (
 
         try{
             
-            const response = await api_client.get(`/api/auth/exist_email/${email}`,
+            const response = await api_client.get(`${auth}exist_email/${email}`,
                 { withCredentials : true }
             )
             console.log('this is find mail respose', response.data)

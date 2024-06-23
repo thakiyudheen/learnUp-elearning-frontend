@@ -8,7 +8,7 @@ import CourseCards from './courseCard';
 import { useTheme } from '@/Components/ui/theme-provider';
 import { useAppDispatch } from '@/hooks/hooke';
 import { getAllCategoryAction } from '@/redux/store/actions/course/getAllCategoryAction';
-import { resetPasswordAction } from '@/redux/store/actions/auth/resetPasswordAction';
+
 
 const PromoSection: React.FC = () => {
   const [selectedLevels, setSelectedLevels] = useState<any>([]);
@@ -41,8 +41,8 @@ const PromoSection: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="md:w-2/4 md:pr-7 mb-10 md:mb-0 md:ml-[3rem]"
           >
-            <div className="dark:bg-gray-800 p-4  ">
-              <h6 className="text-[35px] font-bold mb-3 text-black ">Unlock Your Potential with <span className='text-blue-600'>Courses</span>  </h6>
+            <div className=" p-4  ">
+              <h6 className="text-[35px] font-bold mb-3 text-black dark:text-gray-400 ">Unlock Your Potential with <span className='text-blue-600'>Courses</span>  </h6>
               <small className="text-sm mb-3 ">Discover a wide range of courses tailored to your learning journey. Whether you're a beginner or an expert, our courses are designed to help you succeed. Enroll now and take 
                 advantage of our special sale ending on June 13. Start learning for just ₹449!</small>
             </div>

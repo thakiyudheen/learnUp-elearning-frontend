@@ -85,7 +85,7 @@ const Signup: React.FC = () => {
         <img className="absolute md:h-[12%] h-[9%] top-0 left-0 md:left-4" src={LearnUp} alt="" />
         <img className="h-[70%]" src={SignupSVG} alt="" />
         {isLoading && <LoadingIndicator />}
-        <div className={`max-w-md w-full p-10 rounded-[10px] md:shadow-md absolute m-3 md:relative md:space-y-4 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}>
+        <div className={`max-w-md w-full p-10 rounded-[10px] md:shadow-md absolute md:mt-[4rem] m-3 md:relative md:space-y-4 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}>
           <h2 className="text-2xl font-bold text-blue-500 mb-5 text-center">Sign Up</h2>
           <Formik
             initialValues={{
@@ -157,7 +157,7 @@ const Signup: React.FC = () => {
                     {isSubmitting ? 'Signing up...' : 'Sign Up'}
                   </button>
                   <div className="flex items-center mt-2">
-                    <span className="text-sm text-[grey]">If you have an account, </span>
+                    <span className="text-[12px] text-[grey]">If you have an account, </span>
                     <a onClick={() => navigator('/login', { state: location.state })} className="text-blue-500 text-sm font-bold">sign in</a>
                   </div>
                 </div>

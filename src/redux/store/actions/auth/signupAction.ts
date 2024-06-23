@@ -9,7 +9,7 @@ export const signupAction = createAsyncThunk(
     async ( data : SignupFormData ,{ rejectWithValue }) => {
         try {
 
-            const response = await api_client.post('/api/auth/signup',
+            const response = await api_client.post('${auth}signup',
             data,
             config
             )

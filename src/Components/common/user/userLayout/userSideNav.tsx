@@ -45,7 +45,7 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
         initial={{ x: '-100%' }}
         animate={{ x: isOpen ? '0%' : '-100%' }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 z-50 flex flex-col md:w-[16%] justify-between h-full shadow-lg ${theme !== 'light' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`}
+        className={`fixed top-0 left-0 z-50 flex  flex-col md:w-[16%] justify-between h-full shadow-lg ${theme !== 'light' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`}
       >
         <div>
           <div className="text-2xl font-bold text-center flex justify-center items-center p-1">
@@ -58,12 +58,13 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
               Dashboard
             </NavLink>
             <NavLink to="user-profile" className={({ isActive }) => getNavItemClass(isActive)}>
-              <FaBook className="mr-4 " />
+            <FaUserGraduate className="mr-4" />
               Profile
             </NavLink>
-            <NavLink to="students" className={({ isActive }) => getNavItemClass(isActive)}>
-              <FaUserGraduate className="mr-4" />
-              Students
+            <NavLink to="enrolled-courses" className={({ isActive }) => getNavItemClass(isActive)}>
+            
+              <FaBook className="mr-4 " />
+              Courses
             </NavLink>
             <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaChalkboardTeacher className="mr-4" />

@@ -133,6 +133,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { updateCourseAction } from '@/redux/store/actions/course/updateCourseAction';
 import { RootState } from '@/redux/store';
 import { PaginationControls } from '@/Components/common/skelton';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Data {
   _id: string;
@@ -233,8 +234,13 @@ const CourseListing: React.FC = () => {
   const totalPages = Math.ceil( filteredAndSortedCourses.length / itemsPerPage);
 
 
-  return (
+  return ( 
     <div className='min-h-screen'>
+      <div className='w-full flex justify-end mt-6'>
+        <button onClick={() => navigate('/instructor/add-courses')} className="border-2 border-blue-500 py-1 mr-[3.7rem] hover:bg-blue-600 px-4 rounded-lg">
+          Add course
+        </button>
+      </div>
       <div className='flex justify-between mt-4 '>
         <input type="text" className='dark:bg-gray-700 py-1 ml-[12rem] bg-gray-200 px-6 rounded-lg shadow-lg' placeholder='search...' />
         <div className="dropdown dropdown-bottom dropdown-end mr-[15rem]">
@@ -352,6 +358,7 @@ const CourseListing: React.FC = () => {
         </div>
       </div>
       <div className="container  p-2 flex justify-center mt-7 ">
+
         <div className="grid grid-cols-1 w-3/4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {getPaginatedData().map((course: any, index: any) => {
             return (
@@ -371,9 +378,12 @@ const CourseListing: React.FC = () => {
                   <div className="dropdown">
                     <div tabIndex={0} role="button" className="md:relative bottom-3 w-full flex  w-full justify-end"><CiMenuKebab /></div>
                     <ul tabIndex={0} className="dropdown-content z-[10] absolute menu p-2 shadow-lg bg-gray-100 dark:bg-gray-700  rounded-box w-52">
-                      <li  onClick={() => navigate('/course')} ><a> view </a></li>
+                      <li  onClick={() => navigate('/course',{state : course?._id})} ><a> view </a></li>
                       <li onClick={()=>handleUpdate({_id:course._id, isBlocked :!course.isBlocked})}><a>{course.isBlocked?'unblock':'block'}</a></li>
-                      <li  onClick={()=> navigate('/instructor/update-course',{state : course?._id})}><a>Edit</a></li>
+                      <li  onClick={()=> course.isPublished?
+                        
+                          toast.info("You don't have the right to edit after published!!"):
+                      navigate('/instructor/update-course',{state : course?._id})}><a>Edit</a></li>
                     </ul>
                   </div>
                  
