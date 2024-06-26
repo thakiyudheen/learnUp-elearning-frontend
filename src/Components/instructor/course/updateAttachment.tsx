@@ -7,7 +7,6 @@ import { useTheme } from '@/Components/ui/theme-provider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '@/redux/store';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
-import { createCourseAction } from '@/redux/store/actions/course/createCourseAction';
 import LoadingIndicator from '@/Components/common/skelton/loading';
 import { PdfUpload } from '@/utils/cloudinary/uploadPdf';
 import { updateAllCourseAction } from '@/redux/store/actions/course/updateAllCourseAction';

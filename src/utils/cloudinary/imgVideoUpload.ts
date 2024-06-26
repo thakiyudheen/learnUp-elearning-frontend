@@ -25,7 +25,7 @@ export const FileUpload = async (file: File) => {
     console.log(res.data, "resp data");
 
     // Assuming you want to allow both image and video formats
-    const isValidFormat = format === 'jpg' || format === 'png' || format === 'jpeg' || format === 'gif' || format === 'mp4' || format === 'avi' || format === 'mov';
+    const isValidFormat = format === 'jpg' || format === 'png' || format === 'jpeg' || format === 'gif' || format === 'mp4' || format === 'avi' || format === 'mov'||format==='chromHTML';
 
     if (isValidFormat) {
       return res.data;

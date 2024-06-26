@@ -3,13 +3,14 @@ import { api_client } from "../../../../axios";
 import { config } from "../../../../common/configuration";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { auth } from "@/common/endPoint";
 
 export const signupAction = createAsyncThunk( 
     'user/signup-user',
     async ( data : SignupFormData ,{ rejectWithValue }) => {
         try {
 
-            const response = await api_client.post('${auth}signup',
+            const response = await api_client.post(`${auth}signup`,
             data,
             config
             )

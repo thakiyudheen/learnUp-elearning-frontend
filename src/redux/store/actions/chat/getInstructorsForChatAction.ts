@@ -1,13 +1,14 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "../../../../common/endPoint";
 
-export const getAllInstructorsAction = createAsyncThunk(
-    'user/getAll-instrictors',
-    async ( data: {page?:number,limit?:number}, { rejectWithValue }) => {
+
+export const getInstructorsForChatAction = createAsyncThunk(
+    'user/get-students',
+    async ( data :{userId:string}, { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/user/getAll-instructors`,{params:data}
-            )
+            const response = await api_client.get(`${course}get-instructorForChat`,{params:data})
 
             if(response.data.success){
 

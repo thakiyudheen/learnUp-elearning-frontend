@@ -10,18 +10,21 @@ import { store } from './redux/store/index.ts';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SocketProvider } from './context/socketContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
-          <GoogleOAuthProvider clientId="859424619330-fd4tm6rtd4rv4df6rijfqp4it5ham81a.apps.googleusercontent.com">
-              <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" >
-                  <Provider store ={store}>
-                  <ToastContainer />
-                      <App />
-                  </Provider>
-              </ThemeProvider>
-        </GoogleOAuthProvider>
+      <GoogleOAuthProvider clientId="859424619330-fd4tm6rtd4rv4df6rijfqp4it5ham81a.apps.googleusercontent.com">
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme" >
+          <Provider store={store}>
+            <ToastContainer />
+            <SocketProvider>
+              <App />
+            </SocketProvider>
+          </Provider>
+        </ThemeProvider>
+      </GoogleOAuthProvider>
     </Router>
   </React.StrictMode>,
 )

@@ -1,17 +1,24 @@
 import Navbar from '@/Components/common/user/navbar/Navbar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { deleteObject, getObject } from '@/utils/localStorage';
 import { createPaymentAction } from '@/redux/store/actions/Payment/createPaymentAction';
 import { useAppDispatch } from '@/hooks/hooke';
+import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
 
 const PaymentSuccess: React.FC = () => {
   const dispatch= useAppDispatch()
   const navigate = useNavigate()
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
-    createPayment()
+    if (isFirstRun.current) {
+      console.log("useEffect triggered");
+      createPayment()
+      isFirstRun.current = false;
+  }
+    
   },[])
 
   const createPayment = async () => {
@@ -36,7 +43,21 @@ const PaymentSuccess: React.FC = () => {
     if(!response?.payload?.success){
       throw new Error('payment creation filed')
     }
+    console.log('instructor id',paymentSession.instructorId)
+    createChat(paymentSession.userId,paymentSession.instructorId)
     deleteObject('payment_session')
+
+  }
+
+    // crete chat -----------------
+    const createChat =async (studentId:string,instructorId: string)=>{
+      console.log('create chat is working');
+      
+      const response = await dispatch(createChatAction({
+    participants:[studentId,instructorId]
+  }))
+  
+  
 
   }
   return (

@@ -5,6 +5,7 @@ import Dashboard from '../Components/user/Dashboard/Dashboard';
 import UserDetails from '@/Components/user/profile/UserDetails';
 import EnrolledCourses from '@/Components/user/course/enrolledCourses';
 import VideoLayout from '@/Components/user/enrollment/videoLayout';
+import Chat from '@/Pages/student/chat';
 
 
 
@@ -16,6 +17,7 @@ const studentRoutes: React.FC = () => {
         <Route index path='/user-profile' element={<UserDetails/>} />
         <Route index path='/enrolled-courses' element={<EnrolledCourses/>} />
         <Route index path='/view-video' element={<VideoLayout/>} />
+        <Route index path='/chat' element={<Chat/>} />
 
 
         

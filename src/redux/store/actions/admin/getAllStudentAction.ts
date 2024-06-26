@@ -4,13 +4,10 @@ import { AxiosError } from "axios";
 
 export const getAllStudentAction = createAsyncThunk(
     'user/getAll-students',
-    async ( _ , { rejectWithValue }) => {
+    async ( data :{page?:number,limit?:number}, { rejectWithValue }) => {
         try {
             const response = await api_client.get(`/api/user/getAll-students`,
-
-                {
-                    withCredentials : true
-                }
+                {params:data}
             )
             console.log('this is finded students',response.data.data)
             if(response.data.success){

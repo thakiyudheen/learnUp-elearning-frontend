@@ -4,7 +4,6 @@ import { getCourseByIdAction } from '@/redux/store/actions/course/getCourseByIdA
 import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
-import { FaRupeeSign, FaLock, FaSync } from 'react-icons/fa';
 import { RootState } from '@/redux/store';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +12,8 @@ import { createSessionAction } from '@/redux/store/actions/Payment/createSession
 import { storeData } from '@/utils/localStorage';
 import { getEnrollmentByIdAction } from '@/redux/store/actions/enrollment/getEnrollmentByIdAction';
 import { createEnrollmentAction } from '@/redux/store/actions/enrollment/createEnrollment';
+import { FaRupeeSign, FaLock, FaSync, FaUsers, FaBook, FaToolbox } from 'react-icons/fa';
+import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
 
 
 
@@ -84,6 +85,7 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
             const response = await  dispatch(createEnrollmentAction(enrollmentData))
             if(response?.payload?.data){
                 setEnrolled(true)
+                createChat(data.data._id,course?.instructorRef)
                 toast.success('Enrolled successfully !')
 
             }
@@ -146,14 +148,24 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
         }
     }
 
-    // handle enrollment ------------------------------
+    // crete chat -----------------
+    const createChat =async (studentId:string,instructorId: string)=>{
+        console.log('create chat is working');
+        
+        const response = await dispatch(createChatAction({
+			participants:[studentId,instructorId]
+		}))
+		
+		
+
+    }
 
 
 
     return (
         <div className=" mx-auto font-Poppins   shadow-md">
 
-            <div className="h-[26rem] flex bg-gradient-to-r from-gray-700 to-gray-400  bg-opacity-40 p-6 items-center relative "  >
+            <div className="h-[26rem] flex bg-gradient-to-r from-gray-900 to-blue-700  bg-opacity-60 p-6 items-center relative "  >
                 <div className="text-left w-3/4 z-10 p-10">
                     <h2 className="text-[2rem] font-bold text-white">{course?.courseTitle}</h2>
                     <h4 className="text-lg w-3/4 text-gray-300 mt-2">{course?.subTitle}</h4>
@@ -168,44 +180,44 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
 
 
-            <div className="flex justify-between ">
+            <div className="flex justify-between bg-gray-200 dark:bg-base-100">
                 <div className="w-3/4 p-6 ">
 
-                    <div className="flex items-center w-[86%] bg-gray-100 dark:text-gray-400 mb-3 shadow-md dark:bg-gray-800 rounded-t-lg justify-between p-2  text-black">
+                    <div className="flex items-center w-[86%] bg-white  dark:text-gray-400 mb-3 shadow-md dark:bg-gray-800 rounded-lg justify-between p-2  text-black">
                         <div className="flex items-center ">
                             <img
                                 src={course?.instructorRef?.profile?.avatar} // Replace with the actual profile image URL
                                 alt="Profile"
-                                className="w-12 h-12 rounded-full"
+                                className="w-10 h-10 rounded-full"
                             />
-                            <div className="ml-4">
-                                <h2 className="text-lg font-bold">{course?.instructorRef?.firstName || 'Your Name'}</h2>
-                                <p className="text-sm">3 students</p>
+                            <div className="ml-4 flex flex-col">
+                                <small className="text-lg font-bold">{course?.instructorRef?.firstName || 'Your Name'}</small>
+                                <small className="text-sm">3 students</small>
                             </div>
 
                         </div>
-                        <button className="flex items-center px-4 py-2 bg-opacity-50 bg-gray-500 shadow-sm hover:bg-gray-700 text-white font-semibold rounded-full">
+                        <button className="flex items-center px-3 bg-gradient-to-r from-gray-600 to-gray-500 shadow-md py-1 bg-opacity-50 bg-gray-500 shadow-sm hover:bg-gray-700 text-white font-semibold rounded-full">
 
                             <IoIosShareAlt className='mr-2' /> Share
                         </button>
 
 
                     </div>
-                    <hr className='w-[86%]' />
+                    <hr className='w-[86%] bg-gray-700' />
 
-                    <div className="mb-6 border bg-gray-200 border-gary-600 dark:bg-gray-800 p-7 mt-4 w-[86%]">
+                    <div className="mb-6 border bg-white shadow-lg rounded-lg border-gary-600 dark:bg-gray-800 p-7 mt-2 w-[86%]">
                         <h3 className="text-xl font-semibold text-[20px] mb-4">What you'll learn</h3>
-                        <p className='text-sm w-[100%]'>{course.description}</p>
+                        <small className='text-sm w-[100%]'>{course.description}</small>
                     </div>
 
 
 
-                    <div className="mb-6 p-7 w-[86%] dark:bg-gray-800  border border-gray-300 dark:border-gray-800">
+                    <div className="mb-6 p-7 w-[86%] dark:bg-gray-800  bg-white border rounded-lg border-gray-200 dark:border-gray-800">
                         <h3 className="text-xl font-semibold text-[20px]">This course includes:</h3>
                         {course?.lessons?.map((item: any, index: number) => (
-                            <div className="collapse collapse-arrow bg-gray-200 text-gray-700 mt-2" key={index}>
+                            <div className="collapse collapse-arrow bg-gray-200 text-gray-800 mt-2" key={index}>
                                 <input type="radio" name="course-accordion" />
-                                <div className="collapse-title text-xl dark:text-white font-medium dark:bg-gray-700 bg-gray-200 shadow-sm">
+                                <div className="collapse-title text-xl dark:text-white font-medium dark:bg-gray-700 bg-gray-300 shadow-xl">
                                     {item.title}
                                 </div>
                                 <div className="collapse-content dark:bg-gray-700">
@@ -240,7 +252,7 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
 
 
-                    <div className="border dark:border-gray-800 dark:bg-gray-800 bg-gray-200  p-4 md:p-10 lg:p-8 w-[86%]">
+                    <div className="border dark:border-gray-800 dark:bg-gray-800 bg-white  rounded-lg p-4 md:p-10 lg:p-8 w-[86%]">
                         <h2 className="text-lg  md:text-xl lg:text-2xl font-bold mb-2">
                             Top companies offer this course to their employees
                         </h2>
@@ -259,48 +271,73 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
 
 
-                <div className={` dark:bg-gray-800  bg-gray-200 p-3  shadow-lg  relative right-[5rem] h-[28rem] bottom-[12rem]`}>
+                <div className={` dark:bg-gray-800  bg-white p-3  shadow-xl rounded-lg  relative right-[5rem] h-[33rem] bottom-[12rem]`}>
                     <div className=" inset-0 flex items-center justify-center mt-0">
                         <iframe src={course.videoTrailer} frameBorder="0"></iframe>
                     </div>
-
-
-
-                    <div className=" z-10 text-center ">
-                        <h1 className='text-center font-bold  text-[17px] mt-4'>Subscribe to LearnUp's top courses</h1>
-                        <ul className='text-start mt-2 p-3 bg-gray-300 dark:bg-gray-700 rounded-md'>
-                            <li><small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small></li>
-                            <li><small><FaLock className='inline mr-2' /> Exclusive content access</small></li>
-                            <li><small><FaSync className='inline mr-2' /> Auto-renewal option</small></li>
-                        </ul>
-
-                        <p className="text-[20px] font-bold text-black dark:text-gray-300 text-left mt-4">
-                            {!isEnrolled?course.pricing == 'free' ? 'Free !!' : `₹ ${course.priceAmount}`:''}
+                    <p className="text-[20px] font-bold text-black dark:text-gray-300 text-start mt-4">
+                            {!isEnrolled?course.pricing == 'free' ? 'Free' : `₹ ${course.priceAmount}`:''}
                         </p>
                     
                              <div className='flex w-full justify-center flex-col '>
                                 {isEnrolled?
                                 
-                            (<button disabled={true} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-gray-200 bg-blue-700">
+                            (<button disabled={true} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
                                 already Enrolled
                             </button>): course.pricing=='free'?
-                            (<button onClick={handleEnrollment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-gray-200 bg-blue-700">
+                            (<button onClick={handleEnrollment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
                                 Enroll now
                             </button>):
-                            (<button onClick={handlePayment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-gray-200 bg-blue-700">
+                            (<button onClick={handlePayment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
                                 Buy Now
                             </button>)}
                                 
-                               
+                            <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
     
                             </div>
-                     
+                            <div className="z-10 text-center">
+      {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
+        Subscribe to LearnUp's top courses
+      </h1> */}
+      <ul className='text-start mt-2 p-3 bg-gray-300 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
+        <li>
+          <small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small>
+        </li>
+        <li>
+          <small><FaLock className='inline mr-2' /> Exclusive content access</small>
+        </li>
+        <li>
+          <small><FaSync className='inline mr-2' /> Auto-renewal option</small>
+        </li>
+        <li>
+          <small><FaUsers className='inline mr-2' /> For teams of 2 or more users</small>
+        </li>
+        <li>
+          <small><FaBook className='inline mr-2' /> 26,000+ fresh & in-demand courses</small>
+        </li>
+        <li>
+          <small><FaToolbox className='inline mr-2' /> Learning Engagement tools</small>
+        </li>
+      </ul>
+    </div>
+
                        
 
 
-                        <small className="mt-4 text-center">30-Day Money-Back Guarantee</small>
+                        
 
-                    </div>
+
+
+                    {/* <div className=" z-10 text-center ">
+                        <h1 className='text-center font-bold  text-[17px] mt-4 mb-4'>Subscribe to LearnUp's top courses</h1>
+                        <ul className='text-start mt-2 p-3 bg-gray-300 border  dark:bg-gray-700 rounded-md'>
+                            <li><small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small></li>
+                            <li><small><FaLock className='inline mr-2' /> Exclusive content access</small></li>
+                            <li><small><FaSync className='inline mr-2' /> Auto-renewal option</small></li>
+                        </ul>
+
+                        
+                    </div> */}
                 </div>
 
             </div>

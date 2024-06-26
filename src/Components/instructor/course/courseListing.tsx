@@ -156,22 +156,25 @@ const CourseListing: React.FC = () => {
   
   // pagination 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage] = useState<number>(7);
+  const [itemsPerPage] = useState<number>(5);
+  const [totalPages,setTotalPages]=useState<number>(1);
 
    
   useEffect(() => {
     const getData = async () => {
-      const response = await dispatch(getAllCourseAction({instructorRef:data.data._id}));
-      const response1 = await dispatch(getAllCategoryAction());
+      const response = await dispatch(getAllCourseAction({instructorRef:data.data._id,page:currentPage,limit:itemsPerPage}));
+      const response1 = await dispatch(getAllCategoryAction({}));
 
       if (response.payload) {
-        setCourses(response.payload);
+        console.log('this final data',response.payload)
+        setCourses(response.payload.courses);
         setCategory(response1.payload.data);
+        setTotalPages(Math.ceil(response.payload.totalItems/itemsPerPage))
         console.log('Data fetched', response.payload);
       }
     };
     getData();
-  }, [dispatch]);
+  }, [dispatch,currentPage]);
 
   const handleUpdate = async (updateData: Data) => {
     const response = await dispatch(updateCourseAction(updateData));
@@ -231,7 +234,7 @@ const CourseListing: React.FC = () => {
     const endIndex = startIndex + itemsPerPage;
     return  filteredAndSortedCourses.slice(startIndex, endIndex);
   };
-  const totalPages = Math.ceil( filteredAndSortedCourses.length / itemsPerPage);
+
 
 
   return ( 
@@ -360,7 +363,7 @@ const CourseListing: React.FC = () => {
       <div className="container  p-2 flex justify-center mt-7 ">
 
         <div className="grid grid-cols-1 w-3/4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-          {getPaginatedData().map((course: any, index: any) => {
+          {filteredAndSortedCourses.map((course: any, index: any) => {
             return (
               <div
                 key={index}

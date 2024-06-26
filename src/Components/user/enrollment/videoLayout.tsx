@@ -7,6 +7,10 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { getProgressByIdAction } from '@/redux/store/actions/enrollment/getProgressByIdAction';
 import { RootState } from '@/redux/store';
 import { updateProgressAction } from '@/redux/store/actions/enrollment/updateProgressAction';
+import { getReviewAction } from '@/redux/store/actions/review/getReviewsAction';
+import { createReviewAction } from '@/redux/store/actions/review/createReviewAction';
+import { ToastContainer, toast } from 'react-toastify';
+import LoadingIndicator from '@/Components/common/skelton/loading';
 
 const VideoLayout: React.FC = () => {
     const { data, error } = useAppSelector((state: RootState) => state.user)
@@ -20,7 +24,12 @@ const VideoLayout: React.FC = () => {
     const [showMore, setShowMore] = useState(false);
     const [progress, setProgress] = useState<{ [key: number]: number }>({});
     const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+    const [comments,setComments]=useState<any>([])
     const descriptionLimit = 100;
+    const [comment ,setComment]= useState<string>("")
+    const[input,setInput] =useState<string>("")
+    const [isLoading, setLoading]= useState<boolean>(false)
+    const [visibleComments, setVisibleComments] = useState<any>([]);
 
     const handleShowMore = () => {
         setShowMore(!showMore);
@@ -54,8 +63,71 @@ const VideoLayout: React.FC = () => {
         getData();
     }, [dispatch, location.state]);
 
+    useEffect(()=>{
+        const getData =async  () =>{
+            const response=await dispatch(getReviewAction({courseId:location.state}))
+            console.log('the getting ',response.payload)
+            if(response.payload&&response.payload.success){
+                setComments(response.payload.data.reviews.reverse())
+                // setVisibleComments(response.payload.data.reviews.slice(0, 5))
+            }
+        }
+        getData()
+    },[dispatch])
+    const [showAll, setShowAll] = useState(false);
+    
+    // console.log('the visible',visibleComments)
+
+    const handleShowMore1 = () => {
+        setShowAll(true);
+    };
+
+    const handleShowLess1 = () => {
+        setShowAll(false);
+    };
+
+    
+
+    const handlePost = async () => {
+        const trimmedInput = input.trim(); 
+        console.log('this is comment', trimmedInput);
+    
+        if (trimmedInput !== "") { 
+            setLoading(true)
+            setComment(trimmedInput); 
+            setInput(""); 
+    
+            const review = {
+                courseId: location.state,
+                userId: data.data._id,
+                comment: trimmedInput,
+                rating: 5
+            };
+    
+            const response = await dispatch(createReviewAction(review));
+            if (response.payload && response.payload.success) {
+                console.log('iam ok',response.payload)
+                setComment(""); 
+                setComments([...comments,{
+                    courseId: location.state,
+                    userId: data.data,
+                    comment: trimmedInput,
+                    rating: 5
+                }].reverse());
+                setLoading(false)
+                 
+            } else {
+                toast.info('Please enter a comment !!');
+            }
+        } else {
+            toast.info('Please enter a comment !!');
+        }
+    };
+   
+
     const handleProgress = async (state: { played: number }) => {
         if (activeIndex !== null) {
+            
             const lessonId = course?.lessons[activeIndex]._id;
             setProgress((prevProgress) => ({
                 ...prevProgress,
@@ -70,15 +142,18 @@ const VideoLayout: React.FC = () => {
         }
     };
 
+
+
     const playerWrapperStyle = {
         borderRadius: '10px',
         overflow: 'hidden',
     };
 
     console.log('new data fetched', course?.videoTrailer);
-
+    
     return (
         <div className="flex flex-col lg:flex-row w-full p-3">
+            {isLoading&&<LoadingIndicator/>}
             <div className="md:w-[70%]  w-full p-6">
                 <div style={playerWrapperStyle} className='h-64 lg:h-[33%]'>
                     <ReactPlayer
@@ -126,28 +201,72 @@ const VideoLayout: React.FC = () => {
                     <h2 className="text-xl font-bold">Comments</h2>
                     <div className="mt-2 flex items-center">
                         <img
-                            src={course?.instructorRef?.profile?.avatar}
+                            src={data?.data?.profile?.avatar}
                             alt="Avatar"
                             className="w-10 h-10 rounded-full"
                         />
-                        <input type="text" placeholder="Add a comment..." className="md:w-[80%] md:ml-3 w-full bg-gray-300 dark:bg-gray-800 focus:outline-none p-2 border-b border-gray-800 dark:border-gray-600" />
-                        <a className='py-1 px-5 rounded-lg dark:bg-gray-600 bg-gray-400 font-semibold ml-3'> Post </a>
+                        <input
+                            type="text"
+                            placeholder="Add a comment..."
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="w-full bg-gray-300 dark:bg-gray-800 focus:outline-none p-2 border-b border-gray-800 dark:border-gray-600"
+                        />
+                        <a className='py-1 px-5 rounded-lg dark:bg-gray-600 bg-gray-400 font-semibold ml-3' onClick={handlePost}> Post </a>
                     </div>
-                    <div className="mt-4 space-y-4">
-                        {Array.from({ length: 5 }).map((_, index) => (
+                    {/* <div className="mt-4 space-y-4">
+                        { comments.map((comment:any , index:any) => (
                             <div key={index} className="flex items-start space-x-4 m-3">
                                 <img
-                                    src="https://via.placeholder.com/40"
+                                    src={comment?.userId?.profile?.avatar}
                                     alt="Avatar"
                                     className="w-10 h-10 rounded-full"
                                 />
-                                <div>
-                                    <div className="font-semibold">User {index + 1}</div>
-                                    <div className="text-gray-700">This is a sample comment.</div>
+                                <div className=''>
+                                    <div className="font-semibold text-gray-700 dark:text-gray-300 text-[14px]">{comment?.userId?.firstName}</div>
+                                    <small className="text-gray-600 dark:text-gray-400">{comment?.comment}</small>
                                 </div>
                             </div>
                         ))}
+                    </div> */}
+            <div className="mt-4 space-y-4 overflow-y-scroll max-h-96 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+            {(showAll ? comments : comments?.slice(0,5))?.map((comment:any, index:any ) => (
+                <div key={index} className="flex items-start space-x-4 m-5">
+                    <img
+                        src={comment?.userId?.profile?.avatar}
+                        alt="Avatar"
+                        className="w-8 h-8 rounded-full"
+                    />
+                    <div>
+                        <div className="font-semibold text-gray-700 dark:text-gray-300 text-[14px]">
+                            {comment?.userId?.firstName}
+                        </div>
+                        <small className="text-gray-600 dark:text-gray-400">
+                            {comment?.comment}
+                        </small>
                     </div>
+                </div>
+            ))}
+            {comments?.length > 7 && (
+                <div className="flex justify-center mt-4">
+                    {!showAll ? (
+                        <button
+                            onClick={handleShowMore1}
+                            className="text-blue-600"
+                        >
+                            <small>{'Show More...'}</small>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleShowLess1}
+                            className="text-blue-600"
+                        >
+                            <small>{'Show Less...'}</small>
+                        </button>
+                    )}
+                </div>
+            )}
+        </div>
                 </div>
             </div>
             <div className=" w-full p-4 min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 bg-gray-300 shadow-xl">

@@ -21,7 +21,7 @@ const PromoSection: React.FC = () => {
 
   useEffect(()=>{
     const getCategory =async () =>{
-      const response= await dispatch(getAllCategoryAction())
+      const response= await dispatch(getAllCategoryAction({}))
       if(response.payload.success){
         setCategory(response.payload.data)
         console.log('this is the main thing',response.payload)
@@ -51,7 +51,7 @@ const PromoSection: React.FC = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="w-[30%] md:left-[59rem]  bg-gradient-to-r  md:mt-[6.5rem] from-blue-100 to-blue-500 h-[20rem] absolute md:top-0 top-[16rem] md:block rounded-tl-[20rem] rounded-bl-[5rem]"
+            className="w-[30%] md:left-[59rem]  bg-gradient-to-r  md:mt-[6.5rem] from-blue-100 to-blue-800 h-[20rem] absolute md:top-0 top-[16rem] md:block rounded-tl-[20rem] rounded-bl-[5rem]"
           >
           </motion.div>
           <motion.div

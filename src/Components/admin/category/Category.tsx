@@ -36,7 +36,7 @@ const CategoryPage: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await dispatch(getAllCategoryAction({page:currentPage ,limit:itemsPerPage}));
+        const response = await dispatch(getAllCategoryAction({}));
         if (getAllCategoryAction.fulfilled.match(response)) {
           setCategories(response.payload.data);
         } else {
@@ -52,11 +52,11 @@ const CategoryPage: React.FC = () => {
     fetchCategories();
   }, [dispatch,currentPage]);
 
-  // const getPaginatedData = () => {
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   return categories.slice(startIndex, endIndex);
-  // };
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return categories.slice(startIndex, endIndex);
+  };
 
   const totalPages = Math.ceil(categories.length / itemsPerPage);
 
@@ -123,7 +123,7 @@ const CategoryPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.map((category, index) => (
+              {getPaginatedData().map((category, index) => (
                 <tr key={index} className="text-center border-b hover:bg-gray-800">
                   <td className="px-4 py-2 border">{index + 1}</td>
                   <td className="px-4 py-2 border">{category?.categoryName}</td>

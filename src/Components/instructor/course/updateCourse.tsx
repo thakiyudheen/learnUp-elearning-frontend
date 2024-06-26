@@ -81,7 +81,7 @@ const CourseForm = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await dispatch(getCourseByIdAction(location.state));
-      await dispatch(getAllCategoryAction());
+      await dispatch(getAllCategoryAction({}));
       if (response.payload) {
 
         setCourse(response.payload);

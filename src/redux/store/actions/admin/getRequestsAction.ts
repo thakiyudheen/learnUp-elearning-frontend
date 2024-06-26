@@ -4,13 +4,9 @@ import { AxiosError } from "axios";
 
 export const getRequestAction = createAsyncThunk(
     'user/getAll-requests',
-    async ( _ , { rejectWithValue }) => {
+    async ( data:{page?:number,limit?:number} , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/user/getAll-requests`,
-
-                {
-                    withCredentials : true
-                }
+            const response = await api_client.get(`/api/user/getAll-requests`,{params:data}
             )
             console.log('this is finded requests',response.data.data)
 

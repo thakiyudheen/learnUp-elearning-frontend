@@ -1,13 +1,14 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { chat } from "../../../../common/endPoint";
 
-export const getAllInstructorsAction = createAsyncThunk(
-    'user/getAll-instrictors',
-    async ( data: {page?:number,limit?:number}, { rejectWithValue }) => {
+
+export const getChatByUserIdAction = createAsyncThunk(
+    'user/get-chatByUserId',
+    async ( data :{userId:string}, { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/user/getAll-instructors`,{params:data}
-            )
+            const response = await api_client.get(`${chat}get-chatById`,{params:data})
 
             if(response.data.success){
 

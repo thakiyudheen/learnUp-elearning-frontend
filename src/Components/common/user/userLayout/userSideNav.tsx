@@ -74,7 +74,7 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
             <AiFillBell className="mr-4"/>
               requests
             </NavLink>
-            <NavLink to="categories" className={({ isActive }) => getNavItemClass(isActive)}>
+            <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaThList className="mr-4" />
               Categories
             </NavLink>

@@ -1,13 +1,15 @@
+import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "../../../../common/endPoint";
 
-export const getAllInstructorsAction = createAsyncThunk(
-    'user/getAll-instrictors',
-    async ( data: {page?:number,limit?:number}, { rejectWithValue }) => {
+
+export const createReviewAction = createAsyncThunk(
+    'user/create-Review',
+    async ( data : any , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`/api/user/getAll-instructors`,{params:data}
-            )
+            const response = await api_client.post(`${course}create-review`,data,config)
 
             if(response.data.success){
 

@@ -122,9 +122,9 @@ const validationSchema = Yup.object().shape({
     };
 
     return (
-        <div className="p-10">
+        <div className="p-10 dark:bg-base-100 bg-gray-100">
             <h1 className="text-xl font-semibold mb-4 ">My Profile</h1>
-            <div className="flex items-center space-x-4 mt-2 mb-3 p-3 border   bg-gray-300 dark:bg-gray-800 rounded-lg">
+            <div className="flex items-center space-x-4 mt-2 mb-3 p-3  bg-gray-300 shadow-lg dark:bg-gray-800 rounded-lg">
                 <div className="relative">
                     <img
                         src={profileImage}
