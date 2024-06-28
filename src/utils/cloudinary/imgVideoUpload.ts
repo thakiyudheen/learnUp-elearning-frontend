@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { formatDuration } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid';
 
 export const FileUpload = async (file: File) => {
   const presetKey = import.meta.env.VITE_REACT_APP_PRESET_KEY;
@@ -11,11 +12,16 @@ export const FileUpload = async (file: File) => {
     console.error('Cloudinary preset key or cloud name is missing');
     return null;
   }
+
+    // Generate a UUID for the file name
+    const uuid = uuidv4();
+    const fileName = `${uuid}-${"_"}`;
   
 
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', presetKey);
+  formData.append('public_id', fileName);
 
   try {
     const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData);

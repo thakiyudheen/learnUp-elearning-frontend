@@ -20,7 +20,7 @@ const CourseCards: React.FC = () => {
 
   // pagination 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage] = useState<number>(7);
+  const [itemsPerPage] = useState<number>(2);
   const [totalPages, setTotalPages] = useState<number>(1);
 
 
@@ -32,7 +32,7 @@ const CourseCards: React.FC = () => {
       if (response.payload) {
         setCourses(response.payload.courses);
         setCategory(response1.payload.data);
-        setTotalPages(response.payload.totalItems)
+        setTotalPages(Math.ceil(response.payload.totalItems/itemsPerPage))
         console.log('Data fetched', response.payload);
       }
     };
@@ -228,7 +228,7 @@ const CourseCards: React.FC = () => {
               <div
                 key={index}
                 onClick={() => navigate('/course', { state: course?._id })}
-                className="min-w-md dark:bg-base-300 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[26rem] border dark:border-base-300 cursor-pointer"
+                className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[26rem] border dark:border-gray-800 cursor-pointer"
               >
                 <img className="w-full h-48 object-cover" src={course.courseThumbnail} alt={course.courseTitle} />
                 <div className="px-6 py-4">

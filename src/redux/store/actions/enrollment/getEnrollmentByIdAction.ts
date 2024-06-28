@@ -18,8 +18,9 @@ export const getEnrollmentByIdAction = createAsyncThunk(
     'user/getEnrollment',
     async ( params : EnrollmentQueryParams , { rejectWithValue }) => {
         try {
+         
             const response = await api_client.get(`${course}getEnrollment-ById`,{params:params})
-
+            console.log('the respo',response)
             if(response.data.success){
 
                 return response.data

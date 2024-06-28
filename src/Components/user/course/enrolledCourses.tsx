@@ -8,6 +8,8 @@ import { PaginationControls } from '@/Components/common/skelton';
 import { getEnrollmentByIdAction } from '@/redux/store/actions/enrollment/getEnrollmentByIdAction';
 import { RootState } from '@/redux/store';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { FaClock, FaTag, FaLevelUpAlt } from 'react-icons/fa';
+import { IoLanguageSharp } from "react-icons/io5";
 
 const EnrolledCourses: React.FC = () => {
   const { data } = useAppSelector((state: RootState) => state.user)
@@ -50,7 +52,7 @@ const EnrolledCourses: React.FC = () => {
     }
   };
   const getCategory = async () => {
-    const response1 = await dispatch(getAllCategoryAction());
+    const response1 = await dispatch(getAllCategoryAction({}));
 
     setCategory(response1.payload.data);
 
@@ -101,7 +103,7 @@ const EnrolledCourses: React.FC = () => {
   const totalPages = Math.ceil(filteredAndSortedCourses.length / itemsPerPage);
 
   return (
-    <div className=''>
+    <div className='mt-[5rem]'>
 
       <div className='flex justify-between mt-7'>
         <input type="text" onChange={(e) => setSearch(e.target.value)} className='bg-gray-300 w-100  dark:bg-gray-700 py-1 ml-[12rem] px-6 rounded-full shadow-md' placeholder='search...' />
@@ -221,36 +223,74 @@ const EnrolledCourses: React.FC = () => {
         <div className="grid grid-cols-1 w-3/4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
           {filteredAndSortedCourses.map((course: any, index: any) => {
             return (
+              // <div
+              //   key={index}
+              //   onClick={() => navigate('/student/view-video', { state: course?.courseId?._id })}
+              //   className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[24rem] border dark:border-gray-800 flex flex-col"
+              // >
+              //   <img className="w-full h-43 object-cover" src={course.courseId?.courseThumbnail} alt={course.courseId?.courseTitle} />
+              //   <div className="px-6 py-3 flex flex-col flex-grow">
+              //     <div className="flex items-center justify-between">
+              //       <small><span className="bg-blue-600 text-gray-800 text-[12px] font-semibold text-white px-3 rounded-full">{course?.courseId?.category?.categoryName}</span></small>
+              //       <span className="text-gray-500 text-xs"><IoMdCheckmarkCircleOutline className='ml-1' /></span>
+              //     </div>
+              //     <div className="font-bold text-xl mt-2 mb-2">{course.courseId?.courseTitle}</div>
+              //     <div className='md:h-[4rem]'>
+              //       <small className="text-gray-700 text-base dark:text-white">{`${course.courseId?.description?.substring(0, 50)}...`}</small>
+              //     </div>
+              //     <div className="flex items-center justify-between mt-auto">
+              //       <div className='flex items-center'>
+              //         <img className="w-8 h-8 rounded-full mr-2" src={course.courseId?.instructorRef.profile.avatar} alt="Instructor" />
+              //         <small className="text-gray-500 text-sm">{course?.courseId?.instructorRef?.firstName}</small>
+              //       </div>
+              //       <div className='flex'>
+              //         <div className="flex items-center">
+              //           <a className='py-1 px-6 bg-gray-400 rounded-lg flex items-center'>
+              //             <small>View</small>
+              //           </a>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>
               <div
-                key={index}
-                onClick={() => navigate('/student/view-video', { state: course?.courseId?._id })}
-                className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[24rem] border dark:border-gray-800 flex flex-col"
-              >
-                <img className="w-full h-43 object-cover" src={course.courseId?.courseThumbnail} alt={course.courseId?.courseTitle} />
-                <div className="px-6 py-3 flex flex-col flex-grow">
-                  <div className="flex items-center justify-between">
-                    <small><span className="bg-blue-600 text-gray-800 text-[12px] font-semibold text-white px-3 rounded-full">{course?.courseId?.category?.categoryName}</span></small>
-                    <span className="text-gray-500 text-xs"><IoMdCheckmarkCircleOutline className='ml-1' /></span>
+              key={index}
+              onClick={() => navigate('/student/view-video', { state: course?.courseId?._id })}
+              className="min-w-md dark:bg-base-300 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[26rem] border dark:border-base-300 cursor-pointer"
+            >
+              <img className="w-full h-48 object-cover" src={course?.courseId?.courseThumbnail} alt={course.courseTitle} />
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mt-2 mb-2 min-h-[3rem]">{course?.courseId?.courseTitle}</div>
+                <div className="flex flex-col justify-between flex-grow space-y-2">
+                  <div className="flex items-center text-[16px] font-semibold">
+                    <FaTag className="text-gray-500 mr-2" />
+                    <small className="text-gray-700 text-base dark:text-gray-500">{course?.courseId?.category?.categoryName}</small>
                   </div>
-                  <div className="font-bold text-xl mt-2 mb-2">{course.courseId?.courseTitle}</div>
-                  <div className='md:h-[4rem]'>
-                    <small className="text-gray-700 text-base dark:text-white">{`${course.courseId?.description?.substring(0, 50)}...`}</small>
+                  <div className="flex items-center text-[16px] font-semibold">
+                    <IoLanguageSharp className="text-gray-500 mr-2" />
+
+                    <small className="text-gray-700 text-base dark:text-gray-500">{course?.courseId?.language}</small>
                   </div>
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className='flex items-center'>
-                      <img className="w-8 h-8 rounded-full mr-2" src={course.courseId?.instructorRef.profile.avatar} alt="Instructor" />
-                      <small className="text-gray-500 text-sm">{course?.courseId?.instructorRef?.firstName}</small>
-                    </div>
-                    <div className='flex'>
-                      <div className="flex items-center">
-                        <a className='py-1 px-6 bg-gray-400 rounded-lg flex items-center'>
-                          <small>View</small>
-                        </a>
-                      </div>
-                    </div>
+                  <div className="flex items-center text-[16px] font-semibold">
+                    <FaLevelUpAlt className="text-gray-500 mr-2" />
+                    <small className="text-gray-700 text-base  dark:text-gray-500">{course.courseId?.level}</small>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between mt-4">
+                  <div className='flex items-center'>
+                    <img className="w-8 h-8 rounded-full mr-2" src={course?.courseId?.instructorRef?.profile.avatar} alt="Instructor" />
+                    <small className="text-gray-500 text-sm">{course?.courseId?.instructorRef?.firstName}</small>
+                  </div>
+                  <div className='flex items-center'>
+                  <div className="flex items-center">
+                         <a className='py-1 px-6 bg-gray-400 rounded-lg flex items-center'>
+                         <small>View</small>
+                         </a>
+                       </div>
                   </div>
                 </div>
               </div>
+            </div>
 
             );
           })}

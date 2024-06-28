@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { RiMenu4Line } from "react-icons/ri";
 import { useAppDispatch } from '../../../../hooks/hooke';
 import { logoutAction } from '../../../../redux/store/actions/auth/logoutAction';
+import { BsChatLeftText } from "react-icons/bs";
 
 interface userSideNavProps {
   isOpen: boolean;
@@ -75,8 +76,9 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
               requests
             </NavLink>
             <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
-              <FaThList className="mr-4" />
-              Categories
+              {/* <FaThList /> */}
+              <BsChatLeftText  className="mr-4"/>
+              Chat
             </NavLink>
           </ul>
         </div>

@@ -162,7 +162,7 @@ const CourseListing: React.FC = () => {
    
   useEffect(() => {
     const getData = async () => {
-      const response = await dispatch(getAllCourseAction({instructorRef:data.data._id,page:currentPage,limit:itemsPerPage}));
+      const response = await dispatch(getAllCourseAction({instructorRef:data.data._id,page:currentPage,limit:itemsPerPage,isPublished:true}));
       const response1 = await dispatch(getAllCategoryAction({}));
 
       if (response.payload) {

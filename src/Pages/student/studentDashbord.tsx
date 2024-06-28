@@ -23,7 +23,7 @@ const StudentDashboard: React.FC = () => {
           <ModeToggle />
         </div>
       </nav>
-      <main className={`pt-[70px] min-h-screen ${isSidebarOpen ? 'ml-[16%]' : 'ml-0'}`}>
+      <main className={`pt-[10px] min-h-screen ${isSidebarOpen ? 'ml-[16%]' : 'ml-0'}`}>
         <Outlet />
       </main>
 

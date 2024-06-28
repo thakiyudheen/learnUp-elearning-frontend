@@ -57,6 +57,7 @@ const VideoLayout: React.FC = () => {
                     console.log('progress is working');
 
                     setCompletedLessons(response1.payload.data.progress.completedLessons)
+                    console.log('completed lesson',completedLessons)
                 }
             }
         };
@@ -152,10 +153,10 @@ const VideoLayout: React.FC = () => {
     console.log('new data fetched', course?.videoTrailer);
     
     return (
-        <div className="flex flex-col lg:flex-row w-full p-3">
+        <div className="flex flex-col lg:flex-row w-full p-3 ">
             {isLoading&&<LoadingIndicator/>}
-            <div className="md:w-[70%]  w-full p-6">
-                <div style={playerWrapperStyle} className='h-64 lg:h-[33%]'>
+            <div className="md:w-[70%] mt-[3rem]  w-full p-6">
+                <div style={playerWrapperStyle} className='h-64 lg:h-[45%]'>
                     <ReactPlayer
                         url={currentVideo}
                         controls

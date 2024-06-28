@@ -9,7 +9,7 @@ import CourseListing from '@/Components/instructor/course/courseListing';
 import UpdateCourse from '@/Components/instructor/course/updateCourse';
 import UpdateLesson from '@/Components/instructor/course/updateLesson';
 import UpdateAttachment from '@/Components/instructor/course/updateAttachment';
-import Chat from '@/Pages/instructor/chat';
+import InstructorChat from '@/Components/instructor/chat/instructorChat';
 
 const instructorRoutes: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const instructorRoutes: React.FC = () => {
         <Route path="update-course" element={<UpdateCourse/>} />
         <Route path="update-lesson" element={<UpdateLesson/>} />
         <Route path="update-attachment" element={<UpdateAttachment/>} />
-        <Route path="chat" element={<Chat/>} />
+        <Route path="chat" element={<InstructorChat/>} />
           
         
       </Route>

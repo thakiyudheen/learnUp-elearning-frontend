@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AiFillBell } from "react-icons/ai";
@@ -11,6 +9,7 @@ import { motion } from 'framer-motion';
 import { RiMenu4Line } from "react-icons/ri";
 import { useAppDispatch } from '../../../../hooks/hooke';
 import { logoutAction } from '../../../../redux/store/actions/auth/logoutAction';
+import { BsChatLeftText } from "react-icons/bs";
 
 interface userSideNavProps {
   isOpen: boolean;
@@ -21,7 +20,7 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
   const { theme } = useTheme();
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const dispatch = useAppDispatch()
-  const [isLoading,setLoading] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const getNavItemClass = (isActive: boolean) => {
@@ -30,16 +29,16 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
     return `${baseClass} ${selectedClass}`;
   };
 
- const handleLogout = async () =>{
-  setLoading(true)
-  await dispatch(logoutAction())
+  const handleLogout = async () => {
+    setLoading(true)
+    await dispatch(logoutAction())
 
-  setLoading(false)
-   navigate('/home')
-  
+    setLoading(false)
+    navigate('/home')
 
-  
- }
+
+
+  }
 
   return (
     <>
@@ -72,21 +71,21 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
               Instructors
             </NavLink>
             <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
-            <AiFillBell className="mr-4"/>
+              <AiFillBell className="mr-4" />
               requests
             </NavLink>
             <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
-              <FaThList className="mr-4" />
-              chat
+              <BsChatLeftText className="mr-4" />
+              Chat
             </NavLink>
           </ul>
         </div>
         <ul className="text-center font-bold mb-4" onClick={handleLogout}>
           <NavLink to={''} className={`p-4 flex items-center hover:bg-blue-600 hover:bg-opacity-10 hover:rounded-r-full cursor-pointer`}>
-          
+
             <FaSignOutAlt className="mr-4 " />
             Logout
-          
+
           </NavLink>
         </ul>
         <button

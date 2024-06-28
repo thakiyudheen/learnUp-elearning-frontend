@@ -14,6 +14,7 @@ import { getEnrollmentByIdAction } from '@/redux/store/actions/enrollment/getEnr
 import { createEnrollmentAction } from '@/redux/store/actions/enrollment/createEnrollment';
 import { FaRupeeSign, FaLock, FaSync, FaUsers, FaBook, FaToolbox } from 'react-icons/fa';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
+import LoadingIndicator from '@/Components/common/skelton/loading';
 
 
 
@@ -41,10 +42,11 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
             if (response.payload) {
                 setCourse(response.payload)
                 console.log(course)
-
             }
         }
         getData()
+        fetchEnrollment()
+       
     }, [dispatch])
     useEffect(()=>{
         if(data?.data && course._id ){
@@ -55,9 +57,10 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
     // checking is enrolled --------------------------
     const fetchEnrollment = async  () =>{
        
+        console.log('the enrollment1')
         try{
             const response = await dispatch(getEnrollmentByIdAction(data?.data?._id))
-            
+            console.log('the enrollment2',response.payload)
             if(response?.payload?.data){
                 response?.payload?.data?.forEach(( el : any )=>{
                     
@@ -71,6 +74,7 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
             throw new Error('error while fetching enrollment')
         }
     }
+
     // handleEnrollment --------------------------------
     const handleEnrollment = async () => {
         try {
@@ -86,7 +90,13 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
             if(response?.payload?.data){
                 setEnrolled(true)
                 createChat(data.data._id,course?.instructorRef)
-                toast.success('Enrolled successfully !')
+                setEnrolled(true)
+                setLoading(true)
+                setTimeout(()=>{
+                    setLoading(false)
+                    toast.success('Enrolled successfully !')
+                },3000)
+                
 
             }
 
@@ -164,8 +174,8 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
 
     return (
         <div className=" mx-auto font-Poppins   shadow-md">
-
-            <div className="h-[26rem] flex bg-gradient-to-r from-gray-900 to-blue-700  bg-opacity-60 p-6 items-center relative "  >
+           {isLoading && <LoadingIndicator/>}
+            <div className="h-[26rem] flex bg-gradient-to-r from-gray-900 to-blue-800  bg-opacity-60 p-6 items-center relative "  >
                 <div className="text-left w-3/4 z-10 p-10">
                     <h2 className="text-[2rem] font-bold text-white">{course?.courseTitle}</h2>
                     <h4 className="text-lg w-3/4 text-gray-300 mt-2">{course?.subTitle}</h4>
@@ -299,7 +309,7 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
       {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
         Subscribe to LearnUp's top courses
       </h1> */}
-      <ul className='text-start mt-2 p-3 bg-gray-300 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
+      <ul className='text-start mt-2 p-3 bg-gray-300 dark:text-gray-200 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
         <li>
           <small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small>
         </li>
