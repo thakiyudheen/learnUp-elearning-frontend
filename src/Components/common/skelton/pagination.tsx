@@ -32,7 +32,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
             key={page}
             onClick={() => setCurrentPage(page)}
             className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase ${
-              currentPage === page ? 'bg-blue-600 text-white shadow-md shadow-gray-900/10' : 'text-white hover:bg-gray-900/10 active:bg-gray-900/20'
+              currentPage === page ? 'bg-blue-800' : 'text-white hover:bg-gray-900 active:bg-blue-700'
             } transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
             disabled={currentPage === page}
             type="button"

@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { RiMenu4Line } from "react-icons/ri";
 import { useAppDispatch } from '../../../../hooks/hooke';
 import { logoutAction } from '../../../../redux/store/actions/auth/logoutAction';
+import ConfirmModal from '../../skelton/confirmModal';
 
 interface AdminSideNavProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
   const dispatch = useAppDispatch()
   const [isLoading,setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
+  const [isModal,setModal]=useState<boolean>(false)
 
   const getNavItemClass = (isActive: boolean) => {
     const baseClass = "p-4 flex items-center hover:bg-blue-600 hover:bg-opacity-10 hover:rounded-r-full cursor-pointer";
@@ -30,6 +32,7 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
 
  const handleLogout = async () =>{
   setLoading(true)
+  setModal(false)
   await dispatch(logoutAction())
 
   setLoading(false)
@@ -38,9 +41,13 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
 
   
  }
+ const onCancel = () =>{
+  setModal(false)
+ }
 
   return (
     <>
+      {isModal&&<ConfirmModal message={'Logout'} onConfirm={handleLogout} onCancel={onCancel}/>}
       <motion.nav
         initial={{ x: '-100%' }}
         animate={{ x: isOpen ? '0%' : '-100%' }}
@@ -69,18 +76,18 @@ const AdminSideNav: React.FC<AdminSideNavProps> = ({ isOpen, toggleSidebar }) =>
               <FaChalkboardTeacher className="mr-4" />
               Instructors
             </NavLink>
-            <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
+            {/* <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
             <AiFillBell className="mr-4"/>
               requests
-            </NavLink>
+            </NavLink> */}
             <NavLink to="categories" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaThList className="mr-4" />
               Categories
             </NavLink>
           </ul>
         </div>
-        <ul className="text-center font-bold mb-4" onClick={handleLogout}>
-          <NavLink to={''} className={`p-4 flex items-center hover:bg-blue-600 hover:bg-opacity-10 hover:rounded-r-full cursor-pointer`}>
+        <ul className="text-center font-bold mb-4" onClick={()=>{setModal(true)}}>
+          <NavLink to='' className={`p-4 flex items-center hover:bg-blue-600 hover:bg-opacity-10 hover:rounded-r-full cursor-pointer`}>
           
             <FaSignOutAlt className="mr-4 " />
             Logout

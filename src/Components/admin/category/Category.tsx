@@ -7,6 +7,7 @@ import { getAllCategoryAction } from '@/redux/store/actions/course/getAllCategor
 import { format } from 'date-fns';
 import { editCategoryAction } from '@/redux/store/actions/course/editCategoryAction';
 import { PaginationControls } from '@/Components/common/skelton';
+import ConfirmModal from '@/Components/common/skelton/confirmModal';
 
 interface Data {
   _id: string;
@@ -30,6 +31,8 @@ const CategoryPage: React.FC = () => {
     isBlocked: false,
     _id: ''
   });
+  const [value ,setValue ]= useState<any>({})
+  const [isModal ,setModal]=useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(2);
 
@@ -88,19 +91,25 @@ const CategoryPage: React.FC = () => {
     );
   };
 
-  const handleBlock = async (data: { categoryName: string; isBlocked: boolean; _id: string }) => {
+  const handleBlock = async () => {
+    setModal(false)
     setLoading(true);
-    const response = await dispatch(editCategoryAction(data));
+    const response = await dispatch(editCategoryAction(value));
     if (response.payload && response.payload.success) {
       setCategories((prevCategories) =>
-        prevCategories.map((category) => (category._id === data._id ? { ...category, isBlocked: data.isBlocked } : category))
+        prevCategories.map((category) => (category._id === value._id ? { ...category, isBlocked: value.isBlocked } : category))
       );
       setLoading(false);
     }
   };
 
+  const onCancel =( ) =>{
+    setModal(false)
+  }
+
   return (
     <>
+      {isModal&& <ConfirmModal message={'Action'} onCancel={onCancel} onConfirm={handleBlock} />}
       {isAddModal && <AddCategory handleEdit={handleAddCategory} onClose={onClose} />}
       {isEditModal && <EditCategory handleEditCategory={handleEditCategory} handleSubmit={handleSubmit} onClose={onClose} data={name} />}
       <div className="mb-6 ml-[4.3rem] mt-[2rem] flex justify-between">
@@ -124,7 +133,7 @@ const CategoryPage: React.FC = () => {
             </thead>
             <tbody>
               {getPaginatedData().map((category, index) => (
-                <tr key={index} className="text-center border-b hover:bg-gray-800">
+                <tr key={index} className="text-center border-b dark:hover:bg-gray-800">
                   <td className="px-4 py-2 border">{index + 1}</td>
                   <td className="px-4 py-2 border">{category?.categoryName}</td>
                   <td className="px-4 py-2 border">{format(new Date(category?.createdAt), 'yyyy-MM-dd')}</td>
@@ -143,7 +152,7 @@ const CategoryPage: React.FC = () => {
                           ? 'hover:bg-green-600 hover:text-white border-green-600 text-green-600'
                           : 'hover:bg-red-600 hover:text-white border-red-600 text-red-600'
                       }`}
-                      onClick={() => handleBlock({ categoryName: category.firstName, isBlocked: !category.isBlocked, _id: category._id })}
+                      onClick={() =>{ setValue({ categoryName: category.firstName, isBlocked: !category.isBlocked, _id: category._id });setModal(true)}}
                     >
                       {category.isBlocked ? 'Unblock' : 'Block'}
                     </button>

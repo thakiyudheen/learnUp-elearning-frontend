@@ -15,6 +15,7 @@ import { createEnrollmentAction } from '@/redux/store/actions/enrollment/createE
 import { FaRupeeSign, FaLock, FaSync, FaUsers, FaBook, FaToolbox } from 'react-icons/fa';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
 import LoadingIndicator from '@/Components/common/skelton/loading';
+import { getProgressByIdAction } from '@/redux/store/actions/enrollment/getProgressByIdAction';
 
 
 
@@ -59,16 +60,12 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
        
         console.log('the enrollment1')
         try{
-            const response = await dispatch(getEnrollmentByIdAction(data?.data?._id))
+            const response = await dispatch(getProgressByIdAction({userId:data?.data?._id,courseId:location.state}))
             console.log('the enrollment2',response.payload)
             if(response?.payload?.data){
-                response?.payload?.data?.forEach(( el : any )=>{
-                    
-                    if(el.courseId == course._id ){
-                        setEnrolled(true)
-                    }
-                })
-            }
+                console.log('finally get that',response.payload.data)
+                    setEnrolled(true)
+              }
         }catch(error : any ){
             toast.error('error while fetching enrollment')
             throw new Error('error while fetching enrollment')

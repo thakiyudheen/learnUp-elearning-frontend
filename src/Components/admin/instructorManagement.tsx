@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import { PaginationControls } from '../common/skelton';
 import { getAllInstructorsAction } from '@/redux/store/actions/admin/getAllInstructorsAction';
+import ConfirmModal from '../common/skelton/confirmModal';
 
 interface data {
   email: string,
@@ -33,6 +34,8 @@ const InstructorTable: React.FC = () => {
   const [currentData, setCurrentData] = useState<{ email: string; isVerified: boolean } | null>(null);
   const [activeTab, setActiveTab] = useState<'requests' | 'rejects' | 'instructor'>('instructor')
   const [totalPages, setTotalPages] = useState<any>(1)
+  const [isBLockModal,setBlockModal]=useState<boolean>(false)
+  const [value,setValue]=useState<any>({})
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(7);
@@ -107,13 +110,14 @@ const InstructorTable: React.FC = () => {
     }
   };
 
-  const handleBlock = async (data: data1) => {
-    const response = await dispatch(blockUnblockAction(data));
+  const handleBlock = async () => {
+    setBlockModal(false)
+    const response = await dispatch(blockUnblockAction(value));
     if (blockUnblockAction.fulfilled.match(response)) {
       setInstructors((prevInstructors) =>
         prevInstructors.map((instructor) =>
-          instructor._id === data._id
-            ? { ...instructor, isBlocked: data.isBlocked }
+          instructor._id === value?._id
+            ? { ...instructor, isBlocked: value.isBlocked }
             : instructor
         )
       );
@@ -144,11 +148,13 @@ const InstructorTable: React.FC = () => {
   const onCancel = () => {
     setModal(false);
     setRejectModal(false);
+    setBlockModal(false)
   };
 
   return (
     <>
-      <div className="mb-6 ml-[4.3rem] mt-[2rem]">
+    {isBLockModal&& <ConfirmModal message={"Action"} onCancel={onCancel} onConfirm={handleBlock}/>}
+      <div className="mb-6 ml-[4.3rem] mt-[2rem] bg ">
         <h1 className="text-xl font-bold ">Instructor Management</h1>
       </div>
       {isModal && (
@@ -189,7 +195,7 @@ const InstructorTable: React.FC = () => {
               </thead>
               <tbody>
                 {requests.map((request, index) => (
-                  <tr key={index} className="text-center border-b">
+                  <tr key={index} className="text-center border-b dark:hover:bg-gray-800">
                     <td className="px-4 py-2 border">{index + 1}</td>
                     <td className="px-4 py-2 border">{request?.firstName}</td>
                     <td className="px-4 py-2 border">{request?.email}</td>
@@ -335,7 +341,7 @@ const InstructorTable: React.FC = () => {
                             ? 'hover:bg-green-600 hover:text-white border-green-600 text-green-600'
                             : 'hover:bg-red-600 hover:text-white border-red-600 text-red-600'
                             }`}
-                          onClick={() => handleBlock({ _id: instructor._id, isBlocked: !instructor.isBlocked })}
+                          onClick={() => {setValue({ _id: instructor._id, isBlocked: !instructor.isBlocked });setBlockModal(true)}}
                         >
                           {instructor.isBlocked ? 'Unblock' : 'Block'}
                         </button>

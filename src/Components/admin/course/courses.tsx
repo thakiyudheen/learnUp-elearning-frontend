@@ -153,6 +153,7 @@ import { getAllCourseAction } from '@/redux/store/actions/course/getAllCourseAct
 import { PaginationControls } from '@/Components/common/skelton';
 import { useNavigate } from 'react-router-dom';
 import CourseTable from './courseTable';
+import ConfirmModal from '../../common/skelton/confirmModal'
 
 interface Data {
   _id: string;
@@ -166,6 +167,8 @@ const CourseManagement: React.FC = () => {
   const [courses, setCourses] = useState<any[]>([]);
   const [requests, setRequests] = useState<any[]>([]);
   const [rejects, setRejects] = useState<any[]>([]);
+  const [isModal, setModal] = useState<any>(false);
+  const [updateData , setUpdateData] = useState<any>({});
   const [activeTab, setActiveTab] = useState<'requests' | 'courses' | 'rejects'>('courses');
   const [isLoading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -188,7 +191,9 @@ const CourseManagement: React.FC = () => {
     getData();
   }, [dispatch, currentPage]);
 
-  const handleUpdate = async (updateData: Data) => {
+  const handleUpdate = async () => {
+    console.log('the datea',updateData)
+    setModal(!isModal)
     const response = await dispatch(updateCourseAction(updateData));
 
     if (updateCourseAction.fulfilled.match(response)) {
@@ -211,11 +216,15 @@ const CourseManagement: React.FC = () => {
     return activeTab === 'requests' ? requests.slice(startIndex, endIndex) : activeTab === 'courses' ? courses.slice(startIndex, endIndex) : rejects.slice(startIndex, endIndex);
   };
 
+  const onCancel = () =>{
+    setModal(!isModal)
+  }
+
   return (
     <>
+      {isModal&&<ConfirmModal onConfirm={handleUpdate} onCancel={onCancel} message={"This Action"} />}
       <div className="mb-6 ml-[4.3rem] mt-[2rem] flex justify-between mr-[4rem]">
         <h1 className="text-xl font-bold">Course Management</h1>
-        
       </div>
       <div className="flex ml-[4rem] mb-4">
           <div role="tablist" className="tabs tabs-boxed bg-gray-200 dark:bg-gray-700">
@@ -243,7 +252,7 @@ const CourseManagement: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody >
-                  {getPaginatedData().map((course: any, index: number) => (<tr key={index} className="text-center border-b border-gray-600">
+                  {getPaginatedData().map((course: any, index: number) => (<tr key={index} className="text-center border-b border-gray-600 dark:hover:bg-gray-800">
 
                     <td>{index + 1}</td>
                     <td>{course?.courseTitle}</td>
@@ -263,12 +272,17 @@ const CourseManagement: React.FC = () => {
                             ? 'hover:bg-red-600 hover:text-white border-red-600 text-red-600'
                             : 'hover:bg-green-600 hover:text-white border-green-600 text-green-600'
                           }`}
-                        onClick={() =>
-                          handleUpdate({
-                            isBlocked: !course.isBlocked,
-                            _id: course._id,
-                          })
-                        }
+                          onClick={() => {
+                            const newData = {
+                              isBlocked: !course.isBlocked,
+                              _id: course._id,
+                            };
+                          
+                            setUpdateData(newData);
+                            setModal(true);
+                          
+                            console.log(newData);
+                          }}
                       >                           
                       {course.isBlocked ? 'Unblock' : 'Block'}
                       </button>

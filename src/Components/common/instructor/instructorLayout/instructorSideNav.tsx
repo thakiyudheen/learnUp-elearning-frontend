@@ -70,10 +70,10 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
               <FaChalkboardTeacher className="mr-4" />
               Instructors
             </NavLink>
-            <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
+            {/* <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
               <AiFillBell className="mr-4" />
               requests
-            </NavLink>
+            </NavLink> */}
             <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
               <BsChatLeftText className="mr-4" />
               Chat

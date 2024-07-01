@@ -33,7 +33,7 @@ const CourseTable: React.FC<CourseTableProps> = ({ data, getPaginatedData, handl
       </thead>
       <tbody>
         {getPaginatedData().map((course : any , index : any) => (
-          <tr key={index} className="text-center border-b">
+          <tr key={index} className="text-center border-b dark:hover:bg-gray-800">
             <td>{index + 1}</td>
             <td>{course.courseTitle}</td>
             <td>{course.instructorRef.firstName}</td>

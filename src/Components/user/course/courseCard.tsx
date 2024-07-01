@@ -26,7 +26,7 @@ const CourseCards: React.FC = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await dispatch(getAllCourseAction({ isPublished: true, page: currentPage, limit: itemsPerPage }));
+      const response = await dispatch(getAllCourseAction({ isPublished: true, page: currentPage, limit: itemsPerPage, isBlocked:false }));
       const response1 = await dispatch(getAllCategoryAction({}));
 
       if (response.payload) {

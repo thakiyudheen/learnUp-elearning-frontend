@@ -15,7 +15,6 @@ const Protected: FC<ProtectedRouteProps> = ({ element, allowedRoles }) => {
     console.log('this is userdata',data?.data)
 
 	if (!data) {
-		console.log('this  is always',data)
 		return <Navigate to="/home" replace />;
 	}else if(data.data.isBlocked){
 		dispatch(logoutAction())
