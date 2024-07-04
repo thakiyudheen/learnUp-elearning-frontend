@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { getCourseByIdAction } from '@/redux/store/actions/course/getCourseByIdAction';
@@ -24,12 +24,13 @@ const VideoLayout: React.FC = () => {
     const [showMore, setShowMore] = useState(false);
     const [progress, setProgress] = useState<{ [key: number]: number }>({});
     const [completedLessons, setCompletedLessons] = useState<string[]>([]);
-    const [comments,setComments]=useState<any>([])
+    const [comments, setComments] = useState<any>([])
     const descriptionLimit = 100;
-    const [comment ,setComment]= useState<string>("")
-    const[input,setInput] =useState<string>("")
-    const [isLoading, setLoading]= useState<boolean>(false)
+    const [comment, setComment] = useState<string>("")
+    const [input, setInput] = useState<string>("")
+    const [isLoading, setLoading] = useState<boolean>(false)
     const [visibleComments, setVisibleComments] = useState<any>([]);
+    const navigate=useNavigate()
 
     const handleShowMore = () => {
         setShowMore(!showMore);
@@ -57,26 +58,26 @@ const VideoLayout: React.FC = () => {
                     console.log('progress is working');
 
                     setCompletedLessons(response1.payload.data.progress.completedLessons)
-                    console.log('completed lesson',completedLessons)
+                    console.log('completed lesson', completedLessons)
                 }
             }
         };
         getData();
     }, [dispatch, location.state]);
 
-    useEffect(()=>{
-        const getData =async  () =>{
-            const response=await dispatch(getReviewAction({courseId:location.state}))
-            console.log('the getting ',response.payload)
-            if(response.payload&&response.payload.success){
+    useEffect(() => {
+        const getData = async () => {
+            const response = await dispatch(getReviewAction({ courseId: location.state }))
+            console.log('the getting ', response.payload)
+            if (response.payload && response.payload.success) {
                 setComments(response.payload.data.reviews.reverse())
                 // setVisibleComments(response.payload.data.reviews.slice(0, 5))
             }
         }
         getData()
-    },[dispatch])
+    }, [dispatch])
     const [showAll, setShowAll] = useState(false);
-    
+
     // console.log('the visible',visibleComments)
 
     const handleShowMore1 = () => {
@@ -87,36 +88,36 @@ const VideoLayout: React.FC = () => {
         setShowAll(false);
     };
 
-    
+
 
     const handlePost = async () => {
-        const trimmedInput = input.trim(); 
+        const trimmedInput = input.trim();
         console.log('this is comment', trimmedInput);
-    
-        if (trimmedInput !== "") { 
+
+        if (trimmedInput !== "") {
             setLoading(true)
-            setComment(trimmedInput); 
-            setInput(""); 
-    
+            setComment(trimmedInput);
+            setInput("");
+
             const review = {
                 courseId: location.state,
                 userId: data.data._id,
                 comment: trimmedInput,
                 rating: 5
             };
-    
+
             const response = await dispatch(createReviewAction(review));
             if (response.payload && response.payload.success) {
-                console.log('iam ok',response.payload)
-                setComment(""); 
-                setComments([...comments,{
+                console.log('iam ok', response.payload)
+                setComment("");
+                setComments([...comments, {
                     courseId: location.state,
                     userId: data.data,
                     comment: trimmedInput,
                     rating: 5
                 }].reverse());
                 setLoading(false)
-                 
+
             } else {
                 toast.info('Please enter a comment !!');
             }
@@ -124,11 +125,11 @@ const VideoLayout: React.FC = () => {
             toast.info('Please enter a comment !!');
         }
     };
-   
+
 
     const handleProgress = async (state: { played: number }) => {
         if (activeIndex !== null) {
-            
+
             const lessonId = course?.lessons[activeIndex]._id;
             setProgress((prevProgress) => ({
                 ...prevProgress,
@@ -151,10 +152,10 @@ const VideoLayout: React.FC = () => {
     };
 
     console.log('new data fetched', course?.videoTrailer);
-    
+
     return (
         <div className="flex flex-col lg:flex-row w-full p-3 ">
-            {isLoading&&<LoadingIndicator/>}
+            {isLoading && <LoadingIndicator />}
             <div className="md:w-[70%] mt-[3rem]  w-full p-6">
                 <div style={playerWrapperStyle} className='h-64 lg:h-[45%]'>
                     <ReactPlayer
@@ -168,11 +169,17 @@ const VideoLayout: React.FC = () => {
                 <div className="mt-4 text-lg font-bold flex justify-between">
                     <h1>{currentTitle}</h1>
                     {(completedLessons.length === course?.lessons?.length || (activeIndex !== null && course?.lessons && course.lessons[activeIndex] && completedLessons.includes(course.lessons[activeIndex]._id))) ? (
-                        <small className='flex pl-2 items-center font-semibold text-green-600'>
-                            Completed <IoMdCheckmarkCircleOutline className='ml-1' />
-                        </small>
+                        <div>
+                            <small className='flex pl-2 items-center font-semibold text-green-600'>
+                                Completed <IoMdCheckmarkCircleOutline className='ml-1' />
+                            </small>
+
+                        </div>
+
                     ) : null}
+
                 </div>
+                
                 <div className="flex items-center w-full mt-5 bg-gray-300 dark:text-gray-400 mb-3  dark:bg-gray-800 rounded-lg justify-between p-2 text-black">
                     <div className="flex items-center">
                         <img
@@ -230,47 +237,47 @@ const VideoLayout: React.FC = () => {
                             </div>
                         ))}
                     </div> */}
-            <div className="mt-4 space-y-4 overflow-y-scroll max-h-96 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
-            {(showAll ? comments : comments?.slice(0,5))?.map((comment:any, index:any ) => (
-                <div key={index} className="flex items-start space-x-4 m-5">
-                    <img
-                        src={comment?.userId?.profile?.avatar}
-                        alt="Avatar"
-                        className="w-8 h-8 rounded-full"
-                    />
-                    <div>
-                        <div className="font-semibold text-gray-700 dark:text-gray-300 text-[14px]">
-                            {comment?.userId?.firstName}
-                        </div>
-                        <small className="text-gray-600 dark:text-gray-400">
-                            {comment?.comment}
-                        </small>
+                    <div className="mt-4 space-y-4 overflow-y-scroll max-h-96 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                        {(showAll ? comments : comments?.slice(0, 5))?.map((comment: any, index: any) => (
+                            <div key={index} className="flex items-start space-x-4 m-5">
+                                <img
+                                    src={comment?.userId?.profile?.avatar}
+                                    alt="Avatar"
+                                    className="w-8 h-8 rounded-full"
+                                />
+                                <div>
+                                    <div className="font-semibold text-gray-700 dark:text-gray-300 text-[14px]">
+                                        {comment?.userId?.firstName}
+                                    </div>
+                                    <small className="text-gray-600 dark:text-gray-400">
+                                        {comment?.comment}
+                                    </small>
+                                </div>
+                            </div>
+                        ))}
+                        {comments?.length > 7 && (
+                            <div className="flex justify-center mt-4">
+                                {!showAll ? (
+                                    <button
+                                        onClick={handleShowMore1}
+                                        className="text-blue-600"
+                                    >
+                                        <small>{'Show More...'}</small>
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={handleShowLess1}
+                                        className="text-blue-600"
+                                    >
+                                        <small>{'Show Less...'}</small>
+                                    </button>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
-            ))}
-            {comments?.length > 7 && (
-                <div className="flex justify-center mt-4">
-                    {!showAll ? (
-                        <button
-                            onClick={handleShowMore1}
-                            className="text-blue-600"
-                        >
-                            <small>{'Show More...'}</small>
-                        </button>
-                    ) : (
-                        <button
-                            onClick={handleShowLess1}
-                            className="text-blue-600"
-                        >
-                            <small>{'Show Less...'}</small>
-                        </button>
-                    )}
-                </div>
-            )}
-        </div>
-                </div>
             </div>
-            <div className=" w-full p-4 min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 bg-gray-300 shadow-xl">
+            <div className=" w-full p-4 min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
                 <h2 className="text-2xl font-bold mb-4">Course Playlists</h2>
                 <ul>
                     {course?.lessons?.map((lesson: any, index: any) => (
@@ -287,6 +294,13 @@ const VideoLayout: React.FC = () => {
                             </div>
                         </li>
                     ))}
+                    {completedLessons.length === course?.lessons?.length&&(
+                        <li className='w-full flex justify-center'>
+                            <button onClick={()=>navigate('/student/examination',{state:course?._id})} className='border border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
+                                Take Exam
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </div>
         </div>

@@ -44,7 +44,7 @@ const Dashboard = () => {
       const response2 = await dispatch(getMoreEnrolledCourseAction())
       const response3 = await dispatch(getAllCourseAction({}))
       const response4 = await dispatch(getAllPaymentAction({}))
-      const response5 = await dispatch(getEnrolledStudentsAction({ instructorId: data?.data?._id }))
+      const response5 = await dispatch(getEnrolledStudentsAction({ userId: data?.data?._id }))
       console.log('its payment data', response2.payload.data)
       setProfit(data?.data.profit)
       if (response.payload && response.payload.success) {
@@ -103,7 +103,7 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card title="Revenue" value={Profit} percentage="+55%" description="than last week" bgColor="dark:bg-gray-800 bg-white  " icon={<MdOutlineAttachMoney className='text-[25px]' />} />
-        <Card title="Students" value={MyStudents?.length} percentage="+3%" description="than last month" bgColor="dark:bg-gray-800 bg-white" icon={<PiStudentBold className='text-[25px]' />} />
+        {/* <Card title="Students" value={MyStudents?.length} percentage="+3%" description="than last month" bgColor="dark:bg-gray-800 bg-white" icon={<PiStudentBold className='text-[25px]' />} /> */}
         <Card title="Completed Courses" value={completedCourse?.length} percentage="+1%" description="than yesterday" bgColor="dark:bg-gray-800 bg-white" icon={<FaChalkboardTeacher className='text-[25px]' />} />
         {/* <Card title="Followers" value="+91" description="Just updated" bgColor="bg-red-700" /> */}
       </div>

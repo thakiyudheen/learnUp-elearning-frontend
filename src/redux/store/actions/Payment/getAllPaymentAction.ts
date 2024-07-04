@@ -1,14 +1,14 @@
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { course } from "../../../../common/endPoint";
+import { payment } from "../../../../common/endPoint";
 
 
-export const getEnrolledStudentsAction = createAsyncThunk(
-    'user/get-EnrolledStudents',
-    async ( data :{userId?:string,instructorId?:string}, { rejectWithValue }) => {
+export const getAllPaymentAction = createAsyncThunk(
+    'user/getAll-payment',
+    async ( data : any , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`${course}get-instructorForChat`,{params:data})
+            const response = await api_client.get(`${payment}getAll-payment`,{params:data})
 
             if(response.data.success){
 

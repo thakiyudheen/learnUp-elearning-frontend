@@ -22,6 +22,9 @@ const InstructorChat: React.FC = () => {
     const [currentChat, setCurrentChat] = useState<any>(null);
     const [roomId, setRoomId] = useState<string | null>(null);
     const [isTyping, setTyping] = useState<any>(null);
+    const [isResponsive,setResponsive]=useState<boolean>(false)
+    const [isRes,setRes]=useState<boolean>(false)
+    const [isLoading,setLoading]=useState<boolean>(false)
 
     const createPrivateRoomId = (id1: string, id2: string) => {
         return id1 > id2 ? id1 + "_" + id2 : id2 + "_" + id1;
@@ -68,6 +71,7 @@ const InstructorChat: React.FC = () => {
     }, [socket, dispatch]);
 
     const getData = async () => {
+        setLoading(true)
         const response = await dispatch(getChatByUserIdAction({ userId: data.data._id }));
         if (response.payload && response.payload.success) {
             const uniqueParticipants = new Set<string>();
@@ -82,6 +86,7 @@ const InstructorChat: React.FC = () => {
             }, []);
 
             setParticipants(otherParticipants);
+            setLoading(false)
         }
     };
 
@@ -137,13 +142,16 @@ const InstructorChat: React.FC = () => {
 
     return (
         <div className="flex h-screen overflow-y-hidden">
-            <ChatList onlineUsers={onlineUsers} users={participants} createNewChat={createNewChat} />
+            <ChatList onlineUsers={onlineUsers} users={participants} createNewChat={createNewChat} isRes={isResponsive} setRes={setResponsive} isLoading={isLoading} />
             <ChatWindow 
                 messages={messages} 
                 isTyping={isTyping} 
                 currentChat={currentChat} 
                 onSendMessage={onSendMessage} 
                 currentUser={data?.data} 
+                isRes={isRes}
+                setRes={setRes}
+                
             />
         </div>
     );

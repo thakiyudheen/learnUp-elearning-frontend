@@ -8,7 +8,7 @@ import { course } from "../../../../common/endPoint";
 interface EnrollmentQueryParams {
     userId?: string;
     page: number;
-    limit: number;
+    limit?: number;
     search?: string | null;
     categories?: string[];
     levels?: string[];

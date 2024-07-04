@@ -1,14 +1,15 @@
+import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { course } from "../../../../common/endPoint";
 
 
-export const getEnrolledStudentsAction = createAsyncThunk(
-    'user/get-EnrolledStudents',
-    async ( data :{userId?:string,instructorId?:string}, { rejectWithValue }) => {
+export const  updateEnrollmentAction = createAsyncThunk(
+    'user/update-enrollment',
+    async ( data : {courseId:string,userId:string} , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`${course}get-instructorForChat`,{params:data})
+            const response = await api_client.patch(`${course}updateEnrollment`,data,config)
 
             if(response.data.success){
 

@@ -285,23 +285,26 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
                     <p className="text-[20px] font-bold text-black dark:text-gray-300 text-start mt-4">
                             {!isEnrolled?course.pricing == 'free' ? 'Free' : `₹ ${course.priceAmount}`:''}
                         </p>
-                    
-                             <div className='flex w-full justify-center flex-col '>
-                                {isEnrolled?
-                                
-                            (<button disabled={true} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                                already Enrolled
-                            </button>): course.pricing=='free'?
-                            (<button onClick={handleEnrollment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                                Enroll now
-                            </button>):
-                            (<button onClick={handlePayment} className="border transition-all duration-300  hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                                Buy Now
-                            </button>)}
-                                
-                            <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
-    
-                            </div>
+                        {data?.data.role === 'student' && (
+    <div className='flex w-full justify-center flex-col '>
+        {isEnrolled ? (
+            <button disabled={true} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                Already Enrolled
+            </button>
+        ) : course.pricing === 'free' ? (
+            <button onClick={handleEnrollment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                Enroll Now
+            </button>
+        ) : (
+            <button onClick={handlePayment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                Buy Now
+            </button>
+        )}
+        <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
+    </div>
+)}
+
+                            
                             <div className="z-10 text-center">
       {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
         Subscribe to LearnUp's top courses

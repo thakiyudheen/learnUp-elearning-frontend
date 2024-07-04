@@ -4,11 +4,13 @@ import { AxiosError } from "axios";
 import { course } from "../../../../common/endPoint";
 
 
-export const getEnrolledStudentsAction = createAsyncThunk(
-    'user/get-EnrolledStudents',
-    async ( data :{userId?:string,instructorId?:string}, { rejectWithValue }) => {
+
+
+export const getAllAssessmentAction = createAsyncThunk(
+    'user/get-all-assessment',
+    async ( data : {courseId : string} , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`${course}get-instructorForChat`,{params:data})
+            const response = await api_client.get(`${course}getAll-assessments`,{params:data})
 
             if(response.data.success){
 
@@ -19,9 +21,6 @@ export const getEnrolledStudentsAction = createAsyncThunk(
 				return rejectWithValue(response.data);
 
 			}
-
-
-
 
         } catch ( error : any ) {
             const e : any = error as AxiosError ;

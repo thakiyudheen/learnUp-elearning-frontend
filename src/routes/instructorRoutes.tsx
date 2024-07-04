@@ -10,6 +10,8 @@ import UpdateCourse from '@/Components/instructor/course/updateCourse';
 import UpdateLesson from '@/Components/instructor/course/updateLesson';
 import UpdateAttachment from '@/Components/instructor/course/updateAttachment';
 import InstructorChat from '@/Components/instructor/chat/instructorChat';
+import Assessment from '@/Components/instructor/assessment/assessment';
+import AddAssessment from '@/Components/instructor/assessment/AddAssessment';
 
 const instructorRoutes: React.FC = () => {
   return (
@@ -24,6 +26,8 @@ const instructorRoutes: React.FC = () => {
         <Route path="update-lesson" element={<UpdateLesson/>} />
         <Route path="update-attachment" element={<UpdateAttachment/>} />
         <Route path="chat" element={<InstructorChat/>} />
+        <Route path="assessment" element={<Assessment/>} />
+        <Route path="add-assessment" element={<AddAssessment/>} />
           
         
       </Route>

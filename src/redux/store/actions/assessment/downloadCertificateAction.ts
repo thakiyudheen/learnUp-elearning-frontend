@@ -3,12 +3,20 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { course } from "../../../../common/endPoint";
 
+const pdfConfig: any = {
+    responseType: 'blob',
+    headers: {
+      'Accept': 'application/pdf'
+    },
+    withCredentials: true,
+  };
 
-export const getEnrolledStudentsAction = createAsyncThunk(
-    'user/get-EnrolledStudents',
-    async ( data :{userId?:string,instructorId?:string}, { rejectWithValue }) => {
+
+export const downloadCertificateAction = createAsyncThunk(
+    'user/download-certificate',
+    async ( data : { name : string , courseName : string} , { rejectWithValue }) => {
         try {
-            const response = await api_client.get(`${course}get-instructorForChat`,{params:data})
+            const response = await api_client.get(`${course}download-certificate`,{params:data})
 
             if(response.data.success){
 
@@ -19,9 +27,6 @@ export const getEnrolledStudentsAction = createAsyncThunk(
 				return rejectWithValue(response.data);
 
 			}
-
-
-
 
         } catch ( error : any ) {
             const e : any = error as AxiosError ;

@@ -10,6 +10,7 @@ import { RiMenu4Line } from "react-icons/ri";
 import { useAppDispatch } from '../../../../hooks/hooke';
 import { logoutAction } from '../../../../redux/store/actions/auth/logoutAction';
 import { BsChatLeftText } from "react-icons/bs";
+import { PiExam } from "react-icons/pi";
 
 interface userSideNavProps {
   isOpen: boolean;
@@ -70,10 +71,10 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
               <FaChalkboardTeacher className="mr-4" />
               Instructors
             </NavLink>
-            {/* <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
-              <AiFillBell className="mr-4" />
-              requests
-            </NavLink> */}
+            <NavLink to="Assessment" className={({ isActive }) => getNavItemClass(isActive)}>
+              <PiExam className="mr-4"/>
+              Assessment
+            </NavLink>
             <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
               <BsChatLeftText className="mr-4" />
               Chat

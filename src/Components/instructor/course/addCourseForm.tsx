@@ -131,7 +131,7 @@ const CourseForm: React.FC = () => {
   console.log('this is the category data', data)
   useEffect(() => {
     const getCategories = async () => {
-      const response = await dispatch(getAllCategoryAction())
+      const response = await dispatch(getAllCategoryAction({}))
       console.log('this is the category data', data?.data)
     }
     getCategories()

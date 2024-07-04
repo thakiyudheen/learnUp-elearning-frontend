@@ -6,17 +6,21 @@ import { deleteObject, getObject } from '@/utils/localStorage';
 import { createPaymentAction } from '@/redux/store/actions/Payment/createPaymentAction';
 import { useAppDispatch } from '@/hooks/hooke';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
+import { useSocket } from '@/context/socketContext';
 
 const PaymentSuccess: React.FC = () => {
   const dispatch= useAppDispatch()
   const navigate = useNavigate()
   const isFirstRun = useRef(true);
+  
 
   useEffect(() => {
     if (isFirstRun.current) {
       console.log("useEffect triggered");
       createPayment()
       isFirstRun.current = false;
+     
+      
   }
     
   },[])

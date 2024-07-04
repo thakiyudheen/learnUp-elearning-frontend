@@ -10,6 +10,7 @@ import { FileUpload } from '@/utils/cloudinary/imgVideoUpload';
 import { PdfUpload } from '@/utils/cloudinary/uploadPdf';
 import { FaDownload, FaSpinner,FaStop  } from 'react-icons/fa';
 import { audioUpload } from '@/utils/cloudinary/audioUpoad';
+import { MdArrowBackIosNew } from "react-icons/md";
 
 
 
@@ -19,6 +20,8 @@ interface ChatWindowProps {
   onSendMessage: (message: string, contentType?: string) => void;
   currentChat: any;
   isTyping: any;
+  setRes:any;
+  isRes:boolean;
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -27,6 +30,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onSendMessage,
   currentChat,
   isTyping,
+  setRes,
+  isRes
 }) => {
   const { socket } = useSocket();
   const { data } = useAppSelector((state: RootState) => state.user);
@@ -43,6 +48,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   const [audioUrl, setAudioUrl] = useState<any >(null);
   const mediaRecorderRef: any = useRef(null);
   const audioChunks: any = useRef([]);
+
 
 
 
@@ -180,13 +186,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
     <>
       {currentChat ? (
-        <div className="flex flex-col min-h-screen md:w-3/4">
+        <div className="flex flex-col min-h-screen md:w-3/4 w-full">
           <div className="flex items-center justify-between border-b dark:bg-gray-800 border-gray-300 dark:border-gray-900 p-4 shadow-sm mt-[4rem]">
-            <div className="flex items-center">
+          
+            <div className="flex items-center ">
+            <MdArrowBackIosNew className='text-black   absolute  ' onClick={setRes(false)}  />
               <img
                 src={currentChat?.profile?.avatar}
                 alt="Profile"
-                className="w-10 h-10 rounded-full mr-4"
+                className="w-10 h-10 rounded-full mr-3 ml-6 "
               />
               <div className="flex flex-col justify-evenly">
                 <h1 className="font-semibold">{currentChat?.firstName}</h1>
@@ -231,8 +239,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                       ? getMessageSender(message) === currentUser._id
                         ? 'bg-blue-700 text-white rounded-l-full rounded-tr-full px-3 py-2'
                         : 'bg-gray-400 dark:bg-gray-700 text-white rounded-r-full rounded-t-full px-3 py-2'
-                      : getMessageSender(message) === currentUser._id ? 'bg-white dark:bg-base-100 text-white rounded-l-lg rounded-tr-lg px-2 py-3'
-                        : 'bg-gray-400 dark:bg-gray-700 text-white rounded-lg px-2 py-2'
+                      : getMessageSender(message) === currentUser._id ? 'bg-white dark:bg-blue-600 text-white rounded-l-lg rounded-tr-lg px-1 py-1'
+                        : 'bg-gray-400 dark:bg-gray-700 text-white rounded-lg px-1 py-1'
                     }`}
                 >
                   <div className="flex">
@@ -268,9 +276,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   </div>
 ) : message.contentType === 'audio' ? (
   
-  <div className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md">
-    <img src={""} alt="Profile" className="w-5 h-5 rounded-full mr-4" />
-    <audio controls src={message.content} className="mr-2 ml-2 dark:bg-gray-800" />
+  <div className="flex items-center">
+   
+    <audio controls src={message.content} className="  w-[200px]" />
     {/* You can add additional controls or styling for the audio player if needed */}
   </div>
  
@@ -405,7 +413,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
           </div>
         </div>
       ) : (
-        <div className='w-3/4 mt-10 flex justify-center flex-col items-center'>
+        <div className='w-3/4 mt-10 flex justify-center flex-col items-center block  '>
           <BsChatRightQuote className='w-full text-[2rem] text-gray-400' />
           <small className='flex justify-center items-center flex-col w-full text-gray-500'>please click any user and chat ...</small>
         </div>
