@@ -87,7 +87,7 @@ const Assessment: React.FC = () => {
         <ConfirmModal onConfirm={handleUpdate} onCancel={onCancel} message={"This Action"} />
       )}
       <div className="mb-6 ml-[4.3rem] mt-[2rem] flex justify-between mr-[4rem]">
-        <h1 className="text-xl font-bold">Course Management</h1>
+        <h1 className="text-xl font-bold">Exam Management</h1>
       </div>
       <div className="flex ml-[4rem] mb-4"></div>
       <div className="flex w-[100%] justify-center h-[570px]">
@@ -116,7 +116,9 @@ const Assessment: React.FC = () => {
                     <td>{course.pricing === 'free' ? '0' : course?.priceAmount}</td>
                     <td>
                       <button
-                        onClick={() => navigate(`/admin/view-course/`, { state: course?._id })}
+                        onClick={() => {
+                          navigate('/instructor/add-assessment',{state:course?._id})
+                        }}
                         className="border font-bold py-1 px-2 rounded-lg hover:bg-blue-600 hover:text-white border-blue-600 text-blue-600"
                       >
                         View

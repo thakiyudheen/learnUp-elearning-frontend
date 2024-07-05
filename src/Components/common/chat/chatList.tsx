@@ -12,16 +12,16 @@ interface SidebarProps {
       userId: string;
       socketId: string;
   }[] | undefined;
-  createNewChat: (user:any , isOnline: boolean | undefined) =>  void; 
+  createNewChat: (user:any , isOnline: boolean | undefined,lastSeen:any) =>  void; 
   isRes:boolean;
   setRes:any;
-  isloading:any;
+  isLoading:any;
 }
 
-const ChatList: React.FC<SidebarProps>  = ({onlineUsers, users ,createNewChat , isRes,setRes,isLoading}) => {
+const ChatList: React.FC<SidebarProps>  = ({onlineUsers, users ,createNewChat , isRes , setRes,isLoading}) => {
   const { data } = useAppSelector((state: RootState) => state.user);
   
-    console.log('online users',onlineUsers)
+  console.log('let',users)
 
   return (
   
@@ -55,7 +55,7 @@ const ChatList: React.FC<SidebarProps>  = ({onlineUsers, users ,createNewChat , 
             <li
               key={chat?.participant?._id}
               className={`flex items-center p-4 hover:bg-blue-100 dark:bg-gray-700 cursor-pointer mb-2 shadow-lg rounded-lg ${chat.active ? 'bg-blue-600 text-white' : 'bg-white'}`}
-              onClick={() => { createNewChat(chat, onlineUsers?.includes(chat?.participant?._id)); setRes(true); }}
+              onClick={() => { createNewChat(chat, onlineUsers?.includes(chat?.participant?._id),chat?.lastSeen); setRes(true); }}
             >
               <div className='relative'>
                 <img src={chat?.participant.profile?.avatar} className="w-10 h-10 rounded-full"></img>

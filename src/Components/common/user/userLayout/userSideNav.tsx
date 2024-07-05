@@ -67,16 +67,15 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
               <FaBook className="mr-4 " />
               Courses
             </NavLink>
-            <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
+            {/* <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaChalkboardTeacher className="mr-4" />
               Instructors
-            </NavLink>
-            <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
+            </NavLink> */}
+            {/* <NavLink to="requests" className={({ isActive }) => getNavItemClass(isActive)}>
             <AiFillBell className="mr-4"/>
               requests
-            </NavLink>
+            </NavLink> */}
             <NavLink to="chat" className={({ isActive }) => getNavItemClass(isActive)}>
-              {/* <FaThList /> */}
               <BsChatLeftText  className="mr-4"/>
               Chat
             </NavLink>

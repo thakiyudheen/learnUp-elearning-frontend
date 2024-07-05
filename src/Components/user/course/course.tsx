@@ -5,12 +5,10 @@ import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
 import { RootState } from '@/redux/store';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loadStripe } from '@stripe/stripe-js'
 import { createSessionAction } from '@/redux/store/actions/Payment/createSessionAction';
 import { storeData } from '@/utils/localStorage';
-import { getEnrollmentByIdAction } from '@/redux/store/actions/enrollment/getEnrollmentByIdAction';
 import { createEnrollmentAction } from '@/redux/store/actions/enrollment/createEnrollment';
 import { FaRupeeSign, FaLock, FaSync, FaUsers, FaBook, FaToolbox } from 'react-icons/fa';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
@@ -26,9 +24,9 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
     const location = useLocation()
     const [course, setCourse] = useState<any>({})
     const { theme } = useTheme()
-    const [isLoading , setLoading ]= useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(false)
     const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
-    const [isEnrolled , setEnrolled] = useState<boolean>(false)
+    const [isEnrolled, setEnrolled] = useState<boolean>(false)
 
     const handleVideoClick = (lessonId: string) => {
         setSelectedLesson(lessonId === selectedLesson ? null : lessonId);
@@ -47,26 +45,26 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
         }
         getData()
         fetchEnrollment()
-       
+
     }, [dispatch])
-    useEffect(()=>{
-        if(data?.data && course._id ){
+    useEffect(() => {
+        if (data?.data && course._id) {
             fetchEnrollment()
         }
-    },[data,course])
+    }, [data, course])
 
     // checking is enrolled --------------------------
-    const fetchEnrollment = async  () =>{
-       
+    const fetchEnrollment = async () => {
+
         console.log('the enrollment1')
-        try{
-            const response = await dispatch(getProgressByIdAction({userId:data?.data?._id,courseId:location.state}))
-            console.log('the enrollment2',response.payload)
-            if(response?.payload?.data){
-                console.log('finally get that',response.payload.data)
-                    setEnrolled(true)
-              }
-        }catch(error : any ){
+        try {
+            const response = await dispatch(getProgressByIdAction({ userId: data?.data?._id, courseId: location.state }))
+            console.log('the enrollment2', response.payload)
+            if (response?.payload?.data) {
+                console.log('finally get that', response.payload.data)
+                setEnrolled(true)
+            }
+        } catch (error: any) {
             toast.error('error while fetching enrollment')
             throw new Error('error while fetching enrollment')
         }
@@ -76,30 +74,30 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
     const handleEnrollment = async () => {
         try {
             const enrollmentData = {
-                userId : data?.data?._id ,
-                instructorId : course.instructorRef._id ,
-                courseId : course._id,
-                amount : 0,
+                userId: data?.data?._id,
+                instructorId: course.instructorRef._id,
+                courseId: course._id,
+                amount: 0,
             }
 
-           
-            const response = await  dispatch(createEnrollmentAction(enrollmentData))
-            if(response?.payload?.data){
+
+            const response = await dispatch(createEnrollmentAction(enrollmentData))
+            if (response?.payload?.data) {
                 setEnrolled(true)
-                createChat(data.data._id,course?.instructorRef)
+                createChat(data.data._id, course?.instructorRef)
                 setEnrolled(true)
                 setLoading(true)
-                setTimeout(()=>{
+                setTimeout(() => {
                     setLoading(false)
                     toast.success('Enrolled successfully !')
-                },3000)
-                
+                }, 3000)
+
 
             }
 
-            
 
-        }catch (error : any ) {
+
+        } catch (error: any) {
             toast.error('Error occured')
         }
     }
@@ -135,17 +133,17 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
                 throw new Error("Something went wrong, try again!");
 
             }
-           
-        
-            console.log('its res from session',response.payload.data)
+
+
+            console.log('its res from session', response.payload.data)
             // store local storage about session info--------
-            storeData('payment_session', {...response.payload.data,instructorId:course?.instructorRef._id,amount:course.priceAmount})
+            storeData('payment_session', { ...response.payload.data, instructorId: course?.instructorRef._id, amount: course.priceAmount })
 
             const sessionId = response.payload.data.sessionId;
 
             setLoading(false)
             const result = await stripe?.redirectToCheckout({ sessionId });
-             
+
             if (result?.error) {
 
                 throw new Error(result.error.message)
@@ -156,23 +154,23 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
     }
 
     // crete chat -----------------
-    const createChat =async (studentId:string,instructorId: string)=>{
+    const createChat = async (studentId: string, instructorId: string) => {
         console.log('create chat is working');
-        
+
         const response = await dispatch(createChatAction({
-			participants:[studentId,instructorId]
-		}))
-		
-		
+            participants: [studentId, instructorId]
+        }))
+
+
 
     }
 
 
 
     return (
-        <div className=" mx-auto font-Poppins   shadow-md">
-           {isLoading && <LoadingIndicator/>}
-            <div className="h-[26rem] flex bg-gradient-to-r from-gray-900 to-blue-800  bg-opacity-60 p-6 items-center relative "  >
+        <div className=" mx-auto font-Poppins shadow-md">
+            {isLoading && <LoadingIndicator />}
+            <div className="h-[26rem] flex bg-gradient-to-r  from-gray-900 to-blue-800  bg-opacity-60 p-6 items-center relative "  >
                 <div className="text-left w-3/4 z-10 p-10">
                     <h2 className="text-[2rem] font-bold text-white">{course?.courseTitle}</h2>
                     <h4 className="text-lg w-3/4 text-gray-300 mt-2">{course?.subTitle}</h4>
@@ -283,58 +281,58 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
                         <iframe src={course.videoTrailer} frameBorder="0"></iframe>
                     </div>
                     <p className="text-[20px] font-bold text-black dark:text-gray-300 text-start mt-4">
-                            {!isEnrolled?course.pricing == 'free' ? 'Free' : `₹ ${course.priceAmount}`:''}
-                        </p>
-                        {data?.data.role === 'student' && (
-    <div className='flex w-full justify-center flex-col '>
-        {isEnrolled ? (
-            <button disabled={true} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                Already Enrolled
-            </button>
-        ) : course.pricing === 'free' ? (
-            <button onClick={handleEnrollment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                Enroll Now
-            </button>
-        ) : (
-            <button onClick={handlePayment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
-                Buy Now
-            </button>
-        )}
-        <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
-    </div>
-)}
+                        {!isEnrolled ? course.pricing == 'free' ? 'Free' : `₹ ${course.priceAmount}` : ''}
+                    </p>
+                    {data?.data.role === 'student' && (
+                        <div className='flex w-full justify-center flex-col '>
+                            {isEnrolled ? (
+                                <button disabled={true} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                    Already Enrolled
+                                </button>
+                            ) : course.pricing === 'free' ? (
+                                <button onClick={handleEnrollment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                    Enroll Now
+                                </button>
+                            ) : (
+                                <button onClick={handlePayment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                    Buy Now
+                                </button>
+                            )}
+                            <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
+                        </div>
+                    )}
 
-                            
-                            <div className="z-10 text-center">
-      {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
+
+                    <div className="z-10 text-center">
+                        {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
         Subscribe to LearnUp's top courses
       </h1> */}
-      <ul className='text-start mt-2 p-3 bg-gray-300 dark:text-gray-200 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
-        <li>
-          <small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small>
-        </li>
-        <li>
-          <small><FaLock className='inline mr-2' /> Exclusive content access</small>
-        </li>
-        <li>
-          <small><FaSync className='inline mr-2' /> Auto-renewal option</small>
-        </li>
-        <li>
-          <small><FaUsers className='inline mr-2' /> For teams of 2 or more users</small>
-        </li>
-        <li>
-          <small><FaBook className='inline mr-2' /> 26,000+ fresh & in-demand courses</small>
-        </li>
-        <li>
-          <small><FaToolbox className='inline mr-2' /> Learning Engagement tools</small>
-        </li>
-      </ul>
-    </div>
-
-                       
+                        <ul className='text-start mt-2 p-3 bg-gray-300 dark:text-gray-200 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
+                            <li>
+                                <small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small>
+                            </li>
+                            <li>
+                                <small><FaLock className='inline mr-2' /> Exclusive content access</small>
+                            </li>
+                            <li>
+                                <small><FaSync className='inline mr-2' /> Auto-renewal option</small>
+                            </li>
+                            <li>
+                                <small><FaUsers className='inline mr-2' /> For teams of 2 or more users</small>
+                            </li>
+                            <li>
+                                <small><FaBook className='inline mr-2' /> 26,000+ fresh & in-demand courses</small>
+                            </li>
+                            <li>
+                                <small><FaToolbox className='inline mr-2' /> Learning Engagement tools</small>
+                            </li>
+                        </ul>
+                    </div>
 
 
-                        
+
+
+
 
 
 

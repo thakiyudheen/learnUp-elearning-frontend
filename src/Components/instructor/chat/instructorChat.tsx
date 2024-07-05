@@ -1,5 +1,3 @@
-
-
 import ChatList from '@/Components/common/chat/chatList';
 import ChatWindow from '@/Components/common/chat/chatWindow';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +7,7 @@ import { RootState } from '@/redux/store';
 import { getChatByUserIdAction } from '@/redux/store/actions/chat/getChatByUserIdAction';
 import { createMessageAction } from '@/redux/store/actions/chat/createMessageAction';
 import { getMessageByChatIdAction } from '@/redux/store/actions/chat/getMessageByChatIdAction';
-import { FaPersonWalkingDashedLineArrowRight } from 'react-icons/fa6';
+
 
 const InstructorChat: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -30,11 +28,14 @@ const InstructorChat: React.FC = () => {
         return id1 > id2 ? id1 + "_" + id2 : id2 + "_" + id1;
     };
 
-    const createNewChat = async (users: any, isOnline: boolean | undefined) => {
+    const createNewChat = async (users: any, isOnline: boolean | undefined,lastSeen:any) => {
         try {
+            
             const roomId = createPrivateRoomId(data.data._id, users?.participant?._id);
 
-            setCurrentChat({ ...users?.participant, chatId: users?.chatId, isOnline, roomId });
+           
+            
+            setCurrentChat({ ...users?.participant, chatId: users?.chatId, isOnline, roomId, lastSeen });
             setRoomId(roomId);
 
             const response = await dispatch(getMessageByChatIdAction({ chat: users.chatId }));
@@ -46,6 +47,7 @@ const InstructorChat: React.FC = () => {
             if (socket) {
                 socket.emit('join-room', roomId);
                 console.log(`Joined room ${roomId}`);
+                socket?.emit('seen-message', { sender: currentChat._id, chatId: users?.chatId });
             }
         } catch (error) {
             console.error(error);
@@ -74,18 +76,25 @@ const InstructorChat: React.FC = () => {
         setLoading(true)
         const response = await dispatch(getChatByUserIdAction({ userId: data.data._id }));
         if (response.payload && response.payload.success) {
+            console.log('the chat is ', response.payload.data)
+            const sortedData = response.payload.data.sort((a: any, b: any) => {
+                return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+              });
             const uniqueParticipants = new Set<string>();
-            const otherParticipants = response.payload.data.reduce((acc: any[], chat: any) => {
+            const otherParticipants = sortedData.reduce((acc: any[], chat: any) => {
                 chat.participants.forEach((participant: any) => {
                     if (participant._id !== data.data._id && !uniqueParticipants.has(participant._id)) {
                         uniqueParticipants.add(participant._id);
-                        acc.push({ chatId: chat._id, participant });
+                        acc.push({ chatId: chat._id, participant ,lastSeen: chat?.lastSeen,updatedAt:chat?.updatedAt});
                     }
                 });
                 return acc;
             }, []);
 
-            setParticipants(otherParticipants);
+            const sortedChats = otherParticipants.sort((a: any, b: any): number => {
+                return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+              });
+            setParticipants(sortedChats);
             setLoading(false)
         }
     };
@@ -104,6 +113,13 @@ const InstructorChat: React.FC = () => {
                 }
                 console.log(message)
                 setMessages((prevMessages) => [...prevMessages, message]);
+
+
+                // Mark the message as seen
+                if (message.sender !== data.data._id) {
+                    console.log('its working tehn what is theprooblrm')
+                    socket.emit('seen-message', { _id: message.sender._id, chat: currentChat.chatId });
+                }
             };
 
             const handleTypingEvent = (data: any) => {
@@ -136,7 +152,7 @@ const InstructorChat: React.FC = () => {
                 contentType:contentType
             };
             socket?.emit("send-message", newMessage);
-            await dispatch(createMessageAction(newMessage));
+            // await dispatch(createMessageAction(newMessage));
         }
     };
 
@@ -158,3 +174,5 @@ const InstructorChat: React.FC = () => {
 };
 
 export default InstructorChat;
+
+

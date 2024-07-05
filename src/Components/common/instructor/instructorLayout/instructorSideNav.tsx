@@ -63,14 +63,14 @@ const instructorSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }
               <FaBook className="mr-4 " />
               Courses
             </NavLink>
-            <NavLink to="students" className={({ isActive }) => getNavItemClass(isActive)}>
+            <NavLink to="my-students" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaUserGraduate className="mr-4" />
               Students
             </NavLink>
-            <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
+            {/* <NavLink to="instructors" className={({ isActive }) => getNavItemClass(isActive)}>
               <FaChalkboardTeacher className="mr-4" />
               Instructors
-            </NavLink>
+            </NavLink> */}
             <NavLink to="Assessment" className={({ isActive }) => getNavItemClass(isActive)}>
               <PiExam className="mr-4"/>
               Assessment

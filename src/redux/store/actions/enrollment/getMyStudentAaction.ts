@@ -9,21 +9,17 @@ interface EnrollmentQueryParams {
     userId?: string;
     page: number;
     limit?: number;
-    search?: string | null;
-    categories?: string[];
-    levels?: string[];
-    sort?: 'asc' | 'desc';
     instructorId ?:string;
   }
-export const getEnrollmentByIdAction = createAsyncThunk(
-    'user/getEnrollment',
+export const getMyStudentAction = createAsyncThunk(
+    'user/getmyStudent',
     async ( params : EnrollmentQueryParams , { rejectWithValue }) => {
         
         console.log('params',params);
         try {
          
-            const response = await api_client.get(`${course}getEnrollment-ById`,{params:params})
-            console.log('the respo',response)
+            const response = await api_client.get(`${course}get-myStudent`,{params:params})
+            
             if(response.data.success){
 
                 return response.data
@@ -33,9 +29,6 @@ export const getEnrollmentByIdAction = createAsyncThunk(
 				return rejectWithValue(response.data);
 
 			}
-
-
-
 
         } catch ( error : any ) {
             const e : any = error as AxiosError ;

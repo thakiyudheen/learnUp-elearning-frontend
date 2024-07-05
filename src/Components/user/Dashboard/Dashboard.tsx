@@ -54,6 +54,7 @@ const Dashboard = () => {
         setPieData(response3.payload.courses)
         setPayment(response4.payload.data)
         setPopularCourse(response2.payload.data)
+        console.log('what is the problem',response5.payload.data)
         setCompletedCourse(response5.payload.data.filter((el: any) => el.completionStatus == 'completed'))
         setMyStudents([...new Set(response5.payload.data.map((el: any) => el.userId))])
         console.log('the students', MyStudents)
@@ -99,7 +100,7 @@ const Dashboard = () => {
 
     <div className="min-h-screen bg-gray-100 dark:bg-base-100 text-white p-4 mt-[4rem]">
       {isLoading&& <LoadingIndicator/>}
-      <div>
+      <div> 
         <h1 className='font-bold mb-5 text-gray-700 dark:text-gray-400'>Dashboard</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -113,7 +114,7 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         {PopularCourse.map((course:any)=>
-          (<div className="card lg:card-side bg-white dark:bg-gray-800 shadow-xl">
+          (<div className="card  lg:card-side bg-white dark:bg-gray-800 shadow-xl">
             <figure>
               <img
                 src={course?.courseData?.courseThumbnail}
@@ -146,7 +147,7 @@ const Dashboard = () => {
 };
 
 const Card = ({ title, value, percentage, description, bgColor, icon }: { title: string, value: string, percentage?: string, description: string, bgColor: string, icon?: any }) => (
-  <div className={`px-4 py-7 rounded-lg ${bgColor}  shadow-lg dark:text-gray-500 text-gray-600`}>
+  <div className={`px-4 py-7  rounded-lg ${bgColor}  shadow-lg dark:text-gray-500 text-gray-600`}>
 
     <div className='flex items-center'>
       {icon}

@@ -8,7 +8,7 @@ import { FaPaperclip, FaPaperPlane, FaSmile, FaMicrophone, FaFileAlt, FaImage } 
 import Picker from 'emoji-picker-react';
 import { FileUpload } from '@/utils/cloudinary/imgVideoUpload';
 import { PdfUpload } from '@/utils/cloudinary/uploadPdf';
-import { FaDownload, FaSpinner,FaStop  } from 'react-icons/fa';
+import { FaDownload, FaSpinner, FaStop } from 'react-icons/fa';
 import { audioUpload } from '@/utils/cloudinary/audioUpoad';
 import { MdArrowBackIosNew } from "react-icons/md";
 
@@ -20,8 +20,8 @@ interface ChatWindowProps {
   onSendMessage: (message: string, contentType?: string) => void;
   currentChat: any;
   isTyping: any;
-  setRes:any;
-  isRes:boolean;
+  setRes: any;
+  isRes: boolean;
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -45,7 +45,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   const [downloading, setDownloading] = useState(null);
   // audio  ---------------------------------------
   const [recording, setRecording] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<any >(null);
+  const [audioUrl, setAudioUrl] = useState<any>(null);
   const mediaRecorderRef: any = useRef(null);
   const audioChunks: any = useRef([]);
 
@@ -57,15 +57,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorderRef.current = mediaRecorder;
 
-    mediaRecorder.ondataavailable = (event : any) => {
+    mediaRecorder.ondataavailable = (event: any) => {
       audioChunks.current.push(event?.data);
     };
 
-    mediaRecorder.onstop =async  () => {
-      const audioBlob : any = new Blob(audioChunks.current, { type: 'audio/wav' });
-      const url=await audioUpload(audioBlob)
+    mediaRecorder.onstop = async () => {
+      const audioBlob: any = new Blob(audioChunks.current, { type: 'audio/wav' });
+      const url = await audioUpload(audioBlob)
       setMessage(url)
-      console.log('the url ',url)
+      console.log('the url ', url)
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(url);
       audioChunks.current = [];
@@ -80,10 +80,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     setRecording(false);
   };
 
-  const sendAudio =async  () => {
+  const sendAudio = async () => {
     setMessage(audioUrl)
-    console.log('the main url which i want',message)
-    onSendMessage(message,'audio')
+    console.log('the main url which i want', message)
+    onSendMessage(message, 'audio')
     setMessage('')
     setAudioUrl(null);
   };
@@ -182,15 +182,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     socket?.emit('isTyping', { isTyping: true, roomId: currentChat?.roomId, sender: data?.data?._id })
   }
 
-
+  console.log('the last seen',currentChat)
   return (
     <>
       {currentChat ? (
         <div className="flex flex-col min-h-screen md:w-3/4 w-full">
           <div className="flex items-center justify-between border-b dark:bg-gray-800 border-gray-300 dark:border-gray-900 p-4 shadow-sm mt-[4rem]">
-          
+
             <div className="flex items-center ">
-            <MdArrowBackIosNew className='text-black   absolute  ' onClick={setRes(false)}  />
+              <MdArrowBackIosNew className='text-black   absolute  ' onClick={setRes(false)} />
               <img
                 src={currentChat?.profile?.avatar}
                 alt="Profile"
@@ -232,62 +232,63 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   <small className={`${getMessageSender(message) === currentUser._id ? "text-end relative right-2" : "text-start relative left-2"}`}>{new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
                 </div>
                 <div
-                  // className={` ${
-                  //   getMessageSender(message) === currentUser._id ? 'bg-blue-700 text-white rounded-l-full rounded-tr-full px-3 py-2 ' : 'bg-gray-500 dark:bg-gray-700 text-white rounded-r-full rounded-t-full px-3 py-2 '
-                  // }`}
                   className={`${message.contentType === 'text'
-                      ? getMessageSender(message) === currentUser._id
-                        ? 'bg-blue-700 text-white rounded-l-full rounded-tr-full px-3 py-2'
-                        : 'bg-gray-400 dark:bg-gray-700 text-white rounded-r-full rounded-t-full px-3 py-2'
-                      : getMessageSender(message) === currentUser._id ? 'bg-white dark:bg-blue-600 text-white rounded-l-lg rounded-tr-lg px-1 py-1'
-                        : 'bg-gray-400 dark:bg-gray-700 text-white rounded-lg px-1 py-1'
+                    ? getMessageSender(message) === currentUser._id
+                      ? 'bg-blue-700 text-white rounded-l-full rounded-tr-full px-3 py-2'
+                      : 'bg-gray-400 dark:bg-gray-700 text-white rounded-r-full rounded-t-full px-3 py-2'
+                    : getMessageSender(message) === currentUser._id ? 'bg-white dark:bg-blue-600 text-white rounded-l-lg rounded-tr-lg px-1 py-1'
+                      : 'bg-gray-400 dark:bg-gray-700 text-white rounded-lg px-1 py-1'
                     }`}
                 >
                   <div className="flex">
-                  {message.contentType === 'image' ? (
-  <img src={message.content} alt="Image" className="max-w-full h-[150px] rounded-lg" />
-) : message.contentType === 'video' ? (
-  <video src={message.content} controls className="max-w-full h-[150px] rounded-lg" />
-) : message.contentType === 'file' ? (
-  <div className="flex items-center p-2 border dark:border-gray-800 dark:bg-gray-800 rounded-lg">
-    <FaFileAlt className="w-8 h-8 mr-2 text-[12x]" /> {/* React icon for file */}
-    <div className="flex flex-col ">
-      <div className="text-xs text-gray-500 dark:text-gray-400">
-        <small>{message.content.split('/').pop()}</small>
-      </div>
-      <div className="text-xs text-gray-500 dark:text-gray-400">
-        {message.contentType.toUpperCase()}
-      </div>
-    </div>
-    <a
-      href={message.content}
-      download
-      onClick={() => handleDownloadClick(message.content, index)}
-      className="flex items-center text-blue-500 underline ml-2 mt-1"
-      target='_blank'
-    >
-      {downloading === index ? (
-        <FaSpinner className="mr-1 animate-spin" />
-      ) : (
-        <FaDownload className="mr-1" />
-      )}
-      {/* Download */}
-    </a>
-  </div>
-) : message.contentType === 'audio' ? (
-  
-  <div className="flex items-center">
-   
-    <audio controls src={message.content} className="  w-[200px]" />
-    {/* You can add additional controls or styling for the audio player if needed */}
-  </div>
- 
-) : (
-  message.content
-)}
+                    {message.contentType === 'image' ? (
+                      <img src={message.content} alt="Image" className="max-w-full h-[150px] rounded-lg" />
+                    ) : message.contentType === 'video' ? (
+                      <video src={message.content} controls className="max-w-full h-[150px] rounded-lg" />
+                    ) : message.contentType === 'file' ? (
+                      <div className="flex items-center p-2 border dark:border-gray-800 dark:bg-gray-800 rounded-lg">
+                        <FaFileAlt className="w-8 h-8 mr-2 text-[12x]" /> {/* React icon for file */}
+                        <div className="flex flex-col ">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                            <small>{message.content.split('/').pop()}</small>
+                          </div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                            {message.contentType.toUpperCase()}
+                          </div>
+                        </div>
+                        <a
+                          href={message.content}
+                          download
+                          onClick={() => handleDownloadClick(message.content, index)}
+                          className="flex items-center text-blue-500 underline ml-2 mt-1"
+                          target='_blank'
+                        >
+                          {downloading === index ? (
+                            <FaSpinner className="mr-1 animate-spin" />
+                          ) : (
+                            <FaDownload className="mr-1" />
+                          )}
+                          {/* Download */}
+                        </a>
+                      </div>
+                    ) : message.contentType === 'audio' ? (
+
+                      <div className="flex items-center">
+
+                        <audio controls src={message.content} className="  w-[200px]" />
+                        {/* You can add additional controls or styling for the audio player if needed */}
+                      </div>
+
+                    ) : (
+                      message.content
+                    )}
                   </div>
 
+                 
+
                 </div>
+                {getMessageSender(message) == currentUser._id&&message.recieverSeen&& <small>seen</small>}
+                
               </div>
             ))}
             <div ref={messagesEndRef} />
@@ -338,7 +339,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
               </div>
             )}
-            {/* {!previewUrl && (
+            {!previewUrl && (
               <>
                 <input
                   type="text"
@@ -355,58 +356,34 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                     <Picker onEmojiClick={handleEmojiClick} />
                   </div>
                 )}
-                <button className="ml-2 text-gray-500" onClick={() => {  }}>
-                  <FaMicrophone size={20} />
-                </button>
-                <button className="ml-2 bg-blue-700 text-white p-3 rounded-full" onClick={handleSend}>
-                  <FaPaperPlane />
-                </button>
-              </>)} */}
-                {!previewUrl && (
-        <>
-          <input
-            type="text"
-            placeholder="Type a message here..."
-            className="flex-1 pl-5 dark:text-gray-200 border dark:border-gray-800 border-gray-300 dark:bg-gray-700 bg-gray-300 focus:outline-none text-gray-800 rounded-full"
-            value={message}
-            onChange={(e) => { setMessage(e.target.value); handleTyping(); }}
-          />
-          <button className="ml-2 text-gray-500" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-            <FaSmile size={20} />
-          </button>
-          {showEmojiPicker && (
-            <div className="absolute bottom-16 right-4 bg-white dark:bg-gray-700 rounded-md shadow-lg p-2">
-              <Picker onEmojiClick={handleEmojiClick} />
-            </div>
-          )}
-          {audioUrl ? (
-            <div className="flex items-center">
-              <audio controls src={audioUrl} className="mr-2 ml-2" />
-              <button className="ml-2 bg-blue-700 text-white p-2 rounded-full" onClick={sendAudio}>
-                <FaPaperPlane />
-              </button>
-              <button className="ml-2 bg-red-600 text-white p-2 rounded-full" onClick={() => setAudioUrl(null)}>
-                Cancel
-              </button>
-            </div>
-          ) : (
-            <>
-              {recording ? (
-                <button className="ml-2 text-red-600" onClick={stopRecording}>
-                  <FaStop size={20} />
-                </button>
-              ) : (
-                <button className="ml-2 text-gray-500" onClick={startRecording}>
-                  <FaMicrophone size={20} />
-                </button>
-              )}
-              <button className="ml-2 bg-blue-700 text-white p-3 rounded-full" onClick={handleSend}>
-                <FaPaperPlane />
-              </button>
-            </>
-          )}
-        </>
-      )}
+                {audioUrl ? (
+                  <div className="flex items-center">
+                    <audio controls src={audioUrl} className="mr-2 ml-2" />
+                    <button className="ml-2 bg-blue-700 text-white p-2 rounded-full" onClick={sendAudio}>
+                      <FaPaperPlane />
+                    </button>
+                    <button className="ml-2 bg-red-600 text-white p-2 rounded-full" onClick={() => setAudioUrl(null)}>
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {recording ? (
+                      <button className="ml-2 text-red-600" onClick={stopRecording}>
+                        <FaStop size={20} />
+                      </button>
+                    ) : (
+                      <button className="ml-2 text-gray-500" onClick={startRecording}>
+                        <FaMicrophone size={20} />
+                      </button>
+                    )}
+                    <button className="ml-2 bg-blue-700 text-white p-3 rounded-full" onClick={handleSend}>
+                      <FaPaperPlane />
+                    </button>
+                  </>
+                )}
+              </>
+            )}
 
 
 

@@ -49,13 +49,13 @@ const Dashboard = () => {
       setProfit(data?.data.profit)
       if (response.payload && response.payload.success) {
         setInstructor(response.payload.data.totalItems)
-        setStudents(response.payload.data.totalItems)
+        setStudents(response1.payload.data.totalItems)
         setCourse(response2.payload.data)
         setPieData(response3.payload.courses)
         setPayment(response4.payload.data)
+        console.log('the students', response5.payload)
         setCompletedCourse(response5.payload.data.filter((el: any) => el.completionStatus == 'completed'))
         setMyStudents([...new Set(response5.payload.data.map((el: any) => el.userId))])
-        console.log('the students', MyStudents)
         setLoading(false)
 
       }

@@ -237,7 +237,7 @@ const VideoLayout: React.FC = () => {
                             </div>
                         ))}
                     </div> */}
-                    <div className="mt-4 space-y-4 overflow-y-scroll max-h-96 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                    <div className="mt-4 space-y-4 overflow-y-scroll max-h-40 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                         {(showAll ? comments : comments?.slice(0, 5))?.map((comment: any, index: any) => (
                             <div key={index} className="flex items-start space-x-4 m-5">
                                 <img
