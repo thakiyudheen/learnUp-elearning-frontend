@@ -6,9 +6,9 @@ import { deleteObject, getObject } from '@/utils/localStorage';
 import { createPaymentAction } from '@/redux/store/actions/Payment/createPaymentAction';
 import { useAppDispatch } from '@/hooks/hooke';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
-import { useSocket } from '@/context/socketContext';
+import { createSubsciptionPaymentAction } from '@/redux/store/actions/Payment/createSubscriptionPaymentAction';
 
-const PaymentSuccess: React.FC = () => {
+const SubscriptionSuccess: React.FC = () => {
   const dispatch= useAppDispatch()
   const navigate = useNavigate()
   const isFirstRun = useRef(true);
@@ -36,14 +36,13 @@ const PaymentSuccess: React.FC = () => {
 
     const createPaymentData = {
       userId: paymentSession.userId,
-      instructorId: paymentSession.instructorId,
-      courseId: paymentSession.courseId,
       method: "card",
       status: "completed",
-      amount: paymentSession.amount
+      amount: paymentSession.amount,
+      subscriptionType: paymentSession.subscriptionType,
     };
 
-    const response = await dispatch(createPaymentAction(createPaymentData))
+    const response = await dispatch(createSubsciptionPaymentAction(createPaymentData))
     if(!response?.payload?.success){
       throw new Error('payment creation filed')
     }
@@ -59,7 +58,7 @@ const PaymentSuccess: React.FC = () => {
       
       const response = await dispatch(createChatAction({
     participants:[studentId,instructorId]
-  }))
+   }))
   
   
 
@@ -96,4 +95,4 @@ const PaymentSuccess: React.FC = () => {
   );
 };
 
-export default PaymentSuccess;
+export default SubscriptionSuccess;

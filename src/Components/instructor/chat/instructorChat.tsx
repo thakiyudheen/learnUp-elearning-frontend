@@ -47,7 +47,7 @@ const InstructorChat: React.FC = () => {
             if (socket) {
                 socket.emit('join-room', roomId);
                 console.log(`Joined room ${roomId}`);
-                socket?.emit('seen-message', { sender: currentChat._id, chatId: users?.chatId });
+                socket?.emit('seen-message', { sender: currentChat._id, chat: users?.chatId });
             }
         } catch (error) {
             console.error(error);
@@ -116,10 +116,10 @@ const InstructorChat: React.FC = () => {
 
 
                 // Mark the message as seen
-                if (message.sender !== data.data._id) {
-                    console.log('its working tehn what is theprooblrm')
-                    socket.emit('seen-message', { _id: message.sender._id, chat: currentChat.chatId });
-                }
+                // if (message.sender !== data.data._id) {
+                //     console.log('its working tehn what is theprooblrm')
+                //     socket.emit('seen-message', { _id: message.sender._id, chat: currentChat.chatId });
+                // }
             };
 
             const handleTypingEvent = (data: any) => {
@@ -152,7 +152,7 @@ const InstructorChat: React.FC = () => {
                 contentType:contentType
             };
             socket?.emit("send-message", newMessage);
-            // await dispatch(createMessageAction(newMessage));
+            await dispatch(createMessageAction(newMessage));
         }
     };
 

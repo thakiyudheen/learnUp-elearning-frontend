@@ -4,21 +4,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { payment } from "../../../../common/endPoint";
 
-interface data {
-    courseName?: string;
-    courseThumbnail?: string;
-    courseId?: string;
-    amount: number | string;
-    userId: string;
-    subscriptionType?:string,
-    
-}
 
-export const createSessionAction = createAsyncThunk(
-    'user/create-session',
-    async (data: data , { rejectWithValue }) => {
+export const createSubsciptionPaymentAction = createAsyncThunk(
+    'user/create-payment',
+    async ( data : any , { rejectWithValue }) => {
         try {
-            const response = await api_client.post(`${payment}create-session`,data,config)
+            const response = await api_client.post(`${payment}create-subscriptionPayment`,data,config)
 
             if(response.data.success){
 

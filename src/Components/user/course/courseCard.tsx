@@ -195,40 +195,10 @@ const CourseCards: React.FC = () => {
         <div className="grid grid-cols-1 w-3/4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
           {filteredAndSortedCourses.map((course: any, index: any) => {
             return (
-              // <div
-              //   key={index}
-              //   onClick={() => navigate('/course', { state: course?._id })}
-              //   className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden shadow-lg m-4 md:h-[26rem] border dark:border-gray-800"
-              // >
-              //   <img className="w-full h-48 object-cover" src={course.courseThumbnail} alt={course.courseTitle} />
-              //   <div className="px-6 py-4">
-              //     <div className="flex items-center justify-between">
-              //       {/* <small><span className="bg-blue-500  text-gray-800 text-xs font-semibold px-3 py-1 rounded-full">{course?.category?.categoryName}</span></small> */}
-              //       <span className="text-gray-500 text-xs"></span>
-              //     </div>
-              //     <div className='flex flex-col justify-between flex-grow'>
-
-              //     <div className="font-bold text-xl mt-2 mb-2">{course.courseTitle}</div>
-              //     <small className="text-gray-700 text-base dark:text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</small>
-              //     <div className="flex items-center justify-between mt-4">
-              //       <div className='flex items-center'>
-              //         <img className="w-8 h-8 rounded-full mr-2" src={course.instructorRef.profile.avatar} alt="Instructor" />
-              //         <small className="text-gray-500 text-sm">{course?.instructorRef?.firstName} </small>
-              //       </div>
-              //       <div className='flex '>
-
-              //         <div className="flex items-center ">
-              //           <span className="text-blue-500 text-lg font-bold">₹ {course?.priceAmount}</span>
-              //         </div>
-              //       </div>
-              //     </div>
-              //     </div>
-              //   </div>
-              // </div>
               <div
                 key={index}
                 onClick={() => navigate('/course', { state: course?._id })}
-                className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden shadow-lg  md:h-[26rem] border dark:border-gray-800 cursor-pointer"
+                className="min-w-md dark:bg-gray-800 bg-white rounded-lg overflow-hidden m-3 shadow-lg transform transition-transform hover:scale-105  md:h-[26rem] border dark:border-gray-800 cursor-pointer"
               >
                 <img className="w-full h-48 object-cover" src={course.courseThumbnail} alt={course.courseTitle} />
                 <div className="px-6 py-4">

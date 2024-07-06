@@ -5,6 +5,7 @@ import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
 import { RootState } from '@/redux/store';
+import { ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { loadStripe } from '@stripe/stripe-js'
 import { createSessionAction } from '@/redux/store/actions/Payment/createSessionAction';
@@ -286,30 +287,30 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
                     {data?.data.role === 'student' && (
                         <div className='flex w-full justify-center flex-col '>
                             {isEnrolled ? (
-                                <button disabled={true} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                <button disabled={true} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded-lg hover:bg-white bg-blue-700">
                                     Already Enrolled
                                 </button>
                             ) : course.pricing === 'free' ? (
-                                <button onClick={handleEnrollment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                <button onClick={handleEnrollment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded-lg hover:bg-white bg-blue-700">
                                     Enroll Now
                                 </button>
                             ) : (
-                                <button onClick={handlePayment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded hover:bg-white bg-blue-700">
+                                <button onClick={handlePayment} className="border transition-all duration-300 hover:border-blue-700 hover:text-blue-600 text-white font-semibold px-4 py-2 mt-4 w-[100%] rounded-lg hover:bg-white bg-blue-700">
                                     Buy Now
                                 </button>
                             )}
-                            <small className="mt-2 text-center">30-Day Money-Back Guarantee</small>
+                            <small className="mt-2 text-center text-[11px]">30-Day Money-Back Guarantee</small>
                         </div>
                     )}
 
 
                     <div className="z-10 text-center">
-                        {/* <h1 className='text-center font-bold text-[17px] mt-4 mb-4'>
-        Subscribe to LearnUp's top courses
-      </h1> */}
+                        <div>
+                            <hr className='mt-1 mb-3' />
+                        </div>
                         <ul className='text-start mt-2 p-3 bg-gray-300 dark:text-gray-200 text-gray-700 border space-y-2 dark:bg-gray-700 rounded-md'>
                             <li>
-                                <small><FaRupeeSign className='inline mr-2' /> Monthly fee required</small>
+                                <small><FaRupeeSign className='inline mr-2 ' /> Monthly fee required</small>
                             </li>
                             <li>
                                 <small><FaLock className='inline mr-2' /> Exclusive content access</small>

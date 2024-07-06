@@ -17,12 +17,14 @@ module.exports = {
       },
     },
     fontFamily: {
-      Poppins: ["var(--font-Poppins)"],
+      Poppins: ["Poppins", "sans-serif"],
       Titillium: ['"Titillium Web"', 'sans-serif'],
       josefin:['"Josefin Sans"', 'sans-serif'],
       monoko :["Source Code Pro", 'monospace']
     },
+   
     fontSize:{
+      custom: '15px',
        xsmall:["1rem"],
        small:["3rem"],
        medium:["4rem"],

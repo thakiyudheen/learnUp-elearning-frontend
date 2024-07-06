@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
+
 @layer base {
   :root {
     --font-Josefin: 'Josefin Sans', sans-serif;
@@ -91,29 +92,3 @@
   margin: 0;
 }
 
-
-
-
-/* input[type=date]:required:invalid::-webkit-datetime-edit {
-  color: transparent;
-}
-input[type=date]:focus::-webkit-datetime-edit {
-  color: black !important;
-}
-
-input[type=date]::-webkit-datetime-edit-text {
-  -webkit-appearance: none;
-  display: none;
-}
-input[type=date]::-webkit-datetime-edit-month-field{
-  -webkit-appearance: none;
-  display: none;
-}
-input[type=date]::-webkit-datetime-edit-day-field {
-  -webkit-appearance: none;
-  display: none;
-}
-input[type=date]::-webkit-datetime-edit-year-field {
-  -webkit-appearance: none;
-  display: none;
-} */

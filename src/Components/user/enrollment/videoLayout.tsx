@@ -11,6 +11,8 @@ import { getReviewAction } from '@/redux/store/actions/review/getReviewsAction';
 import { createReviewAction } from '@/redux/store/actions/review/createReviewAction';
 import { ToastContainer, toast } from 'react-toastify';
 import LoadingIndicator from '@/Components/common/skelton/loading';
+import { generateCertificate } from '@/utils/generatePdf/generatePdf';
+import { FiDownloadCloud } from "react-icons/fi";
 
 const VideoLayout: React.FC = () => {
     const { data, error } = useAppSelector((state: RootState) => state.user)
@@ -31,6 +33,8 @@ const VideoLayout: React.FC = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [visibleComments, setVisibleComments] = useState<any>([]);
     const navigate=useNavigate()
+    const [examCompleted , setExamCompleted]= useState<boolean>(false)
+    
 
     const handleShowMore = () => {
         setShowMore(!showMore);
@@ -55,8 +59,8 @@ const VideoLayout: React.FC = () => {
                 setCurrentDescription(response.payload?.description);
                 const response1 = await dispatch(getProgressByIdAction({ userId: data?.data?._id, courseId: location.state }))
                 if (response1?.payload?.success) {
-                    console.log('progress is working');
-
+                    console.log('progress is working',response1.payload.data.ExamCompletion);
+                    setExamCompleted(response1.payload.data.ExamCompletion)
                     setCompletedLessons(response1.payload.data.progress.completedLessons)
                     console.log('completed lesson', completedLessons)
                 }
@@ -222,21 +226,6 @@ const VideoLayout: React.FC = () => {
                         />
                         <a className='py-1 px-5 rounded-lg dark:bg-gray-600 bg-gray-400 font-semibold ml-3' onClick={handlePost}> Post </a>
                     </div>
-                    {/* <div className="mt-4 space-y-4">
-                        { comments.map((comment:any , index:any) => (
-                            <div key={index} className="flex items-start space-x-4 m-3">
-                                <img
-                                    src={comment?.userId?.profile?.avatar}
-                                    alt="Avatar"
-                                    className="w-10 h-10 rounded-full"
-                                />
-                                <div className=''>
-                                    <div className="font-semibold text-gray-700 dark:text-gray-300 text-[14px]">{comment?.userId?.firstName}</div>
-                                    <small className="text-gray-600 dark:text-gray-400">{comment?.comment}</small>
-                                </div>
-                            </div>
-                        ))}
-                    </div> */}
                     <div className="mt-4 space-y-4 overflow-y-scroll max-h-40 " style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                         {(showAll ? comments : comments?.slice(0, 5))?.map((comment: any, index: any) => (
                             <div key={index} className="flex items-start space-x-4 m-5">
@@ -296,9 +285,15 @@ const VideoLayout: React.FC = () => {
                     ))}
                     {completedLessons.length === course?.lessons?.length&&(
                         <li className='w-full flex justify-center'>
-                            <button onClick={()=>navigate('/student/examination',{state:course?._id})} className='border border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
-                                Take Exam
+                            {!examCompleted?
+                            (<button onClick={()=>navigate('/student/examination',{state:course?._id})} className='border border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
+                            Take Exam
+                        </button>):(
+                            <button  onClick={async() => {generateCertificate(data.data.firstName + ' ' + data.data.lastName, 'HTML', '14/07/2024')}} className='border flex justify-center items-center border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
+                               <FiDownloadCloud className='text-blue-700 mr-2 size-7' />  Certificate
                             </button>
+                        )}
+                            
                         </li>
                     )}
                 </ul>

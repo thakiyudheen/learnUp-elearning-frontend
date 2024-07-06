@@ -33,6 +33,8 @@ import UserDetails from './Components/user/profile/UserDetails';
 import Profile from './Pages/student/profile';
 import PaymentSuccess from './Pages/payment/paymentSuccess';
 import { toast } from 'react-toastify';
+import SubscriptionPage from './Components/user/subscription/subscription';
+import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
 
 
 
@@ -134,6 +136,7 @@ function App() {
         <Route path="/resetPassword" element={<PublicRoute element={<ResetPassword/>}/> } />
         <Route path="/confirmMail" element={<PublicRoute element={<ConfirmEmail/>}/> } />
         {/* <Route path="/course-listing" element={<PromoSection/> } /> */}
+        <Route path="/subscription" element={<SubscriptionPage/> } />
 
 
         <Route path="/course" element={<CoursePage/> } />
@@ -146,6 +149,7 @@ function App() {
         <Route path="*" element={<NotFontError/>} />
         <Route path="/user-profile" element={<Profile/>} />
         <Route path="/payment-success" element={<PaymentSuccess/>} />
+        <Route path="/subscription-success" element={<SubscriptionSuccess/>} />
 
         
          

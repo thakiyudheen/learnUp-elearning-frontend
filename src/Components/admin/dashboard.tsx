@@ -16,6 +16,7 @@ import {
 import { getMoreEnrolledCourseAction } from '@/redux/store/actions/enrollment/getMoreEnrolledCourseAction';
 import { getAllCourseAction } from '@/redux/store/actions/course/getAllCourseAction';
 import { getAllPaymentAction } from '@/redux/store/actions/Payment/getAllPaymentAction';
+import LoadingIndicator from '../common/skelton/loading';
 
 
 const COLORS = ['#336699', 'gray', '#003366', '#FF8042'];
@@ -27,16 +28,19 @@ const Dashboard = () => {
   const [course, setCourse] = useState<any>([])
   const [ pieData,setPieData]=useState<any>([])
   const [ payment,setPayment]=useState<any>([])
+  const [isLoading ,setLoading]= useState<boolean>(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
 
     const getData = async () => {
+      
+      setLoading(true)
       const response: any = await dispatch(getAllInstructorsAction({}))
       const response1: any = await dispatch(getAllStudentAction({}))
       const response2 = await dispatch(getMoreEnrolledCourseAction())
       const response3 = await dispatch(getAllCourseAction({}))
       const response4=await dispatch(getAllPaymentAction({}))
-      console.log('its payment data',response4.payload)
+      console.log('its payment data',response2.payload.data)
       setProfit(data?.data.profit)
       if (response.payload && response.payload.success) {
         setInstructor(response.payload.data.totalItems)
@@ -44,6 +48,7 @@ const Dashboard = () => {
         setCourse(response2.payload.data)
         setPieData(response3.payload.courses)
         setPayment(response4.payload.data)
+        setLoading(false)
       }
     }
     getData()
@@ -80,6 +85,7 @@ const Dashboard = () => {
   return (
 
     <div className="min-h-screen bg-gray-100 dark:bg-base-100 text-white p-4">
+      {isLoading&&<LoadingIndicator/>}
       <div>
         <h1 className='font-bold mb-5 text-gray-700 dark:text-gray-400'>Dashboard</h1>
       </div>
@@ -90,8 +96,8 @@ const Dashboard = () => {
         {/* <Card title="Followers" value="+91" description="Just updated" bgColor="bg-red-700" /> */}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-        <ChartCard title="Sales By Day" data={course} />
-        <ChartCardPie title="Sales By Day" data={categories} />
+        <ChartCard title="Popular Course" data={course} />
+        <ChartCardPie title="Category" data={categories} />
         {/* <ChartCard title="User Joined" /> */}
         {/* <ChartCard title="Completed Tasks" /> */}
       </div>
@@ -153,7 +159,7 @@ const ChartCard = ({ title, data }: { title: string, data: any }) => (
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 20, right: 50, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="courseData.priceAmount" />
+          <XAxis type="category" dataKey="courseData.courseTitle" />
           <YAxis type="number" dataKey="count" />
           <Tooltip />
           <Legend />

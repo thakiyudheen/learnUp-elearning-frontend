@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
 
   return (
     // Wrap the entire Navbar in a container with fixed position
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-50 font-Poppins ">
       <div className={`wrapper flex justify-between items-center ${theme == 'light' ? 'bg-white' : 'bg-gray-800'} h-[65px] shadow-lg font-sans relative z-10`}>
         <div className="logo">
           <img src={LearnUp} className="h-[70px] w-[150px] md:ml-[2rem]" alt="LearnUp Logo" />
@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
                 className={`text-sm rounded-md px-3 py-1 text-blue-600 font-bold ${selected === buttonName && 'bg-gray-500'} ${selected === buttonName && theme=='light'&&'md:bg-gray-300'} ${theme=='light'?'hover:bg-gray-200':'hover:bg-gray-700'} ${theme !== 'light' && 'bg-gray-800'  } ${theme !== 'light' && 'text-white'}`}
                 onClick={() => handleButtonClick(buttonName)}
               >
-                {buttonName}
+               {buttonName} 
               </button>
             </li>
           ))}
@@ -93,12 +93,12 @@ const Navbar: React.FC = () => {
         {!data?.data?(<ul className="hidden md:flex md:items-center md:space-x-4 mr-10">
           <li className="pl-1">
             <button onClick={() => navigate('/login')} className={`text-sm font-semi-bold rounded-md px-3 py-1  border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 ${theme=='light'?'bg-white':'bg-gray-800'}`}>
-              Login
+              <small>Login</small>
             </button>
           </li>
           <li className="pl-1">
             <button onClick={() => navigate('/enrollment')} className="text-sm rounded-md px-3 py-1 bg-blue-500 text-white hover:bg-blue-600 border border-blue-500 hover:text-white hover:border-blue-600">
-              Signup
+              <small>Signup</small>
             </button>
           </li>
         </ul>):<DropdownMenu/>}

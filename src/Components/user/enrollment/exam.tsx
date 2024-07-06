@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { getAllAssessmentAction } from '@/redux/store/actions/assessment/getAllAssessment';
 import ExamComplete from '../../../assets/enrollment/exam-completed.svg';
 import { RootState } from '@/redux/store';
-import { downloadCertificateAction } from '@/redux/store/actions/assessment/downloadCertificateAction';
+import { FiDownloadCloud } from "react-icons/fi";
 import { generateCertificate } from '@/utils/generatePdf/generatePdf';
 import { updateEnrollmentAction } from '@/redux/store/actions/enrollment/updateEnrollmentAction';
 
@@ -47,6 +47,7 @@ const QuizComponent: React.FC = () => {
         const getData = async () => {
             const response = await dispatch(getAllAssessmentAction({ courseId: location.state }));
             if (response.payload.success) {
+                console.log()
                 setQuestions(response.payload.data[0]?.questions || []);
             }
         };
@@ -132,6 +133,7 @@ const QuizComponent: React.FC = () => {
                             <img src={ExamComplete} alt="" className='h-[15rem]' />
                         </div>
                         <div>
+                            
                             {calculateScore() > 40 ? (
                                 <button
                                     onClick={async() => {generateCertificate(data.data.firstName + ' ' + data.data.lastName, 'HTML', '14/07/2024')
@@ -144,7 +146,7 @@ const QuizComponent: React.FC = () => {
 
                             ) : (
                                 <button onClick={() => {
-                                    navigate('/view-video',{state:location.state})
+                                    navigate('/student/view-video',{state:location.state})
 
                                 }} className='py-1 px-5 border border-[red] text-[red] rounded-lg hover:bg-[red] hover:text-white'>
                                     Retry Exam
@@ -153,6 +155,12 @@ const QuizComponent: React.FC = () => {
 
 
                         </div>
+                        <button onClick={() => {
+                                    navigate('/student/view-video',{state:location.state})
+
+                                }} className='border border-[red] text-[red] px-4 py-1 mt-3 rounded-lg'>
+                                cancel
+                            </button>
 
                     </div>
                 )}

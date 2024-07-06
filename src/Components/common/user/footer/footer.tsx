@@ -4,7 +4,7 @@ import { useTheme } from '../../../ui/theme-provider';
 const Footer: React.FC = () => {
     const { theme } = useTheme();
   return (
-    <footer className={`${theme=='light'?'bg-white':'bg-dark'}  p-8 md:p-8 lg:p-16  ${theme=='light'?'text-gray-700': 'md:text-gray-100'}  text-[14px] font-sans`}>
+    <footer className={`${theme=='light'?'bg-white':'bg-dark'}  font-Poppins p-8 md:p-8 lg:p-16  ${theme=='light'?'text-gray-700': 'md:text-gray-100'}  text-[14px] font-sans`}>
       <div className={`container mx-auto flex flex-col lg:flex-row justify-between ${theme=='light'?'bg-gray-200': 'bg-gray-800'}  md:p-[3rem] rounded-tl-[2rem] p-4 rounded-tr-[2rem]`}>
         <div className="mb-6 lg:mb-0">
           {/* <img src="/logo.png" alt="LearnUp" className="h-10 mb-4" /> Ensure the path is correct */}
