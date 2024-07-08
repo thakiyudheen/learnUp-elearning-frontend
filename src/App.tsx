@@ -29,6 +29,7 @@ import Profile from './Pages/student/profile';
 import PaymentSuccess from './Pages/payment/paymentSuccess';
 import SubscriptionPage from './Components/user/subscription/subscription';
 import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
+import ReApply from './Components/auth/reapply/ReApply';
 
 
 
@@ -38,7 +39,8 @@ function App() {
   const dispatch = useAppDispatch()
 
   const { data , error} = useAppSelector((state: RootState) => state.user)
-
+ console.log(error);
+ 
   const renderInstructorRoutes = () => {
     if (data?.data.isReject) {
       return <RejectPage/>;
@@ -108,7 +110,7 @@ function App() {
 						/>}
           
         />
-         <Route
+         {/* <Route
 					path="/course-listing"
           element={
 					<Protected
@@ -116,7 +118,7 @@ function App() {
 							element={<PromoSection/>}
 						/>}
           
-        />
+        /> */}
 
         {/* pubic routes  */}
         <Route path="/login" element={<PublicRoute element={<Login/>}/> } />
@@ -129,8 +131,10 @@ function App() {
         <Route path="/enrollment" element={<PublicRoute element={<Enrollment/>}/> } />
         <Route path="/resetPassword" element={<PublicRoute element={<ResetPassword/>}/> } />
         <Route path="/confirmMail" element={<PublicRoute element={<ConfirmEmail/>}/> } />
-        {/* <Route path="/course-listing" element={<PromoSection/> } /> */}
+        <Route path="/course-listing" element={<PromoSection/> } />
         <Route path="/subscription" element={<SubscriptionPage/> } />
+        <Route path="/reapply" element={<ReApply/> } />
+
 
 
         <Route path="/course" element={<CoursePage/> } />
@@ -144,6 +148,7 @@ function App() {
         <Route path="/user-profile" element={<Profile/>} />
         <Route path="/payment-success" element={<PaymentSuccess/>} />
         <Route path="/subscription-success" element={<SubscriptionSuccess/>} />
+        {/* <Route path="/course-listing" element={<CourseListing/>} /> */}
 
         
          

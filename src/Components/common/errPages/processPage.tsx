@@ -12,7 +12,7 @@ const ProcessingPage: React.FC = () => {
         src="https://lottie.host/02a55678-c52e-461d-b662-81565a3d67f5/m54wbccbib.json" 
         background="transparent" 
         speed=".5" 
-        style={{ width: '1500px', height: '150px' }} 
+        style={{ width: '150px', height: '150px' }} 
         loop 
         autoplay
       ></dotlottie-player>

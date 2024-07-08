@@ -6,7 +6,7 @@ import { deleteObject, getObject } from '@/utils/localStorage';
 import { createPaymentAction } from '@/redux/store/actions/Payment/createPaymentAction';
 import { useAppDispatch } from '@/hooks/hooke';
 import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
-import { useSocket } from '@/context/socketContext';
+// import { useSocket } from '@/context/socketContext';
 
 const PaymentSuccess: React.FC = () => {
   const dispatch= useAppDispatch()
@@ -59,8 +59,8 @@ const PaymentSuccess: React.FC = () => {
       
       const response = await dispatch(createChatAction({
     participants:[studentId,instructorId]
-  }))
-  
+   }))
+  console.log(response)
   
 
   }

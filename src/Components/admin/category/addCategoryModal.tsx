@@ -36,6 +36,8 @@ const AddCategory: React.FC<AddCategoryProps> = ({onClose , handleEdit }) => {
     const [isError ,setError]= useState<boolean>(false)
     const [isLoading , setLoading] = useState<boolean>(false)
 
+    console.log(open,isLoading)
+
     const initialValues: FormValues = { categoryName: '' };
 
     const handleSubmit = async ( data : {categoryName : string} ) => {

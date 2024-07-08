@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import InputField from "../../common/form-input/inputField"; // Adjust the path as needed
 import { useTheme } from "../../ui/theme-provider";
 import { useAppDispatch } from "@/hooks/hooke";
-import { useNavigate } from "react-router-dom";
 import { editCategoryAction } from "@/redux/store/actions/course/editCategoryAction";
 import { findCategoryAction } from "@/redux/store/actions/course/findCategoryAction";
 import LoadingIndicator from "@/Components/common/skelton/loading";
@@ -33,11 +32,11 @@ const EditCategory: React.FC<AddCategoryProps> = ({onClose , data ,handleEditCat
     const { theme } = useTheme();
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [isError , setError ] = useState<boolean>(false)
     const [isLoading ,setLoading]= useState<boolean>(false)
     
-
+    console.log(open)
     const handleSubmit = async ( updated :{categoryName: string}) =>{
         
         setLoading(true)

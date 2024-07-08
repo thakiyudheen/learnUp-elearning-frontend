@@ -18,6 +18,8 @@ const YourComponent: React.FC = () => {
     const [ isLoading ,setLoading ] = useState<boolean>(false)
     const navigate = useNavigate()
   
+    console.log(ErrorMessage,isLoading,Field);
+    
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Email is required'),
   });
@@ -78,7 +80,7 @@ const YourComponent: React.FC = () => {
       </div>
 
       
-      <div className="md:w-[40%] p-15 md:order-2 md:order-1">
+      <div className="md:w-[40%] p-15 md:order-2">
         <img
           src={confirmImg} 
           alt="Your Image"

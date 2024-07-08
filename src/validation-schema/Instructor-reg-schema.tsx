@@ -23,7 +23,7 @@ const InstructorSchema = Yup.object().shape({
   profession: Yup.string().required('Profession is required'),
   qualification: Yup.string().required('Qualification is required'),
   social: Yup.string().url('Invalid URL'),
-  cv: Yup.mixed().required('Document is required').nullable(),
+  cv: Yup.mixed().required('Document is required'),
 });
 
 export default InstructorSchema ;

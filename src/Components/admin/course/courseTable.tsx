@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface InstructorRef {
-  firstName: string;
-}
+// interface InstructorRef {
+//   firstName: string;
+// }
 
-interface Category {
-  categoryName: string;
-}
+// interface Category {
+//   categoryName: string;
+// }
 
 interface CourseTableProps {
   data?: any ;
@@ -17,6 +17,8 @@ interface CourseTableProps {
 
 const CourseTable: React.FC<CourseTableProps> = ({ data, getPaginatedData, handleUpdate }) => {
   const navigate = useNavigate();
+  console.log(data);
+  
 
   return (
     <table className="table table-zebra">

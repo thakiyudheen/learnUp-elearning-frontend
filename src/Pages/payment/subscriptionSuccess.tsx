@@ -40,6 +40,8 @@ const SubscriptionSuccess: React.FC = () => {
       status: "completed",
       amount: paymentSession.amount,
       subscriptionType: paymentSession.subscriptionType,
+      chatId : paymentSession.chatId, 
+      instructorId : paymentSession.instructorId
     };
 
     const response = await dispatch(createSubsciptionPaymentAction(createPaymentData))
@@ -47,22 +49,11 @@ const SubscriptionSuccess: React.FC = () => {
       throw new Error('payment creation filed')
     }
     console.log('instructor id',paymentSession.instructorId)
-    createChat(paymentSession.userId,paymentSession.instructorId)
     deleteObject('payment_session')
 
   }
 
-    // crete chat -----------------
-    const createChat =async (studentId:string,instructorId: string)=>{
-      console.log('create chat is working');
-      
-      const response = await dispatch(createChatAction({
-    participants:[studentId,instructorId]
-   }))
   
-  
-
-  }
   return (
     <>
       <Navbar />

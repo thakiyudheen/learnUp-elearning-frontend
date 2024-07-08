@@ -7,6 +7,8 @@ import { RootState } from '@/redux/store';
 import { getChatByUserIdAction } from '@/redux/store/actions/chat/getChatByUserIdAction';
 import { createMessageAction } from '@/redux/store/actions/chat/createMessageAction';
 import { getMessageByChatIdAction } from '@/redux/store/actions/chat/getMessageByChatIdAction';
+import { TiInfo } from "react-icons/ti";
+import { useNavigate } from 'react-router-dom';
 
 
 const InstructorChat: React.FC = () => {
@@ -23,19 +25,22 @@ const InstructorChat: React.FC = () => {
     const [isResponsive,setResponsive]=useState<boolean>(false)
     const [isRes,setRes]=useState<boolean>(false)
     const [isLoading,setLoading]=useState<boolean>(false)
+    const  navigate = useNavigate()
+
 
     const createPrivateRoomId = (id1: string, id2: string) => {
         return id1 > id2 ? id1 + "_" + id2 : id2 + "_" + id1;
     };
 
-    const createNewChat = async (users: any, isOnline: boolean | undefined,lastSeen:any) => {
+    const createNewChat = async (users: any, isOnline: boolean | undefined,lastSeen:any,subscriptionType:any) => {
         try {
             
+            console.log('create chat ',subscriptionType)
             const roomId = createPrivateRoomId(data.data._id, users?.participant?._id);
 
            
             
-            setCurrentChat({ ...users?.participant, chatId: users?.chatId, isOnline, roomId, lastSeen });
+            setCurrentChat({ ...users?.participant, chatId: users?.chatId, isOnline, roomId, lastSeen,subscriptionType });
             setRoomId(roomId);
 
             const response = await dispatch(getMessageByChatIdAction({ chat: users.chatId }));
@@ -85,7 +90,7 @@ const InstructorChat: React.FC = () => {
                 chat.participants.forEach((participant: any) => {
                     if (participant._id !== data.data._id && !uniqueParticipants.has(participant._id)) {
                         uniqueParticipants.add(participant._id);
-                        acc.push({ chatId: chat._id, participant ,lastSeen: chat?.lastSeen,updatedAt:chat?.updatedAt});
+                        acc.push({ chatId: chat._id, participant ,lastSeen: chat?.lastSeen,updatedAt:chat?.updatedAt,subscriptionType:chat?.subscriptionType});
                     }
                 });
                 return acc;
@@ -157,18 +162,40 @@ const InstructorChat: React.FC = () => {
     };
 
     return (
-        <div className="flex h-screen overflow-y-hidden">
+        <div className="flex h-screen overflow-y-hidden dark:bg-base-300">
+            
             <ChatList onlineUsers={onlineUsers} users={participants} createNewChat={createNewChat} isRes={isResponsive} setRes={setResponsive} isLoading={isLoading} />
-            <ChatWindow 
-                messages={messages} 
-                isTyping={isTyping} 
-                currentChat={currentChat} 
-                onSendMessage={onSendMessage} 
-                currentUser={data?.data} 
-                isRes={isRes}
-                setRes={setRes}
-                
-            />
+            {data.data.role=='instructor'?
+                (<ChatWindow 
+                    messages={messages} 
+                    isTyping={isTyping} 
+                    currentChat={currentChat} 
+                    onSendMessage={onSendMessage} 
+                    currentUser={data?.data} 
+                    isRes={isRes}
+                    setRes={setRes}
+                    role={'instructor'}
+                    
+                />): data.data.role=='student'&& currentChat?.subscriptionType!='none' ?
+                (<ChatWindow 
+                    messages={messages} 
+                    isTyping={isTyping} 
+                    currentChat={currentChat} 
+                    onSendMessage={onSendMessage} 
+                    currentUser={data?.data} 
+                    isRes={isRes}
+                    setRes={setRes}
+                    role={'student'}
+                    
+                />):(
+                    <div className='w-3/4  flex justify-center  items-center flex-col'>
+                       <TiInfo className='text-gary-400 text-gray-600 text-[5rem] ' />
+                       <small className='text-gray-400'>Please Subscibe And Start Chating</small>
+                        <button className='border-2 border-blue-700 text-blue-600 py-1 px-5 rounded-lg mt-7' onClick={()=> navigate('/subscription',{state:{instructorId:currentChat?._id,chatId:currentChat?.chatId}})}> Subscribe</button>
+                    </div>
+                )
+            }
+            
         </div>
     );
 };

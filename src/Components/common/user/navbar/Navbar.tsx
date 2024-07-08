@@ -42,8 +42,8 @@ const Navbar: React.FC = () => {
         </div>
         <div className="md:hidden absolute block right-2">
           <ModeToggle />
-          <button onClick={toggleMenu} className="text-xl p-2 ml-4 text-gray-700 focus:outline-none">
-            {isMenuOpen ? <RxCross2 /> : <RiMenu4Line />}
+          <button onClick={toggleMenu} className="text-xl p-2 ml-4 text-gray-700 relative top-1 focus:outline-none">
+            {isMenuOpen ? <RxCross2  className='text-[25px] dark:text-gray-400'/> : <RiMenu4Line className={'text-[25px] dark:text-gray-400'} />}
           </button>
         </div>
        
@@ -55,19 +55,19 @@ const Navbar: React.FC = () => {
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.5 }}
           >
-            <ul className="flex flex-col items-center space-y-4">
+            <ul className="flex flex-col  items-center space-y-4 ">
               {['Home', 'Course', 'Teach', 'Contact Us', 'About Us'].map(buttonName => (
                 <li key={buttonName} onClick={() => handleButtonClick(buttonName)} className="table hover:bg-gray-100 p-2 rounded-md w-full text-center">
                   {buttonName}
                 </li>
               ))}
               <li>
-                <a onClick={() => navigate('/login')} className="text-lg font-semi-bold rounded-md px-4 py-2 bg-white   text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                <a onClick={() => navigate('/login')} className="text-lg font-semi-bold rounded-md px-4 py-2   text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500">
                   Login
                 </a>
               </li>
               <li>
-                <a onClick={() => navigate('/signup')} className="text-lg rounded-md px-4 py-2  text-white  hover:text-white ">
+                <a onClick={() => navigate('/signup')} className="text-lg rounded-md px-4 py-2  text-blue-500   ">
                   Signup
                 </a>
               </li>
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
             </ul>
             <div className="absolute top-1 right-5">
               <button onClick={toggleMenu} className="text-xl p-2 mr-4 top-0 text-gray-800 focus:outline-none">
-                ✕
+              <RxCross2  className='text-[25px] dark:text-gray-400'/>
               </button>
             </div>
           </motion.div>

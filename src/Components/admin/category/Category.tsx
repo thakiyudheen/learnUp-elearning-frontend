@@ -9,10 +9,10 @@ import { editCategoryAction } from '@/redux/store/actions/course/editCategoryAct
 import { PaginationControls } from '@/Components/common/skelton';
 import ConfirmModal from '@/Components/common/skelton/confirmModal';
 
-interface Data {
-  _id: string;
-  isBlocked: boolean;
-}
+// interface Data {
+//   _id: string;
+//   isBlocked: boolean;
+// }
 
 interface CategoryData {
   categoryName: string;
@@ -36,6 +36,8 @@ const CategoryPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(2);
 
+  console.log(error);
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toast} from 'sonner'
 
 
 export const PdfUpload = async (file: File) => {
@@ -22,15 +23,14 @@ export const PdfUpload = async (file: File) => {
     const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData);
     const { format, secure_url } = res.data;
 
-    console.log(secure_url,"secure url");
-    console.log(res.data,"resp data");
-    
+   
+    console.log('the url ' , secure_url)
 
     if (format === 'pdf') {
       return secure_url;
     } else {
-      console.error('Uploaded file is not a PDF:', res.data);
-      console.error('Uploaded file is not a PDF.');
+      toast.error('Uploaded file is not a PDF.')
+      
       return null;
     }
   } catch (error) {

@@ -97,10 +97,11 @@ const FormComponent: React.FC = () => {
   return (
     <div className="md:flex justify-evenly items-center min-h-screen w-full">
       <div className="md:w-1/2">
-      <h1 className='text-center text-[26px] md:mr-[8rem] font-bold md:relative top-[5rem] text-blue-500 md:mt-0 md:p-0 md:mt-[3rem]  mt-[4rem] p-2'> Instructor <span className='text-blue-900'>Registration</span>  </h1>
+      <h1 className='text-center text-[26px] md:mr-[8rem] font-bold md:relative top-[5rem] text-blue-500 md:mt-0 md:p-0   mt-[4rem] p-2'> Instructor <span className='text-blue-900'>Registration</span>  </h1>
         <img src={Register1} alt="registration" className="w-[60%] ml-[5rem] mt-[4rem] md:w-[65%] h-auto" />
       </div>
-      <div className={`md:w-1/2 max-w-md p-6 md:mt-[2rem] rounded-lg md:shadow-lg md:p-[3rm] md:mt-[6rem] md:mr-[4rem] ${theme=='light'?'bg-white':'bg-gray-800'} `}>
+      {/* md:mt-[6rem]  */}
+      <div className={`md:w-1/2 max-w-md p-6 md:mt-[2rem] rounded-lg md:shadow-lg md:p-[3rm] md:mr-[4rem] ${theme=='light'?'bg-white':'bg-gray-800'} `}>
         <Formik
           initialValues={initialValues}
           validationSchema={InstructorSchema}
