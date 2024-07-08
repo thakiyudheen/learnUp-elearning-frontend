@@ -9,7 +9,7 @@ const Enrollment: React.FC = () => {
   return (
     <>
     <Navbar/>
-    <div className="container mx-auto px-3 py-6">
+    <div className="container mx-auto px-3 py-6 font-Poppins">
       <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-8 mt-[3rem]">
         <div className="flex-1 text-center ">
           <img

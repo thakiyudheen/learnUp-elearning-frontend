@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooke';
 import { RootState } from '../../../../redux/store';
 import DropdownMenu from '../dropDownMenu/dropDownMenu';
+import { RiMenu4Line } from "react-icons/ri";
+import { RxCross2 } from "react-icons/rx";
 
 const Navbar: React.FC = () => {
   const { theme } = useTheme();
@@ -39,10 +41,12 @@ const Navbar: React.FC = () => {
           <img src={LearnUp} className="h-[70px] w-[150px] md:ml-[2rem]" alt="LearnUp Logo" />
         </div>
         <div className="md:hidden absolute block right-2">
-          <button onClick={toggleMenu} className="text-xl p-2  text-gray-700 focus:outline-none">
-            {isMenuOpen ? '✕' : '☰'}
+          <ModeToggle />
+          <button onClick={toggleMenu} className="text-xl p-2 ml-4 text-gray-700 focus:outline-none">
+            {isMenuOpen ? <RxCross2 /> : <RiMenu4Line />}
           </button>
         </div>
+       
         <AnimatePresence>
           <motion.div
             className={`fixed top-0 right-0 w-[70%] h-full ${theme == 'light' ? 'bg-white' : 'bg-gray-700'} z-9 flex flex-col items-center justify-center space-y-4 md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}
@@ -58,18 +62,16 @@ const Navbar: React.FC = () => {
                 </li>
               ))}
               <li>
-                <button onClick={() => navigate('/login')} className="text-lg font-semi-bold rounded-md px-4 py-2 bg-white border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                <a onClick={() => navigate('/login')} className="text-lg font-semi-bold rounded-md px-4 py-2 bg-white   text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500">
                   Login
-                </button>
+                </a>
               </li>
               <li>
-                <button onClick={() => navigate('/signup')} className="text-lg rounded-md px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 border border-blue-500 hover:text-white hover:border-blue-600">
+                <a onClick={() => navigate('/signup')} className="text-lg rounded-md px-4 py-2  text-white  hover:text-white ">
                   Signup
-                </button>
+                </a>
               </li>
-              <li>
-                <ModeToggle />
-              </li>
+             
             </ul>
             <div className="absolute top-1 right-5">
               <button onClick={toggleMenu} className="text-xl p-2 mr-4 top-0 text-gray-800 focus:outline-none">

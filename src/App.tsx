@@ -1,4 +1,3 @@
-
 import './App.css'
 import {  Route, Routes } from 'react-router-dom';
 import Login from './Pages/auth/Login';
@@ -23,16 +22,11 @@ import HomeRoutes from './routes/HomeRoutes';
 import StudentRoutes from './routes/studentRoutes';
 import ProcessingPage from './Components/common/errPages/processPage';
 import RejectPage from './Components/common/errPages/rejectPages';
-import Addcat from './Components/admin/category/addCategoryModal';
 import NotFontError from './Components/common/errPages/notFontError';
-import { getAllCourseAction } from './redux/store/actions/course/getAllCourseAction';
 import PromoSection from './Components/user/course/courseListing';
 import CoursePage from './Pages/student/coursePage';
-import UserProfile from './Components/user/profile/userProfile';
-import UserDetails from './Components/user/profile/UserDetails';
 import Profile from './Pages/student/profile';
 import PaymentSuccess from './Pages/payment/paymentSuccess';
-import { toast } from 'react-toastify';
 import SubscriptionPage from './Components/user/subscription/subscription';
 import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
 

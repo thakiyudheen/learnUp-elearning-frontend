@@ -79,9 +79,9 @@ const CourseCards: React.FC = () => {
   return (
     <>
 
-      <div className='flex justify-between '>
-        <input type="text" className='bg-gray-300 w-1/4 dark:bg-gray-700 py-1 ml-[12rem] px-6 rounded-full shadow-md' placeholder='search...' />
-        <div className='mr-[9rem]'>
+      <div className='flex md:flex-row flex-col md:justify-between '>
+        <input type="text" className='bg-gray-200 md:w-1/4 md:m-0 m-4 w-[90%] ml-[1rem]  md:mb-0 dark:bg-gray-700 py-1 md:ml-[12rem] md:px-3 px-3 rounded-full shadow-md' placeholder='search...' />
+        <div className='md:mr-[9rem] justify-evenly w-full flex md:justify-end items-center'>
           <details className="dropdown dropdown-right ">
             <summary className="px-6 py-1 text-white  bg-blue-600 rounded-md font-semibold flex items-center"><small>Category</small></summary>
             <ul className="menu p-2 bg-white dark:bg-gray-700 rounded-box absolute">
@@ -153,8 +153,8 @@ const CourseCards: React.FC = () => {
             </ul>
           </details>
           {/* the filter ---------------- */}
-          <details className="dropdown ">
-            <summary className="px-6 py-1 mb-0   rounded-lg  flex items-center font-semibold"><small><div tabIndex={0} role="button" className="mt-2 flex items-center">
+          <details className="dropdown mb-2">
+            <summary className="px-6 py-1   rounded-lg  flex items-center font-semibold"><small><div tabIndex={0} role="button" className="mt-2 flex items-center">
               <IoFilter className='text-[20px]' /><small>Filter</small>
             </div></small></summary>
             <ul className="menu p-2 bg-white dark:bg-gray-700 rounded w-[10rem] absolute">

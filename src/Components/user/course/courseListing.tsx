@@ -33,7 +33,7 @@ const PromoSection: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className={`py-10 ${theme == 'light' && 'bg-gradient-to-t from-white to-gray-200'}`}>
+      <div className={`py-10 font-Poppins ${theme == 'light' && 'bg-gradient-to-t from-white to-gray-100'}`}>
         <div className="container mx-auto flex  flex-col md:flex-row items-center mt-[4rem]">
           <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -51,7 +51,7 @@ const PromoSection: React.FC = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="w-[30%] md:left-[59rem]  bg-gradient-to-r  md:mt-[6.5rem] from-blue-100 to-blue-800 h-[20rem] absolute md:top-0 top-[16rem] md:block rounded-tl-[20rem] rounded-bl-[5rem]"
+            className="md:w-[30%] w-[80%] md:left-[59rem]  bg-gradient-to-r md:mt-[6.5rem]  from-blue-100 to-blue-800 md:h-[20rem] h-[19rem] absolute md:top-0 top-[20rem] mt-[11.7rem] md:block rounded-tl-[20rem] rounded-bl-[5rem]"
           >
           </motion.div>
           <motion.div

@@ -112,6 +112,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/hooke';
 import { RootState } from '@/redux/store';
+import Home from '../../../assets/homebanner/22378291_6567451.svg';
 
 
 const textItem = {
@@ -126,7 +127,7 @@ const Homebanner: React.FC = () => {
     const { data } = useAppSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white font-Poppins  dark:bg-gray-800 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen  font-Poppins   p-6">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center ">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -179,8 +180,8 @@ const Homebanner: React.FC = () => {
           transition={{ duration: 1 }}
           className="flex justify-center"
         >
-          {/* <img src="/path/to/your/image.png" alt="LearnUp" className="max-w-full h-auto" /> */}
-          <dotlottie-player
+          <img src={Home} alt="LearnUp" className="max-w-full h-auto" />
+          {/* <dotlottie-player
           src="https://lottie.host/da0e13ce-8e92-48b2-a4e5-de886d3ba9de/ZxURYoKHcB.json"
           background="transparent"
           speed=".3"
@@ -188,7 +189,7 @@ const Homebanner: React.FC = () => {
           className='mt-10'
           loop
           autoplay
-        ></dotlottie-player>
+        ></dotlottie-player> */}
         </motion.div>
       </div>
     </div>
