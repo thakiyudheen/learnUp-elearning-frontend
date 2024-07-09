@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hooks/hooke';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import React, { useEffect, useState } from 'react';
 import LoadingIndicator from '../../common/skelton/loading';
 import { updateCourseAction } from '@/redux/store/actions/course/updateCourseAction';
@@ -6,6 +6,7 @@ import { getAllCourseAction } from '@/redux/store/actions/course/getAllCourseAct
 import { PaginationControls } from '@/Components/common/skelton';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../../common/skelton/confirmModal'
+import { RootState } from '@/redux/store';
 
 interface Data {
   _id: string;
@@ -15,6 +16,7 @@ interface Data {
 }
 
 const Assessment: React.FC = () => {
+  const { data } = useAppSelector((state:RootState)=>state.user)
   const dispatch = useAppDispatch();
   const [courses, setCourses] = useState<any[]>([]);
   const [requests, setRequests] = useState<any[]>([]);
@@ -31,7 +33,7 @@ const Assessment: React.FC = () => {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const response = await dispatch(getAllCourseAction({ page: currentPage, limit: itemsPerPage }));
+      const response = await dispatch(getAllCourseAction({ page: currentPage, limit: itemsPerPage,instructorRef:data?.data?._id }));
       console.log('data course', response.payload);
       const { courses, totalItems } = response.payload;
       setCourses(courses.filter((course: any) => course.isPublished));
@@ -103,7 +105,7 @@ const Assessment: React.FC = () => {
                   <th>Category</th>
                   <th>Price</th>
                   <th>View</th>
-                  <th>Block/Unblock</th>
+                  <th>Add Exam</th>
                 </tr>
               </thead>
               <tbody>

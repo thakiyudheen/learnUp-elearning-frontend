@@ -3,9 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { deleteObject, getObject } from '@/utils/localStorage';
-import { createPaymentAction } from '@/redux/store/actions/Payment/createPaymentAction';
 import { useAppDispatch } from '@/hooks/hooke';
-import { createChatAction } from '@/redux/store/actions/chat/createChatAction';
 import { createSubsciptionPaymentAction } from '@/redux/store/actions/Payment/createSubscriptionPaymentAction';
 
 const SubscriptionSuccess: React.FC = () => {

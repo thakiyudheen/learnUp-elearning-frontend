@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 export const getAllCourseAction = createAsyncThunk(
     'user/get-all-course',
-    async ( data: { instructorRef ?: string , isPublished?:boolean , page?:number , limit?:number , isBlocked?:boolean} , { rejectWithValue }) => {
+    async ( data: { instructorRef ?: string , isPublished?:boolean , page?:number , limit?:number , isBlocked?:boolean,courseTitle?:string} , { rejectWithValue }) => {
         try {
             console.log('instructor data',data)
            if(data){

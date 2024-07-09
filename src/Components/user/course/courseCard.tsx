@@ -22,11 +22,20 @@ const CourseCards: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(8);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [search , setSearch]= useState<any>(null)
 
 
   useEffect(() => {
     const getData = async () => {
-      const response = await dispatch(getAllCourseAction({ isPublished: true, page: currentPage, limit: itemsPerPage, isBlocked:false }));
+      let response;
+      if(search){
+         response = await dispatch(getAllCourseAction({ isPublished: true, page: currentPage, limit: itemsPerPage, isBlocked:false ,courseTitle:search}));
+      }else{
+          response = await dispatch(getAllCourseAction({ isPublished: true, page: currentPage, limit: itemsPerPage, isBlocked:false }));
+      }
+
+
+
       const response1 = await dispatch(getAllCategoryAction({}));
 
       if (response.payload) {
@@ -37,7 +46,7 @@ const CourseCards: React.FC = () => {
       }
     };
     getData();
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage,search]);
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategories(prevCategories =>
@@ -80,7 +89,7 @@ const CourseCards: React.FC = () => {
     <>
 
       <div className='flex md:flex-row flex-col md:justify-between '>
-        <input type="text" className='bg-gray-200 md:w-1/4 md:m-0 m-4 w-[90%] ml-[1.5rem]  md:mb-0 dark:bg-gray-700 py-1 md:ml-[12rem] md:px-3 px-3 rounded-full shadow-md' placeholder='search...' />
+        <input type="text" onChange={(e)=>setSearch(e.target.value)} className='bg-gray-200 md:w-1/4 md:m-0 m-4 w-[90%] ml-[1.5rem]  md:mb-0 dark:bg-gray-700 py-1 md:ml-[12rem] md:px-3 px-3 rounded-full shadow-md' placeholder='search...' />
         <div className='md:mr-[9rem] justify-evenly w-full flex md:justify-end items-center'>
           <details className="dropdown dropdown-right ">
             <summary className="px-6 py-1 text-white  bg-blue-600 rounded-md font-semibold flex items-center"><small>Category</small></summary>

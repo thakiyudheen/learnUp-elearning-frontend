@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
 import { LuUploadCloud } from 'react-icons/lu';
+import Reapply from '../../../assets/enrollment/reapply.svg';
+import Navbar from '@/Components/common/user/navbar/Navbar';
+import { PdfUpload } from '@/utils/cloudinary/uploadPdf';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
+import { updateUserAction } from '@/redux/store/actions/user/updateUserAction';
+import { RootState } from '@/redux/store';
 
-const FileUploadField = ({ field, form } :any) => {
+const FileUploadField = ({ field, form }:any) => {
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [fileName, setFileName] = useState('');
+ 
 
-  const handleDragOver = (event :any) => {
+  const handleDragOver = (event:any) => {
     event.preventDefault();
     setDragging(true);
   };
@@ -27,14 +34,15 @@ const FileUploadField = ({ field, form } :any) => {
     handleChange({ target: { files: [file] } });
   };
 
-  const handleChange = async (event:any) => {
+  const handleChange = async (event:any)=> {
     const file = event.currentTarget.files[0];
     if (file) {
+      setFileName(file.name);
       setUploading(true);
       try {
-        // Simulate upload process
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate 2 seconds upload time
-        form.setFieldValue(field.name, file);
+        const imageUrl = await PdfUpload(file);
+        form.setFieldValue(field.name, imageUrl);
+        toast.success('Uploaded Successfully');
       } catch (error) {
         console.error('Error uploading file:', error);
       } finally {
@@ -69,7 +77,9 @@ const FileUploadField = ({ field, form } :any) => {
         ) : (
           <div className="flex items-center justify-center">
             <LuUploadCloud className="text-blue-600 text-[20px]" />
-            <span className="p-3 text-[12px] text-blue-600">Drop Your CV (PDF) Here</span>
+            <span className="p-3 text-[12px] text-blue-600">
+              {fileName ? fileName : 'Drop Your CV (PDF) Here'}
+            </span>
           </div>
         )}
       </label>
@@ -77,62 +87,48 @@ const FileUploadField = ({ field, form } :any) => {
   );
 };
 
-const ReApply: React.FC = () => {
+const ReApply = () => {
   const navigate = useNavigate(); 
+  const dispatch= useAppDispatch()
+  const { data } = useAppSelector((state:RootState)=>state.user)
 
   const validationSchema = Yup.object().shape({
-    cv: Yup.mixed().required('CV is required').test('fileType', 'Only PDF files are allowed', (value:any) =>
-      value ? ['application/pdf'].includes(value?.type) : true
-    ),
+    cv: Yup.mixed().required('CV is required')
   });
 
   const initialValues = {
     cv: undefined,
   };
 
-  const onSubmit = async (values: any, { setSubmitting }: any) => {
+  const onSubmit = async (values : any , { setSubmitting }:any) => {
     console.log(values);
     
     try {
-      // Set loading state
       setSubmitting(true);
-
-      // Dispatch action to find email
-      // You can add findEmailAction logic if required
-
-      // Dispatch action to forget password
-      // You can add forgetPasswordAction logic if required
-
-      // Notify user
-      toast.success('Reset Password Mail Sent!');
-
-      // Redirect to login page after delay
-      setTimeout(() => {
-        navigate('/login');
-      }, 1500);
+      const response = await dispatch(updateUserAction({isReject:false,_id:data?.data?._id,cv:values?.cv}))
+      console.log(response.payload.data)
     } catch (error) {
       console.error('Error occurred:', error);
       toast.error('An error occurred. Please try again.');
     } finally {
-      // Reset loading state
       setSubmitting(false);
     }
   };
 
   return (
     <>
+      <Navbar />
       <div className="flex flex-col md:flex-row justify-evenly md:items-center md:h-[40rem] min-h-screen">
-        <div className="md:w-[40%] order-2 md:order-1 flex bg-white justify-center md:shadow-lg p-10 rounded-lg">
-          <ToastContainer />
+        <div className="md:w-[40%] order-2 md:order-1 flex justify-center md:shadow-lg p-10 rounded-lg">
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-            {({ setFieldValue }) => (
+            {() => (
               <Form className="flex flex-col gap-4 w-full max-w-md">
                 <Field name="cv" component={FileUploadField} />
                 <ErrorMessage name="cv" component="div" className="text-red-500" />
                 
                 <button
                   type="submit"
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+                  className="mt-4 bg-blue-700 hover:bg-blue-700 text-white py-1 px-4 rounded-lg"
                 >
                   Submit
                 </button>
@@ -141,8 +137,8 @@ const ReApply: React.FC = () => {
           </Formik>
         </div>
 
-        <div className="md:w-[40%] p-15  md:order-1">
-          {/* Placeholder image or remove this section if not needed */}
+        <div className="md:w-[40%] p-15 md:order-1">
+          <img src={Reapply} alt="Reapply" />
         </div>
       </div>
     </>
@@ -150,3 +146,4 @@ const ReApply: React.FC = () => {
 };
 
 export default ReApply;
+

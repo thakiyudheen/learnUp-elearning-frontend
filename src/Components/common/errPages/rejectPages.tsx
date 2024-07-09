@@ -1,7 +1,9 @@
 import React from 'react';
 import Navbar from '../user/navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const RejectPage: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <>
       <Navbar />
@@ -16,7 +18,7 @@ const RejectPage: React.FC = () => {
             autoplay
           ></dotlottie-player>
           <small className="text-lg font-semibold mt-3">Your request has been Rejected, check your Mail..!</small>
-          <button className='bg-blue-700 text-white mt-6 py-1 px-5 rounded-lg'>
+          <button className='bg-blue-700 text-white mt-6 py-1 px-5 rounded-lg' onClick={()=> navigate('/reapply')}>
           <small>Re Apply</small> 
         </button>        
         </div>

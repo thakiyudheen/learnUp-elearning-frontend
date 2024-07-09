@@ -30,6 +30,7 @@ import PaymentSuccess from './Pages/payment/paymentSuccess';
 import SubscriptionPage from './Components/user/subscription/subscription';
 import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
 import ReApply from './Components/auth/reapply/ReApply';
+import PeerVideoComponent from './Components/instructor/chat/videoCall';
 
 
 
@@ -134,7 +135,7 @@ function App() {
         <Route path="/course-listing" element={<PromoSection/> } />
         <Route path="/subscription" element={<SubscriptionPage/> } />
         <Route path="/reapply" element={<ReApply/> } />
-
+        <Route path="/peervideo" element={<PeerVideoComponent/>} />
 
 
         <Route path="/course" element={<CoursePage/> } />
@@ -148,7 +149,7 @@ function App() {
         <Route path="/user-profile" element={<Profile/>} />
         <Route path="/payment-success" element={<PaymentSuccess/>} />
         <Route path="/subscription-success" element={<SubscriptionSuccess/>} />
-        {/* <Route path="/course-listing" element={<CourseListing/>} /> */}
+        
 
         
          

@@ -5,7 +5,7 @@ import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
 import { RootState } from '@/redux/store';
-import { ToastContainer,toast} from 'react-toastify'
+import { toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { loadStripe } from '@stripe/stripe-js'
 import { createSessionAction } from '@/redux/store/actions/Payment/createSessionAction';
@@ -24,7 +24,6 @@ const CourseCard: React.FC<IframeHTMLAttributes<HTMLIFrameElement>> = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const [course, setCourse] = useState<any>({})
-    const { theme } = useTheme()
     const [isLoading, setLoading] = useState<boolean>(false)
     const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
     const [isEnrolled, setEnrolled] = useState<boolean>(false)

@@ -35,7 +35,7 @@ export const PdfUpload = async (file: File) => {
     }
   } catch (error) {
     console.error('Error uploading PDF:', error);
-
+    toast.error('Error uploading this file !')
     return null;
   }
 };

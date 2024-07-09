@@ -13,6 +13,7 @@ import InstructorChat from '@/Components/instructor/chat/instructorChat';
 import Assessment from '@/Components/instructor/assessment/assessment';
 import AddAssessment from '@/Components/instructor/assessment/AddAssessment';
 import MyStudents from '@/Components/instructor/students/myStudent';
+import PeerVideoComponent from '@/Components/instructor/chat/videoCall';
 
 const instructorRoutes: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const instructorRoutes: React.FC = () => {
         <Route path="assessment" element={<Assessment/>} />
         <Route path="add-assessment" element={<AddAssessment/>} />
         <Route path="my-students" element={<MyStudents/>} />
+       
           
         
       </Route>
