@@ -145,6 +145,7 @@ const InstructorChat: React.FC = () => {
     const [localStream, setLocalStream] = useState<any>(null);
     const [call, setCall] = useState<any>(null);
     const [isRing, setRing] = useState<any>(false);
+    const [isVideoCallActive, setIsVideoCallActive] = useState(false);
     
     useEffect(() => {
         const newPeer = new Peer();
@@ -162,6 +163,7 @@ const InstructorChat: React.FC = () => {
                     setRemoteStream(remoteStream);
                 });
                 setCall(incomingCall);
+                setIsVideoCallActive(true);
             });
         });
     
@@ -181,6 +183,7 @@ const InstructorChat: React.FC = () => {
     
                 if (isConfirmed) {
                     callPeer(data.peerId);
+                    setIsVideoCallActive(true);
                 } else {
                     socket?.emit('rejectCall', { roomId: data.roomId});
                     setRing(false);
@@ -190,6 +193,7 @@ const InstructorChat: React.FC = () => {
             socket.on('incomingCall', handleConnectedPeer);
             socket.on('answerCall', (data) => {
                 console.log('Call accepted');
+                setRing(false)
             });
             const stopStream = (stream: MediaStream | null) => {
                 if (stream) {
@@ -205,7 +209,11 @@ const InstructorChat: React.FC = () => {
                     stopStream(remoteStream);
                     setLocalStream(null);
                     setRemoteStream(null);
-                    // Additional logic if needed (e.g., notify the user)
+                    if (call) {
+                        call.close();
+                        setCall(null);
+                    }
+                    setIsVideoCallActive(false);
                
 
             });
@@ -227,6 +235,7 @@ const InstructorChat: React.FC = () => {
                 setRemoteStream(remoteStream);
             });
             setCall(outgoingCall);
+            setIsVideoCallActive(true);
         });
     };
     
@@ -336,11 +345,7 @@ const InstructorChat: React.FC = () => {
                 setMessages((prevMessages) => [...prevMessages, message]);
 
 
-                // Mark the message as seen
-                // if (message.sender !== data.data._id) {
-                //     console.log('its working tehn what is theprooblrm')
-                //     socket.emit('seen-message', { _id: message.sender._id, chat: currentChat.chatId });
-                // }
+               
             };
 
             const handleTypingEvent = (data: any) => {
@@ -395,6 +400,7 @@ const InstructorChat: React.FC = () => {
                     role={'instructor'}
                     handleClick={handleClick}
                     isRing={isRing}
+                    isVideoCallActive={isVideoCallActive}
 
                 />) : data.data.role == 'student' && currentChat?.subscriptionType != 'none' ?
                     (<ChatWindow
@@ -408,6 +414,7 @@ const InstructorChat: React.FC = () => {
                         role={'student'}
                         handleClick={handleClick}
                         isRing={isRing}
+                        isVideoCallActive={isVideoCallActive}
 
                     // isRing={isRing}
                     // setRing={setRing}
@@ -421,7 +428,10 @@ const InstructorChat: React.FC = () => {
                         </div>
                     )
             }
-           <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall}/>
+           {/* <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall}/> */}
+           {isVideoCallActive && (
+            <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall} />
+        )}
         </div>
     );
 };

@@ -31,7 +31,8 @@ interface ChatWindowProps {
   isRes: boolean;
   role: string;
   handleClick:any;
-  isRing:boolean
+  isRing:boolean;
+  isVideoCallActive:any;
   
 
 }
@@ -53,7 +54,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   isRes,
   role,
   handleClick,
-  isRing
+  isRing,
+  isVideoCallActive
  
 }) => {
   const { socket } = useSocket();
@@ -214,7 +216,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
 
     <>
-      {isRing &&(
+      {isRing && !isVideoCallActive &&(
         <>
         <div className='bg-black rounded-lg absolute flex  min-h-[50%] z-10 justify-center left-[30%] top-[40%] opacity-70  items-center w-2/4 '>
         Ringing...
