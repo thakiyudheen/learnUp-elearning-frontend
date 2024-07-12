@@ -4,7 +4,7 @@ import { useTheme } from "@/Components/ui/theme-provider";
 
 interface PaginationControlsProps {
   currentPage: number;
-  setCurrentPage: (page: number) => void;
+  setCurrentPage: (page: any) => void;
   totalPages: number;
 }
 
@@ -19,7 +19,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
   return (
     <div className="flex items-center justify-center gap-4 p-20">
       <button
-        onClick={() => setCurrentPage((prevPage: any) => Math.max(prevPage - 1, 1))}
+        onClick={() => setCurrentPage((prevPage : any ) => Math.max(prevPage - 1, 1))}
         disabled={currentPage === 1}
         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 dark:text-white uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
