@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learnup-frontend-deployment
+  labels:
+    app: learnup-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: learnup-frontend
+  template:
+    metadata:
+      labels:
+        app: learnup-frontend
+    spec:
+      containers:
+        - name: learnup-frontend
+          image: thakiyudheen/learnup-client:latest
+          ports:
+            - containerPort: 5173
+          envFrom:
+            - configMapRef:
+                name: learnup-frontend-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: learnup-frontend-service
+spec:
+  selector:
+    app: learnup-frontend
+  ports:
+    - port: 5173
+      targetPort: 5173

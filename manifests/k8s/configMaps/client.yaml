@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: learnup-frontend-config
+  labels:
+    app: learnup-client-service
+data:
+  VITE_REACT_APP_PRESET_KEY: cogpbt77
+  VITE_REACT_APP_CLOUD_NAME: dy8yhxc6a
+  VITE_STRIPE_PUBLIC_KEY: 'pk_test_51PTgwvEvhq95htrivs2uETviuuagXTJYlLYPkNYzk2dEFnKUNjaL9SCl4RwQIuP7iCao6aPzNryH1uMng76lbNXZ00JyJOwxsu'
+  VITE_SERVER_URL: 'http://localhost:3006'
