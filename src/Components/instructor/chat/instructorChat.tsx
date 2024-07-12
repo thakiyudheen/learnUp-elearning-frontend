@@ -30,6 +30,7 @@ const InstructorChat: React.FC = () => {
     const navigate = useNavigate()
 
 
+
     // // peer connection -------------------------------
     // const [peerId, setPeerId] = useState<string>('');
     // const [peer, setPeer] = useState<Peer | null>(null);
@@ -146,14 +147,16 @@ const InstructorChat: React.FC = () => {
     const [call, setCall] = useState<any>(null);
     const [isRing, setRing] = useState<any>(false);
     const [isVideoCallActive, setIsVideoCallActive] = useState(false);
-    
+    const [isAudioMuted, setIsAudioMuted] = useState(false);
+    const [isVideoMuted, setIsVideoMuted] = useState(false);
+
     useEffect(() => {
         const newPeer = new Peer();
-    
+
         newPeer.on('open', (id) => {
             setPeerId(id);
         });
-    
+
         newPeer.on('call', (incomingCall) => {
             console.log('Incoming call');
             navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
@@ -166,30 +169,30 @@ const InstructorChat: React.FC = () => {
                 setIsVideoCallActive(true);
             });
         });
-    
+
         setPeer(newPeer);
-    
+
         return () => {
             newPeer.destroy();
         };
     }, []);
-    
+
     useEffect(() => {
         if (socket) {
             const handleConnectedPeer = (data: any) => {
                 console.log('Incoming call data', data);
-    
+
                 const isConfirmed = window.confirm('Are you sure?');
-    
+
                 if (isConfirmed) {
                     callPeer(data.peerId);
                     setIsVideoCallActive(true);
                 } else {
-                    socket?.emit('rejectCall', { roomId: data.roomId});
+                    socket?.emit('rejectCall', { roomId: data.roomId });
                     setRing(false);
                 }
             };
-    
+
             socket.on('incomingCall', handleConnectedPeer);
             socket.on('answerCall', (data) => {
                 console.log('Call accepted');
@@ -200,24 +203,24 @@ const InstructorChat: React.FC = () => {
                     stream.getTracks().forEach(track => track.stop());
                 }
             };
-    
+
             socket.on('rejectCall', (data) => {
-               
-                    console.log('The call is rejected');
-                    setRing(false);
-                    stopStream(localStream);
-                    stopStream(remoteStream);
-                    setLocalStream(null);
-                    setRemoteStream(null);
-                    if (call) {
-                        call.close();
-                        setCall(null);
-                    }
-                    setIsVideoCallActive(false);
-               
+
+                console.log('The call is rejected');
+                setRing(false);
+                stopStream(localStream);
+                stopStream(remoteStream);
+                setLocalStream(null);
+                setRemoteStream(null);
+                if (call) {
+                    call.close();
+                    setCall(null);
+                }
+                setIsVideoCallActive(false);
+
 
             });
-    
+
             return () => {
                 socket.off('incomingCall', handleConnectedPeer);
                 socket.off('answerCall');
@@ -225,7 +228,28 @@ const InstructorChat: React.FC = () => {
             };
         }
     }, [socket, call]);
-    
+
+    const toggleAudio = () => {
+        if (localStream) {
+            const audioTrack = localStream.getAudioTracks()[0];
+            if (audioTrack) {
+                audioTrack.enabled = !audioTrack.enabled;
+                setIsAudioMuted(!audioTrack.enabled);
+            }
+        }
+    };
+
+    const toggleVideo = () => {
+        if (localStream) {
+            const videoTrack = localStream.getVideoTracks()[0];
+            if (videoTrack) {
+                videoTrack.enabled = !videoTrack.enabled;
+                setIsVideoMuted(!videoTrack.enabled);
+            }
+        }
+    };
+
+
     const callPeer = (id: string) => {
         console.log('Calling peer', id);
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
@@ -238,7 +262,7 @@ const InstructorChat: React.FC = () => {
             setIsVideoCallActive(true);
         });
     };
-    
+
     const handleClick = () => {
         socket?.emit('outGoingCall', { peerId: peerId, roomId: currentChat.roomId, userId: data.data._id });
         setRing(true);
@@ -247,10 +271,10 @@ const InstructorChat: React.FC = () => {
         socket?.emit('rejectCall', { roomId: currentChat?.roomId });
     };
 
-   
-    
+
+
     console.log(peerId);
-    
+
 
 
     const createPrivateRoomId = (id1: string, id2: string) => {
@@ -345,7 +369,7 @@ const InstructorChat: React.FC = () => {
                 setMessages((prevMessages) => [...prevMessages, message]);
 
 
-               
+
             };
 
             const handleTypingEvent = (data: any) => {
@@ -386,7 +410,7 @@ const InstructorChat: React.FC = () => {
 
     return (
         <div className="flex h-screen overflow-y-hidden dark:bg-base-300">
-            
+
             <ChatList onlineUsers={onlineUsers} users={participants} createNewChat={createNewChat} isRes={isResponsive} setRes={setResponsive} isLoading={isLoading} />
             {data.data.role == 'instructor' ?
                 (<ChatWindow
@@ -401,6 +425,7 @@ const InstructorChat: React.FC = () => {
                     handleClick={handleClick}
                     isRing={isRing}
                     isVideoCallActive={isVideoCallActive}
+                    rejectCall={rejectCall}
 
                 />) : data.data.role == 'student' && currentChat?.subscriptionType != 'none' ?
                     (<ChatWindow
@@ -415,7 +440,7 @@ const InstructorChat: React.FC = () => {
                         handleClick={handleClick}
                         isRing={isRing}
                         isVideoCallActive={isVideoCallActive}
-
+                        rejectCall={rejectCall}
                     // isRing={isRing}
                     // setRing={setRing}
                     // isAnswer={isAnswer}
@@ -428,14 +453,20 @@ const InstructorChat: React.FC = () => {
                         </div>
                     )
             }
-           {/* <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall}/> */}
-           {isVideoCallActive && (
-            <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall} />
-        )}
+            {/* <NewVideoCall localStream={localStream} remoteStream={remoteStream} rejectCall={rejectCall}/> */}
+            {isVideoCallActive && (
+                <NewVideoCall
+                    localStream={localStream}
+                    remoteStream={remoteStream}
+                    rejectCall={rejectCall}
+                    toggleAudio={toggleAudio}
+                    toggleVideo={toggleVideo}
+                    isAudioMuted={isAudioMuted}
+                    isVideoMuted={isVideoMuted}
+                />
+            )}
         </div>
     );
 };
 
 export default InstructorChat;
-
-

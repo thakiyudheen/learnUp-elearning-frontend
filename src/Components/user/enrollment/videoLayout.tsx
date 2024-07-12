@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import LoadingIndicator from '@/Components/common/skelton/loading';
 import { generateCertificate } from '@/utils/generatePdf/generatePdf';
 import { FiDownloadCloud } from "react-icons/fi";
+import { getAllAssessmentAction } from '@/redux/store/actions/assessment/getAllAssessment';
 
 const VideoLayout: React.FC = () => {
     const { data, error } = useAppSelector((state: RootState) => state.user)
@@ -31,9 +32,9 @@ const VideoLayout: React.FC = () => {
     const [comment, setComment] = useState<string>("")
     const [input, setInput] = useState<string>("")
     const [isLoading, setLoading] = useState<boolean>(false)
-    const [visibleComments, setVisibleComments] = useState<any>([]);
     const navigate=useNavigate()
     const [examCompleted , setExamCompleted]= useState<boolean>(false)
+    const [exam,setExam]=useState<any>(false)
     
 
     const handleShowMore = () => {
@@ -58,7 +59,10 @@ const VideoLayout: React.FC = () => {
                 setCurrentTitle(response.payload?.courseTitle);
                 setCurrentDescription(response.payload?.description);
                 const response1 = await dispatch(getProgressByIdAction({ userId: data?.data?._id, courseId: location.state }))
+                const response2 = await dispatch(getAllAssessmentAction({ courseId: location.state }));
                 if (response1?.payload?.success) {
+                    console.log('this is exam ',response2.payload.data)
+                    setExam(response2.payload.data.length>0)
                     console.log('progress is working',response1.payload.data.ExamCompletion);
                     setExamCompleted(response1.payload.data.ExamCompletion)
                     setCompletedLessons(response1.payload.data.progress.completedLessons)
@@ -285,7 +289,7 @@ const VideoLayout: React.FC = () => {
                     ))}
                     {completedLessons.length === course?.lessons?.length&&(
                         <li className='w-full flex justify-center'>
-                            {!examCompleted?
+                            {!examCompleted&& exam ?
                             (<button onClick={()=>navigate('/student/examination',{state:course?._id})} className='border border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
                             Take Exam
                         </button>):(

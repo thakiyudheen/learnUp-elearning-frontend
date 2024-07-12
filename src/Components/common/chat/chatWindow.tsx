@@ -15,9 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner'
 import { IoCallOutline } from "react-icons/io5";
 import { FaVideo } from "react-icons/fa";
-import Peer from 'peerjs'
 import { IoCall } from "react-icons/io5";
-import { NewVideoCall } from '@/Components/instructor/chat/newVideoCall';
 
 
 
@@ -33,6 +31,7 @@ interface ChatWindowProps {
   handleClick:any;
   isRing:boolean;
   isVideoCallActive:any;
+  rejectCall:any;
   
 
 }
@@ -55,7 +54,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   role,
   handleClick,
   isRing,
-  isVideoCallActive
+  isVideoCallActive,
+  rejectCall
  
 }) => {
   const { socket } = useSocket();
@@ -216,20 +216,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
 
     <>
-      {isRing && !isVideoCallActive &&(
+      {isRing&&(
         <>
         <div className='bg-black rounded-lg absolute flex  min-h-[50%] z-10 justify-center left-[30%] top-[40%] opacity-70  items-center w-2/4 '>
         Ringing...
         <div>
-        {/* onClick={() => setRing(false)} */}
           <div>
-            <button className='bg-[red] p-4 rounded-full absolute bottom-7 opacity-90  left-[46%]' >
+            <button className='bg-[red] p-4 rounded-full absolute bottom-7 opacity-90  left-[46%]' onClick={rejectCall} >
               <IoCall />
             </button>
           </div>
         </div>
       </div>
-      {/* <NewVideoCall localVideoStream={localStream} remoteVideoStream={remoteStream}/> */}
+      
     </>
 
     )}
