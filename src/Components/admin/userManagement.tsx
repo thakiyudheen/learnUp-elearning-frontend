@@ -6,10 +6,10 @@ import { blockUnblockAction } from '../../redux/store/actions/admin/blockUnblock
 import { PaginationControls } from '../common/skelton';
 import ConfirmModal from '../common/skelton/confirmModal';
 
-interface Data {
-  _id: string;
-  isBlocked: boolean;
-}
+// interface Data {
+//   _id: string;
+//   isBlocked: boolean;
+// }
 
 const UserTable: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ const UserTable: React.FC = () => {
       );
     }
   };
-
+console.log(error)
   const fetchStudents = async (page: number) => {
     try {
       setLoading(true);

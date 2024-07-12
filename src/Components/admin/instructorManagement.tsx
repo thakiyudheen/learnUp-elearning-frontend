@@ -12,14 +12,14 @@ import { PaginationControls } from '../common/skelton';
 import { getAllInstructorsAction } from '@/redux/store/actions/admin/getAllInstructorsAction';
 import ConfirmModal from '../common/skelton/confirmModal';
 
-interface data {
-  email: string,
-  isVerified: boolean,
-}
-interface data1 {
-  _id: string;
-  isBlocked: boolean;
-}
+// interface data {
+//   email: string,
+//   isVerified: boolean,
+// }
+// interface data1 {
+//   _id: string;
+//   isBlocked: boolean;
+// }
 
 const InstructorTable: React.FC = () => {
 
@@ -39,7 +39,7 @@ const InstructorTable: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(7);
-
+console.log(error)
   useEffect(() => {
     const fetchInstructors = async () => {
       try {

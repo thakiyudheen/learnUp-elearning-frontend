@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { RootState } from '@/redux/store';
 import { getAllInstructorsAction } from '@/redux/store/actions/admin/getAllInstructorsAction';
 import { getAllStudentAction } from '@/redux/store/actions/admin/getAllStudentAction';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 import { FaChalkboardTeacher } from "react-icons/fa";
@@ -41,6 +41,7 @@ const Dashboard = () => {
       const response3 = await dispatch(getAllCourseAction({}))
       const response4=await dispatch(getAllPaymentAction({}))
       console.log('its payment data',response2.payload.data)
+      console.log(response1)
       setProfit(data?.data.profit)
       if (response.payload && response.payload.success) {
         setInstructor(response.payload.data.totalItems)

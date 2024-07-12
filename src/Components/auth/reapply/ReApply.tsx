@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'sonner';
@@ -88,7 +88,7 @@ const FileUploadField = ({ field, form }:any) => {
 };
 
 const ReApply = () => {
-  const navigate = useNavigate(); 
+  // const navigate = useNavigate(); 
   const dispatch= useAppDispatch()
   const { data } = useAppSelector((state:RootState)=>state.user)
 

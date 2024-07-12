@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { useTheme } from '../../ui/theme-provider';
 
-const SecondStep = () => {
+const SecondStep:React.FC = () => {
     const {theme}=useTheme()
   return (
     <div className="md:grid grid-cols-2 gap-4">
