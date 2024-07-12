@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: learnup-frontend-config
   labels:
-    app: learnup-client-service
+    app: learnup-frontend-service
 data:
   VITE_REACT_APP_PRESET_KEY: cogpbt77
   VITE_REACT_APP_CLOUD_NAME: dy8yhxc6a

@@ -38,19 +38,19 @@ kind: Deployment
 metadata:
   name: learnup-frontend-deployment
   labels:
-    app: learnup-frontend
+    app: learnup-frontend-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: learnup-frontend
+      app: learnup-frontend-service
   template:
     metadata:
       labels:
-        app: learnup-frontend
+        app: learnup-frontend-service
     spec:
       containers:
-        - name: learnup-frontend
+        - name: learnup-frontend-service
           image: thakiyudheen/learnup-client:latest
           ports:
             - containerPort: 5173
@@ -64,7 +64,7 @@ metadata:
   name: learnup-frontend-service
 spec:
   selector:
-    app: learnup-frontend
+    app: learnup-frontend-service
   ports:
     - port: 5173
       targetPort: 5173
