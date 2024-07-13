@@ -1,0 +1,3 @@
+{
+    "rewrites": [{ "source": "/(.*)", "destination": "https://learn-up-elearning-frontend.vercel.app/" }]
+  }
