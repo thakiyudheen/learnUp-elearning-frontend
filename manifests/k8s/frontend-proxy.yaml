@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-proxy-config
+data:
+  nginx.conf: |
+    server {
+      listen 80;
+      server_name acecart.shop;
+      
+      location / {
+        proxy_pass https://learn-up-elearning-frontend.vercel.app;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-proxy
+  template:
+    metadata:
+      labels:
+        app: frontend-proxy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.19-alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: frontend-proxy-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-proxy
+spec:
+  selector:
+    app: frontend-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
