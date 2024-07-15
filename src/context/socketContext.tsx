@@ -25,8 +25,8 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     if (data?.data) {
       // import.meta.env.VITE_SERVER_URL
-      // , { transports: ['websocket'], withCredentials:true }
-      const newSocket = io('https://acecart.shop');
+      // , 
+      const newSocket = io('https://acecart.shop',{ transports: ['websocket'], withCredentials:true });
       
 
       newSocket.on('connect', () => {
