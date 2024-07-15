@@ -29,6 +29,8 @@ const Navbar: React.FC = () => {
       navigate('/')
     } else if (buttonName == 'Course') {
       navigate('/course-listing')
+    }else if(buttonName == 'AboutUs'){
+      navigate('/aboutUs')
     }
   };
 
@@ -69,8 +71,9 @@ const Navbar: React.FC = () => {
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.5 }}
           >
+             {/* 'Teach', */}
             <ul className="flex flex-col  items-center space-y-4 ">
-              {['Home', 'Course', 'Teach', 'Contact Us', 'About Us'].map(buttonName => (
+              {['Home', 'Course', 'Contact Us', 'AboutUs'].map(buttonName => (
                 <li key={buttonName} onClick={() => handleButtonClick(buttonName)} className="table hover:bg-gray-100 p-2 rounded-md w-full text-center">
                   {buttonName}
                 </li>
@@ -100,8 +103,9 @@ const Navbar: React.FC = () => {
             </div>
           </motion.div>
         </AnimatePresence>
+        {/* 'Teach', */}
         <ul className="hidden md:flex md:items-center md:space-x-4">
-          {['Home', 'Course', 'Teach', 'Contact Us', 'About Us'].map(buttonName => (
+          {['Home', 'Course', 'Contact Us', 'AboutUs'].map(buttonName => (
             <li key={buttonName} className="pl-4">
               <button
                 className={`text-sm rounded-md px-3 py-1 text-blue-600 font-bold ${selected === buttonName && 'bg-gray-500'} ${selected === buttonName && theme == 'light' && 'md:bg-gray-300'} ${theme == 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700'} ${theme !== 'light' && 'bg-gray-800'} ${theme !== 'light' && 'text-white'}`}

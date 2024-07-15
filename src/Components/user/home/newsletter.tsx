@@ -21,7 +21,7 @@ const Newsletter: React.FC = () => {
           className="p-1 rounded-l-lg border-none md:w-[20rem] w-[11rem] bg-white"
         />
        
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg h-[60%] flex justify-center items-center relative right-[1rem] md:right-0 ">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg h-[60%] flex justify-center items-center relative right-[1rem] md:right- ">
           Submit
         </button>
       </div>

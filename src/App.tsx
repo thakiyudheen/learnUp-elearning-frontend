@@ -31,6 +31,7 @@ import SubscriptionPage from './Components/user/subscription/subscription';
 import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
 import ReApply from './Components/auth/reapply/ReApply';
 import PeerVideoComponent from './Components/instructor/chat/videoCall';
+import AboutUs from './Pages/student/aboutUs';
 
 
 
@@ -149,6 +150,7 @@ function App() {
         <Route path="/user-profile" element={<Profile/>} />
         <Route path="/payment-success" element={<PaymentSuccess/>} />
         <Route path="/subscription-success" element={<SubscriptionSuccess/>} />
+        <Route path="/aboutUs" element={<AboutUs/>} />
         
 
         

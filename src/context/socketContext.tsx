@@ -24,7 +24,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   useEffect(() => {
     if (data?.data) {
-      const newSocket = io(import.meta.env.VITE_SERVER_URL, { transports: ['websocket'] });
+      // const newSocket = io(import.meta.env.VITE_SERVER_URL, { transports: ['websocket'] });
+      const newSocket = io(import.meta.env.VITE_SERVER_URL, {
+        path: '/socket.io',
+        transports: ['websocket'],
+        secure: true,
+      });
 
       newSocket.on('connect', () => {
         console.log("WebSocket connected successfully", data.data);
