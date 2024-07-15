@@ -11,7 +11,7 @@ interface SocketContextProps {
 
 const SocketContext = createContext<SocketContextProps>({
   socket: null,
-  sendMessage: () => {},
+  sendMessage: () => { },
 });
 
 export const useSocket = () => useContext(SocketContext);
@@ -26,8 +26,13 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (data?.data) {
       // import.meta.env.VITE_SERVER_URL
       // , 
-      const newSocket = io('https://acecart.shop',{ transports: ['websocket','polling'], withCredentials:true });
-      
+      const newSocket = io('https://acecart.shop', {
+        transports: ['websocket', 'polling'],
+        query:{
+          userId:data?.data?._id
+        }
+      });
+
 
       newSocket.on('connect', () => {
         console.log("WebSocket connected successfully", data.data);
