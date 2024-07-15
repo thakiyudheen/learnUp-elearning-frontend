@@ -26,7 +26,7 @@ const UserDetails: React.FC = () => {
            setProfileImage(data?.data?.profile?.avatar)
         } 
         getData()
-    },[data])
+    },[dispatch])
 
 
 const validationSchema = Yup.object().shape({

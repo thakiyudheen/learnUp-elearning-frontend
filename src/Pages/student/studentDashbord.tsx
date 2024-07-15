@@ -21,7 +21,7 @@ const StudentDashboard: React.FC = () => {
       <nav className={`w-full ${theme == 'light' ? 'bg-white ' : 'bg-gray-800'} h-[69px] shadow-md flex justify-end items-center fixed top-0 left-0 z-40`}>
         <div className='flex justify-evenly mr-[3rem] items-center'>
           {/* <CgProfile className='text-[1.3rem] mr-5' /> */}
-          <TiHome className='mr-5 text-[6vh] dark:text-gray-500 text-gray-600' onClick={()=>navigate('/home')}/>
+          <TiHome className='mr-5 text-[3vh] dark:text-gray-500 text-gray-600' onClick={()=>navigate('/home')}/>
           <ModeToggle />
         </div>
       </nav>
