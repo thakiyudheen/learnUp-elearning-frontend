@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { RootState } from '@/redux/store';
 import { format } from 'date-fns';
 import { updateUserAction } from '@/redux/store/actions/user/updateUserAction';
+import { getUserDataAction } from '@/redux/store/actions/auth/getUserDataAction';
 
 const UserDetails: React.FC = () => {
     const { data } = useAppSelector((state: RootState) => state.user)
@@ -20,7 +21,11 @@ const UserDetails: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(()=>{
-        setProfileImage(data?.data?.profile?.avatar)
+        const getData = async () =>{
+           await dispatch(getUserDataAction())
+           setProfileImage(data?.data?.profile?.avatar)
+        } 
+        getData()
     },[data])
 
 
