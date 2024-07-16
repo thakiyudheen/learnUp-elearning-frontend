@@ -30,87 +30,31 @@ const Dashboard = () => {
   const [ payment,setPayment]=useState<any>([])
   const [isLoading ,setLoading]= useState<boolean>(false)
   const dispatch = useAppDispatch()
-  // useEffect(() => {
-
-  //   const getData = async () => {
-      
-  //     setLoading(true)
-  //     const response: any = await dispatch(getAllInstructorsAction({}))
-  //     const response1: any = await dispatch(getAllStudentAction({}))
-  //     const response2 = await dispatch(getMoreEnrolledCourseAction())
-  //     const response3 = await dispatch(getAllCourseAction({}))
-  //     const response4=await dispatch(getAllPaymentAction({}))
-  //     console.log('its payment data',response2.payload.data)
-  //     console.log(response1)
-  //     setProfit(data?.data.profit)
-  //     if (response.payload && response.payload.success) {
-  //       setInstructor(response.payload.data.totalItems)
-  //       setStudents(response.payload.data.totalItems)
-  //       setCourse(response2.payload.data)
-  //       setPieData(response3.payload.courses)
-  //       setPayment(response4.payload.data)
-  //       setLoading(false)
-  //     }
-  //   }
-  //   getData()
-
-  // }, [dispatch])
   useEffect(() => {
 
     const getData = async () => {
-        setLoading(true);
-
-        try {
-            const [
-                responseInstructors,
-                responseStudents,
-                responseEnrolledCourses,
-                responseAllCourses,
-                responsePayments
-            ] = await Promise.all([
-                dispatch(getAllInstructorsAction({})),
-                dispatch(getAllStudentAction({})),
-                dispatch(getMoreEnrolledCourseAction()),
-                dispatch(getAllCourseAction({})),
-                dispatch(getAllPaymentAction({}))
-            ]);
-
-            console.log('Enrolled courses data:', responseEnrolledCourses.payload.data);
-            console.log('Students data:', responseStudents);
-
-            setProfit(data?.data.profit);
-
-            if (responseInstructors.payload && responseInstructors.payload.success) {
-                setInstructor(responseInstructors.payload.data.totalItems);
-            }
-
-            if (responseStudents.payload && responseStudents.payload.success) {
-                setStudents(responseStudents.payload.data.totalItems);
-            }
-
-            if (responseEnrolledCourses.payload && responseEnrolledCourses.payload.success) {
-                setCourse(responseEnrolledCourses.payload.data);
-            }
-
-            if (responseAllCourses.payload && responseAllCourses.payload.success) {
-                setPieData(responseAllCourses.payload.courses);
-            }
-
-            if (responsePayments.payload && responsePayments.payload.success) {
-                setPayment(responsePayments.payload.data);
-            }
-
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-            // Handle error if needed
-        }
+      
+      setLoading(true)
+      const response: any = await dispatch(getAllInstructorsAction({}))
+      const response1: any = await dispatch(getAllStudentAction({}))
+      const response2 = await dispatch(getMoreEnrolledCourseAction())
+      const response3 = await dispatch(getAllCourseAction({}))
+      const response4=await dispatch(getAllPaymentAction({}))
+      console.log('its payment data',response2.payload.data)
+      console.log(response1)
+      setProfit(data?.data.profit)
+      if (response.payload && response.payload.success) {
+        setInstructor(response.payload.data.totalItems)
+        setStudents(response.payload.data.totalItems)
+        setCourse(response2.payload.data)
+        setPieData(response3.payload.courses)
+        setPayment(response4.payload.data)
+        setLoading(false)
+      }
     }
+    getData()
 
-    getData();
-
-}, [dispatch]);
+  }, [dispatch])
   const formatDate = (dateString : any ) => {
     const options :any  = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -155,6 +99,8 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <ChartCard title="Popular Course" data={course} />
         <ChartCardPie title="Category" data={categories} />
+        {/* <ChartCard title="User Joined" /> */}
+        {/* <ChartCard title="Completed Tasks" /> */}
       </div>
       <div className='dark:bg-gray-800 p-5 mt-8 rounded-lg bg-white shadow-lg'>
 
@@ -211,7 +157,7 @@ const ChartCard = ({ title, data }: { title: string, data: any }) => (
     <h2 className="text-lg mb-4 text-gray-500">{title}</h2>
     {/* Chart */}
     <div className="h-60 dark:bg-gray-800 bg-white rounded">
-      {/* <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 20, right: 50, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="courseData.courseTitle" />
@@ -220,17 +166,7 @@ const ChartCard = ({ title, data }: { title: string, data: any }) => (
           <Legend />
           <Line type="monotone" dataKey="count" stroke="#8884d8" />
         </LineChart>
-      </ResponsiveContainer> */}
-       <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data} margin={{ top: 20, right: 50, left: 10, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="courseTitle" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="count" stroke="#8884d8" />
-                </LineChart>
-            </ResponsiveContainer>
+      </ResponsiveContainer>
     </div>
   </div>
 );
