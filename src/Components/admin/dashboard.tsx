@@ -30,31 +30,87 @@ const Dashboard = () => {
   const [ payment,setPayment]=useState<any>([])
   const [isLoading ,setLoading]= useState<boolean>(false)
   const dispatch = useAppDispatch()
+  // useEffect(() => {
+
+  //   const getData = async () => {
+      
+  //     setLoading(true)
+  //     const response: any = await dispatch(getAllInstructorsAction({}))
+  //     const response1: any = await dispatch(getAllStudentAction({}))
+  //     const response2 = await dispatch(getMoreEnrolledCourseAction())
+  //     const response3 = await dispatch(getAllCourseAction({}))
+  //     const response4=await dispatch(getAllPaymentAction({}))
+  //     console.log('its payment data',response2.payload.data)
+  //     console.log(response1)
+  //     setProfit(data?.data.profit)
+  //     if (response.payload && response.payload.success) {
+  //       setInstructor(response.payload.data.totalItems)
+  //       setStudents(response.payload.data.totalItems)
+  //       setCourse(response2.payload.data)
+  //       setPieData(response3.payload.courses)
+  //       setPayment(response4.payload.data)
+  //       setLoading(false)
+  //     }
+  //   }
+  //   getData()
+
+  // }, [dispatch])
   useEffect(() => {
 
     const getData = async () => {
-      
-      setLoading(true)
-      const response: any = await dispatch(getAllInstructorsAction({}))
-      const response1: any = await dispatch(getAllStudentAction({}))
-      const response2 = await dispatch(getMoreEnrolledCourseAction())
-      const response3 = await dispatch(getAllCourseAction({}))
-      const response4=await dispatch(getAllPaymentAction({}))
-      console.log('its payment data',response2.payload.data)
-      console.log(response1)
-      setProfit(data?.data.profit)
-      if (response.payload && response.payload.success) {
-        setInstructor(response.payload.data.totalItems)
-        setStudents(response.payload.data.totalItems)
-        setCourse(response2.payload.data)
-        setPieData(response3.payload.courses)
-        setPayment(response4.payload.data)
-        setLoading(false)
-      }
-    }
-    getData()
+        setLoading(true);
 
-  }, [dispatch])
+        try {
+            const [
+                responseInstructors,
+                responseStudents,
+                responseEnrolledCourses,
+                responseAllCourses,
+                responsePayments
+            ] = await Promise.all([
+                dispatch(getAllInstructorsAction({})),
+                dispatch(getAllStudentAction({})),
+                dispatch(getMoreEnrolledCourseAction()),
+                dispatch(getAllCourseAction({})),
+                dispatch(getAllPaymentAction({}))
+            ]);
+
+            console.log('Enrolled courses data:', responseEnrolledCourses.payload.data);
+            console.log('Students data:', responseStudents);
+
+            setProfit(data?.data.profit);
+
+            if (responseInstructors.payload && responseInstructors.payload.success) {
+                setInstructor(responseInstructors.payload.data.totalItems);
+            }
+
+            if (responseStudents.payload && responseStudents.payload.success) {
+                setStudents(responseStudents.payload.data.totalItems);
+            }
+
+            if (responseEnrolledCourses.payload && responseEnrolledCourses.payload.success) {
+                setCourse(responseEnrolledCourses.payload.data);
+            }
+
+            if (responseAllCourses.payload && responseAllCourses.payload.success) {
+                setPieData(responseAllCourses.payload.courses);
+            }
+
+            if (responsePayments.payload && responsePayments.payload.success) {
+                setPayment(responsePayments.payload.data);
+            }
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+            // Handle error if needed
+        }
+    }
+
+    getData();
+
+}, [dispatch]);
   const formatDate = (dateString : any ) => {
     const options :any  = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
