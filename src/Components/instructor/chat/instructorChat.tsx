@@ -29,117 +29,6 @@ const InstructorChat: React.FC = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
 
-
-
-    // // peer connection -------------------------------
-    // const [peerId, setPeerId] = useState<string>('');
-    // const [peer, setPeer] = useState<Peer | null>(null);
-    // // const localVideoRef = useRef<HTMLVideoElement>(null);
-    // // const remoteVideoRef = useRef<HTMLVideoElement>(null);
-    // const [remoteStream, setRemoteStream] = useState<any>(null)
-    // const [localStream, setLocalStream] = useState<any>(null)
-    // const [call, setCall] = useState<any>(null);
-    // const [isRing,setRing]=useState<any>(false)
-
-    // // const [input,setInput]= useState<any>(null);
-
-    // useEffect(() => {
-    //     const newPeer = new Peer();
-
-    //     newPeer.on('open', (id) => {
-    //         setPeerId(id);
-
-    //     });
-
-    //     newPeer.on('call', (incomingCall) => {
-    //         console.log('what is the problem')
-    //         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-    //             // if (localVideoRef.current) {
-    //                 // localVideoRef.current.srcObject = stream;
-    //                 setLocalStream(stream)
-    //             // }
-    //             incomingCall.answer(stream);
-    //             incomingCall.on('stream', (remoteStream) => {
-    //                 // if (remoteVideoRef.current) {
-    //                     // remoteVideoRef.current.srcObject = remoteStream;
-    //                     setRemoteStream(stream)
-    //                 // }
-    //             });
-    //             setCall(incomingCall);
-    //         });
-    //     });
-
-    //     setPeer(newPeer);
-
-    //     return () => {
-    //         newPeer.destroy();
-    //     };
-    // }, []);
-
-    // useEffect(() => {
-    //     if (socket) {
-    //         const handleConnectedPeer = (data: any) => {
-    //             console.log('reached data', data);
-
-    //             const is = window.confirm('are you sure');
-
-    //             if (is) {
-    //                 // setAnswer(true)
-    //                 // setRing(false)
-    //                 // socket?.emit('answerCall',{roomId:data.roomId,peerId:data?.peerId})
-    //                 callPeer(data.peerId);
-    //             } else {
-    //                 socket?.emit('rejectCall', { roomId: data.roomId, peerId: data?.peerId })
-    //                 setRing(false)
-
-    //             }
-
-
-    //         };
-
-    //         socket.on('incomingCall', handleConnectedPeer);
-    //         socket?.on('answerCall', (data) => {
-    //             console.log('the call is accepted')
-    //         });
-
-    //         socket?.on('rejectCall', (data) => {
-    //             console.log('the call is rejected')
-    //         });
-
-
-    //         return () => {
-    //             socket.off('incomingCall', handleConnectedPeer);
-    //         };
-    //     }
-    // }, [socket,]);
-
-
-
-    // const callPeer = (id: string) => {
-    //     console.log('this is callpeer', id)
-    //     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-    //         // if (localVideoRef.current) {
-    //         console.log('stream reached', stream)
-    //         // localVideoRef.current.srcObject = stream;
-    //         setLocalStream(stream)
-    //         // }
-    //         const outgoingCall = peer?.call(id, stream);
-    //         outgoingCall?.on('stream', (remoteStream: any) => {
-    //             // if (remoteVideoRef.current) {
-    //                 console.log(' remote stream reached', stream)
-    //                 // remoteVideoRef.current.srcObject = remoteStream;
-    //                 setRemoteStream(remoteStream)
-    //             // }
-    //         });
-    //         setCall(outgoingCall);
-    //     });
-
-    // };
-    // console.log(peerId);
-    // const handleClick = () => {
-    //     socket?.emit('outGoingCall', { peerId: peerId, roomId:currentChat.roomId,userId:data.data._id });
-    //     setRing(true)
-    // }
     const [peerId, setPeerId] = useState<string>('');
     const [peer, setPeer] = useState<Peer | null>(null);
     const [remoteStream, setRemoteStream] = useState<any>(null);
@@ -264,7 +153,7 @@ const InstructorChat: React.FC = () => {
     };
 
     const handleClick = () => {
-        socket?.emit('outGoingCall', { peerId: peerId, roomId: currentChat.roomId, userId: data.data._id });
+        socket?.emit('outGoingCall', { peerId: peerId, roomId: currentChat.roomId, userId: data.data?._id });
         setRing(true);
     };
     const rejectCall = () => {
@@ -301,7 +190,7 @@ const InstructorChat: React.FC = () => {
             if (socket) {
                 socket.emit('join-room', roomId);
                 console.log(`Joined room ${roomId}`);
-                socket?.emit('seen-message', { sender: currentChat._id, chat: users?.chatId });
+                socket?.emit('seen-message', { sender: currentChat?._id, chat: users?.chatId });
             }
         } catch (error) {
             console.error(error);
@@ -315,7 +204,7 @@ const InstructorChat: React.FC = () => {
 
         if (socket) {
             socket.on('getOnlineUser', handleOnlineUsers);
-            socket.emit('onlineUsers', { userId: data.data._id });
+            socket.emit('onlineUsers', { userId: data.data?._id });
             getData();
         }
 
@@ -328,7 +217,7 @@ const InstructorChat: React.FC = () => {
 
     const getData = async () => {
         setLoading(true)
-        const response = await dispatch(getChatByUserIdAction({ userId: data.data._id }));
+        const response = await dispatch(getChatByUserIdAction({ userId: data.data?._id }));
         if (response.payload && response.payload.success) {
             console.log('the chat is ', response.payload.data)
             const sortedData = response.payload.data.sort((a: any, b: any) => {
@@ -337,9 +226,9 @@ const InstructorChat: React.FC = () => {
             const uniqueParticipants = new Set<string>();
             const otherParticipants = sortedData.reduce((acc: any[], chat: any) => {
                 chat.participants.forEach((participant: any) => {
-                    if (participant._id !== data.data._id && !uniqueParticipants.has(participant._id)) {
-                        uniqueParticipants.add(participant._id);
-                        acc.push({ chatId: chat._id, participant, lastSeen: chat?.lastSeen, updatedAt: chat?.updatedAt, subscriptionType: chat?.subscriptionType });
+                    if (participant?._id !== data.data?._id && !uniqueParticipants.has(participant?._id)) {
+                        uniqueParticipants.add(participant?._id);
+                        acc.push({ chatId: chat?._id, participant, lastSeen: chat?.lastSeen, updatedAt: chat?.updatedAt, subscriptionType: chat?.subscriptionType });
                     }
                 });
                 return acc;
@@ -357,9 +246,9 @@ const InstructorChat: React.FC = () => {
         if (socket && currentChat) {
             const handleMessageReceive = (message: any) => {
                 console.log('Message received:', message);
-                console.log(message.sender, currentChat._id)
+                console.log(message.sender, currentChat?._id)
 
-                if (message.sender === currentChat._id) {
+                if (message.sender === currentChat?._id) {
                     message.sender = currentChat
 
                 } else {
@@ -373,7 +262,7 @@ const InstructorChat: React.FC = () => {
             };
 
             const handleTypingEvent = (data: any) => {
-                if (data.sender === currentChat._id) {
+                if (data.sender === currentChat?._id) {
                     setTyping({ isTyping: true, sender: data.sender });
                     setTimeout(() => {
                         setTyping({ isTyping: false, sender: data.sender });

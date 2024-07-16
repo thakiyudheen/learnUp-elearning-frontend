@@ -194,7 +194,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   const getMessageSender = (message: any) => {
     if (typeof message.sender === 'object') {
-      return message.sender._id;
+      return message.sender?._id;
     }
     return message.sender;
   };
@@ -279,7 +279,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
             {messages.map((message: any, index: number) => (
               <div
                 key={index}
-                className={`chat ${getMessageSender(message) === currentUser._id ? 'chat-end' : 'chat-start'}`}
+                className={`chat ${getMessageSender(message) === currentUser?._id ? 'chat-end' : 'chat-start'}`}
               >
                 <div className="chat-image avatar">
                   <div className="w-5 rounded-full">
@@ -290,14 +290,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   </div>
                 </div>
                 <div className="chat-header">
-                  <small className={`${getMessageSender(message) === currentUser._id ? "text-end relative right-2" : "text-start relative left-2"}`}>{new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
+                  <small className={`${getMessageSender(message) === currentUser?._id ? "text-end relative right-2" : "text-start relative left-2"}`}>{new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
                 </div>
                 <div
                   className={`${message.contentType === 'text'
-                    ? getMessageSender(message) === currentUser._id
+                    ? getMessageSender(message) === currentUser?._id
                       ? 'bg-blue-700 text-white rounded-l-full rounded-tr-full px-3 py-2'
                       : 'bg-gray-400 dark:bg-gray-700 text-white rounded-r-full rounded-t-full px-3 py-2'
-                    : getMessageSender(message) === currentUser._id ? 'bg-white dark:bg-blue-600 text-white rounded-l-lg rounded-tr-lg px-1 py-1'
+                    : getMessageSender(message) === currentUser?._id ? 'bg-white dark:bg-blue-600 text-white rounded-l-lg rounded-tr-lg px-1 py-1'
                       : 'bg-gray-400 dark:bg-gray-700 text-white rounded-lg px-1 py-1'
                     }`}
                 >
@@ -341,7 +341,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   </div>
 
                 </div>
-                {getMessageSender(message) == currentUser._id && message.recieverSeen && <small>seen</small>}
+                {getMessageSender(message) == currentUser?._id && message.recieverSeen && <small>seen</small>}
               </div>
             ))}
             <div ref={messagesEndRef} />

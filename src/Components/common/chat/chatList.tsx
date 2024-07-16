@@ -59,7 +59,7 @@ const ChatList: React.FC<SidebarProps>  = ({onlineUsers, users ,createNewChat , 
             >
               <div className='relative'>
                 <img src={chat?.participant.profile?.avatar} className="w-10 h-10 rounded-full"></img>
-                {onlineUsers?.includes(chat?.participant._id) && (
+                {onlineUsers?.includes(chat?.participant?._id) && (
                   <span style={{ marginLeft: '8px', color: 'green', fontWeight: 'bold' }} className='absolute left-5 bottom-[2px] w-3 h-3 bg-[green] rounded-full'></span>
                 )}
               </div>
@@ -67,7 +67,7 @@ const ChatList: React.FC<SidebarProps>  = ({onlineUsers, users ,createNewChat , 
                 <small className={`font-bold ${chat.active ? 'text-white' : ''} dark:text-gray-200 text-black`}>{chat?.participant.firstName}</small>
                 <small className={`text-gray-500 ${chat.active ? 'text-gray-300' : ''}`}>{'This is sample message'}</small>
               </div>
-              {onlineUsers?.includes(chat?.participant._id) ? <small className='text-[green]'>Online</small> : <small>Offline</small>}
+              {onlineUsers?.includes(chat?.participant?._id) ? <small className='text-[green]'>Online</small> : <small>Offline</small>}
               <small className={`ml-auto ${chat.active ? 'text-gray-300' : 'text-gray-500'}`}>{chat.time}</small>
             </li>
           ))
