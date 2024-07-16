@@ -10,26 +10,34 @@ import { RootState } from '@/redux/store';
 import { format } from 'date-fns';
 import { updateUserAction } from '@/redux/store/actions/user/updateUserAction';
 import { getUserDataAction } from '@/redux/store/actions/auth/getUserDataAction';
+import { toast } from 'sonner'
+import { FaSpinner } from 'react-icons/fa';
+
 
 const UserDetails: React.FC = () => {
     const { data } = useAppSelector((state: RootState) => state.user)
     const [isEditing, setIsEditing] = useState(false);
-    const [profileImage, setProfileImage] = useState(data?.data?.profile?.avatar||"https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg");
+    const [profileImage, setProfileImage] = useState(data?.data?.profile?.avatar || "https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg");
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const dispatch = useAppDispatch()
     const [user, setUser] = useState<any>(null)
     const [loading, setLoading] = useState<boolean>(false)
+    const [isUploading, setUploading] = useState<boolean>(false)
 
-    useEffect(()=>{
-        const getData = async () =>{
-           await dispatch(getUserDataAction())
-           setProfileImage(data?.data?.profile?.avatar)
-        } 
+
+
+
+    useEffect(() => {
+        const getData = async () => {
+            await dispatch(getUserDataAction())
+            setProfileImage(data?.data?.profile?.avatar)
+
+        }
         getData()
-    },[dispatch])
+    }, [dispatch])
 
 
-const validationSchema = Yup.object().shape({
+    const validationSchema = Yup.object().shape({
         username: Yup.string().required('Username is required'),
         firstName: Yup.string().required('First name is required'),
         lastName: Yup.string().required('Last name is required'),
@@ -103,6 +111,7 @@ const validationSchema = Yup.object().shape({
         if (response.payload.success) {
             setUser(response.payload.data)
             setLoading(false)
+            toast.success('Updated Successfully!')
         }
 
 
@@ -118,11 +127,11 @@ const validationSchema = Yup.object().shape({
 
     const handleFileChange = async (file: File | null, setFieldValue: Function) => {
         if (file) {
-            console.log('this is log chage')
+            setUploading(true)
             const uploadedLink = await FileUpload(file);
-            console.log('this is updated data',uploadedLink.secure_url)
             setFieldValue('avatar', uploadedLink.secure_url)
             setProfileImage(uploadedLink.secure_url)
+            setUploading(false)
         }
     };
 
@@ -136,12 +145,20 @@ const validationSchema = Yup.object().shape({
                         alt="Profile"
                         className="w-24 h-24 rounded-full"
                     />
-                    <div
-                        className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-                        onClick={handleImageClick}
-                    >
-                        <CiEdit className="text-white text-2xl" />
-                    </div>
+                    {isEditing && (
+                        <>
+                            {isUploading ? (<div
+                                className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                                onClick={handleImageClick}
+                            >
+                                <CiEdit className="text-white text-2xl" />
+                            </div>) : (<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                <FaSpinner className="animate-spin mr-2 text-[35px] text-blue-900 " />
+                            </div>)}
+                        </>
+
+                    )}
+
                 </div>
                 <div>
                     <h2 className="text-lg font-semibold">{initialValues.firstName} {initialValues.lastName}</h2>
@@ -292,7 +309,7 @@ const validationSchema = Yup.object().shape({
                     </Form>
                 )}
             </Formik>
-        </div>
+        </div >
     )
 };
 

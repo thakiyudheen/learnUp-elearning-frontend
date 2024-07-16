@@ -16,6 +16,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { getUserDataAction } from '../../redux/store/actions/auth/getUserDataAction';
 import { motion } from 'framer-motion';
 import Footer from '@/Components/common/user/footer/footer';
+import {toast} from 'sonner'
 
 interface data {
   email: string;
@@ -41,10 +42,17 @@ const Login: React.FC = () => {
     const response = await dispatch(loginUserAction(values));
     console.log('this is first', response.payload);
     if (!response?.payload || !response?.payload.success) {
-      setError(true);
-      setTimeout(() => {
+      console.log('this is the actual error',response)
+      if(response?.payload){
+        setError(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+
+      }else{
+        toast.error('Network Error!')
         setLoading(false);
-      }, 500);
+      }
     } else {
       setError(false);
       setLoading(false);
@@ -128,11 +136,7 @@ const Login: React.FC = () => {
                     disabled={isSubmitting}
                     className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                   >
-                    {isSubmitting ? (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="spinner border-t-2 border-b-2 border-blue-500 rounded-full w-4 h-4 animate-spin"></div>
-    </div>
-  ) : 'Login'}
+                    {isSubmitting || isLoading ? 'Loading...': 'Login'}
                   </button>
                   <div className="flex items-center justify-between mt-2">
                     <p className='text-[12px] text-[gray]'>I don't have any account <a onClick={() => navigator('/signup', { state: location.state })} className="text-blue-500 text-sm font-bold cursor-pointer">Sign up</a></p>
