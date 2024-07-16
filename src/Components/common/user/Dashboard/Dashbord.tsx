@@ -137,10 +137,10 @@ const Dashboard = () => {
 
       <div className='dark:bg-gray-800 p-5 mt-8 rounded-lg bg-white shadow-lg'>
 
-        <h1 className='font-bold mt-3 dark:text-gray-400 text-gray-500'>Recent Payments</h1>
+        {/* <h1 className='font-bold mt-3 dark:text-gray-400 text-gray-500'>Recent Payments</h1> */}
         <div className="overflow-hidden w-full mt-4 mb-4 h-[240px]">
           <div className="overflow-x-auto rounded-lg">
-            <table className="table-auto w-full ">
+            {/* <table className="table-auto w-full ">
               <thead>
                 <tr className="border-b border-gray-900  dark:text-gray-400 text-black dark:text-gray-400 text-center">
                   <th className='py-2'>No</th>
@@ -163,7 +163,7 @@ const Dashboard = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </div>
       </div>

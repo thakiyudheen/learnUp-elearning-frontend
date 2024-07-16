@@ -155,7 +155,7 @@ const Dashboard = () => {
                 {payment.map((payment: any, index: any) => (
                   <tr key={payment._id} className="text-center dark:text-gray-400 text-black py-7 border-b border-gray-300 dark:border-gray-900 dark:hover:bg-gray-800">
                     <td className='py-4'>{index + 1}</td>
-                    <td>{payment.userId.firstName}</td>
+                    <td>{payment?.userId?.firstName}</td>
                     <td>₹ {payment.amount}</td>
                     <td><div className="badge badge-primary">{payment.status}</div></td>
                     <td>{formatDate(payment.createdAt)}</td>
