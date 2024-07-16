@@ -38,10 +38,10 @@
   }
 
   .dark {
-    --background: var(--background-dark); 
-    --foreground: 210 40% 98%;
-    /* --background: 200 9% 9%; 
+    /* --background: var(--background-dark); 
     --foreground: 210 40% 98%; */
+    --background: 200 9% 9%; 
+    --foreground: 210 40% 98%;
 
   
     --card: 222.2 84% 4.9%;
