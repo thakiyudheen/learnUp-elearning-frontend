@@ -285,7 +285,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                   <div className="w-5 rounded-full">
                     <img
                       alt="Avatar"
-                      src={typeof message.sender === 'object' ? message.sender.profile.avatar : 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'}
+                      src={typeof message.sender === 'object' ? message.sender?.profile?.avatar : 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'}
                     />
                   </div>
                 </div>
