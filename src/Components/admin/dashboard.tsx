@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [ payment,setPayment]=useState<any>([])
   const [isLoading ,setLoading]= useState<boolean>(false)
   const dispatch = useAppDispatch()
+  const [chartPayments, setChartPayments] = useState([]);
   // useEffect(() => {
 
   //   const getData = async () => {
@@ -78,6 +79,7 @@ const Dashboard = () => {
             console.log('Enrolled courses data:', responseEnrolledCourses.payload.data);
             console.log('Students data:', responseStudents);
 
+            // Assuming `data` is defined elsewhere and contains `profit`
             setProfit(data?.data.profit);
 
             if (responseInstructors.payload && responseInstructors.payload.success) {
@@ -97,20 +99,57 @@ const Dashboard = () => {
             }
 
             if (responsePayments.payload && responsePayments.payload.success) {
-                setPayment(responsePayments.payload.data);
-            }
+                const paymentsData = responsePayments.payload.data;
 
+                // Filter payments for this week
+                const today = new Date();
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay()); // Start of current week (Sunday)
+                const endOfWeek = new Date(today);
+                endOfWeek.setDate(startOfWeek.getDate() + 6); // End of current week (Saturday)
+
+                const thisWeekPayments = paymentsData.filter((payment: any) => {
+                    const paymentDate = new Date(payment.date); // Assuming payment.date is a date string
+                    return paymentDate >= startOfWeek && paymentDate <= endOfWeek;
+                });
+
+                // Prepare data for chart (amount per date)
+                const amountsByDate: any = {};
+                thisWeekPayments.forEach((payment: any) => {
+                    const paymentDate = new Date(payment.date).toISOString().split('T')[0]; // Extract YYYY-MM-DD
+                    if (!amountsByDate[paymentDate]) {
+                        amountsByDate[paymentDate] = 0;
+                    }
+                    amountsByDate[paymentDate] += payment.amount;
+                });
+
+                // Format data for chart (array of objects with date and amount)
+                const chartData: any = Object.keys(amountsByDate).map(date => ({
+                    date,
+                    amount: amountsByDate[date]
+                }));
+
+                console.log('This week payments:', thisWeekPayments);
+                console.log('Amounts by date:', amountsByDate);
+                console.log('Chart data:', chartData);
+
+                // Update state with the chart data
+                setChartPayments(chartData);
+                console.log('this payment data for week',chartPayments )
+            }
             setLoading(false);
+           
         } catch (error) {
             console.error('Error fetching data:', error);
             setLoading(false);
             // Handle error if needed
         }
-    }
+    };
 
     getData();
 
 }, [dispatch]);
+
   const formatDate = (dateString : any ) => {
     const options :any  = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
