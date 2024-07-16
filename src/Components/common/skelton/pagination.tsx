@@ -29,6 +29,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
       <div className="flex items-center gap-2">
         {pages.map((page) => (
           <button
+          
             key={page}
             onClick={() => setCurrentPage(page)}
             className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase ${

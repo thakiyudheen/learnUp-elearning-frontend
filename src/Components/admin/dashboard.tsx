@@ -109,7 +109,7 @@ const Dashboard = () => {
             <div className="overflow-x-auto rounded-lg">
                 <table className="table-auto w-full ">
                     <thead>
-                        <tr className=" dark:text-gray-400 text-black dark:text-gray-400 text-center">
+                        <tr className=" dark:text-gray-400 dark:bg-gray-800 bg-white  text-black dark:text-gray-400 text-center">
                             <th className='py-2'>No</th>
                             <th>User Name</th>
                             <th>Amount</th>
