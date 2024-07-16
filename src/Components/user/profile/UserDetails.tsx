@@ -51,6 +51,7 @@ const UserDetails: React.FC = () => {
 
     useEffect(() => {
         setUser(data?.data || null)
+        setProfileImage(data?.data?.profile?.avatar)
     }, [data])
 
 
