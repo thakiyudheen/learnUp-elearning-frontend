@@ -30,7 +30,6 @@ const Dashboard = () => {
   const [ payment,setPayment]=useState<any>([])
   const [isLoading ,setLoading]= useState<boolean>(false)
   const dispatch = useAppDispatch()
-  const [chartPayments, setChartPayments] = useState([]);
   // useEffect(() => {
 
   //   const getData = async () => {
@@ -79,7 +78,6 @@ const Dashboard = () => {
             console.log('Enrolled courses data:', responseEnrolledCourses.payload.data);
             console.log('Students data:', responseStudents);
 
-            // Assuming `data` is defined elsewhere and contains `profit`
             setProfit(data?.data.profit);
 
             if (responseInstructors.payload && responseInstructors.payload.success) {
@@ -99,57 +97,20 @@ const Dashboard = () => {
             }
 
             if (responsePayments.payload && responsePayments.payload.success) {
-                const paymentsData = responsePayments.payload.data;
-
-                // Filter payments for this week
-                const today = new Date();
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay()); // Start of current week (Sunday)
-                const endOfWeek = new Date(today);
-                endOfWeek.setDate(startOfWeek.getDate() + 6); // End of current week (Saturday)
-
-                const thisWeekPayments = paymentsData.filter((payment: any) => {
-                    const paymentDate = new Date(payment.date); // Assuming payment.date is a date string
-                    return paymentDate >= startOfWeek && paymentDate <= endOfWeek;
-                });
-
-                // Prepare data for chart (amount per date)
-                const amountsByDate: any = {};
-                thisWeekPayments.forEach((payment: any) => {
-                    const paymentDate = new Date(payment.date).toISOString().split('T')[0]; // Extract YYYY-MM-DD
-                    if (!amountsByDate[paymentDate]) {
-                        amountsByDate[paymentDate] = 0;
-                    }
-                    amountsByDate[paymentDate] += payment.amount;
-                });
-
-                // Format data for chart (array of objects with date and amount)
-                const chartData: any = Object.keys(amountsByDate).map(date => ({
-                    date,
-                    amount: amountsByDate[date]
-                }));
-
-                console.log('This week payments:', thisWeekPayments);
-                console.log('Amounts by date:', amountsByDate);
-                console.log('Chart data:', chartData);
-
-                // Update state with the chart data
-                setChartPayments(chartData);
-                console.log('this payment data for week',chartPayments )
+                setPayment(responsePayments.payload.data);
             }
+
             setLoading(false);
-           
         } catch (error) {
             console.error('Error fetching data:', error);
             setLoading(false);
             // Handle error if needed
         }
-    };
+    }
 
     getData();
 
 }, [dispatch]);
-
   const formatDate = (dateString : any ) => {
     const options :any  = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -194,8 +155,6 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <ChartCard title="Popular Course" data={course} />
         <ChartCardPie title="Category" data={categories} />
-        {/* <ChartCard title="User Joined" /> */}
-        {/* <ChartCard title="Completed Tasks" /> */}
       </div>
       <div className='dark:bg-gray-800 p-5 mt-8 rounded-lg bg-white shadow-lg'>
 
@@ -252,7 +211,7 @@ const ChartCard = ({ title, data }: { title: string, data: any }) => (
     <h2 className="text-lg mb-4 text-gray-500">{title}</h2>
     {/* Chart */}
     <div className="h-60 dark:bg-gray-800 bg-white rounded">
-      <ResponsiveContainer width="100%" height="100%">
+      {/* <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 20, right: 50, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="courseData.courseTitle" />
@@ -261,7 +220,17 @@ const ChartCard = ({ title, data }: { title: string, data: any }) => (
           <Legend />
           <Line type="monotone" dataKey="count" stroke="#8884d8" />
         </LineChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer> */}
+       <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data} margin={{ top: 20, right: 50, left: 10, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="courseTitle" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                </LineChart>
+            </ResponsiveContainer>
     </div>
   </div>
 );
