@@ -132,6 +132,7 @@ const UserDetails: React.FC = () => {
             setFieldValue('avatar', uploadedLink.secure_url)
             setProfileImage(uploadedLink.secure_url)
             setUploading(false)
+            toast.success('Uploaded Successfully!')
         }
     };
 
@@ -148,13 +149,17 @@ const UserDetails: React.FC = () => {
                     {isEditing && (
                         <>
                             {isUploading ? (<div
-                                className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-                                onClick={handleImageClick}
-                            >
-                                <CiEdit className="text-white text-2xl" />
-                            </div>) : (<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                <FaSpinner className="animate-spin mr-2 text-[35px] text-blue-900 " />
-                            </div>)}
+                                    className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                                    onClick={handleImageClick}
+                                >
+                                   <FaSpinner className="animate-spin mr-2 text-[10px] text-blue-900 " />
+                                </div>) : (
+                                <div
+                                    className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                                    onClick={handleImageClick}
+                                >
+                                    <CiEdit className="text-white text-2xl" />
+                                </div>)}
                         </>
 
                     )}
