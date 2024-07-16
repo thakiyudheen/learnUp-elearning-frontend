@@ -48,7 +48,7 @@ const Dashboard = () => {
         setStudents(response.payload.data.totalItems)
         setCourse(response2.payload.data)
         setPieData(response3.payload.courses)
-        setPayment(response4.payload.data)
+        setPayment(response4.payload.data.slice(0,5))
         setLoading(false)
       }
     }
@@ -109,7 +109,7 @@ const Dashboard = () => {
             <div className="overflow-x-auto rounded-lg">
                 <table className="table-auto w-full ">
                     <thead>
-                        <tr className="dark:bg-gray-700 bg-white dark:text-gray-400 text-black dark:text-gray-400 text-center">
+                        <tr className=" dark:text-gray-400 text-black dark:text-gray-400 text-center">
                             <th className='py-2'>No</th>
                             <th>User Name</th>
                             <th>Amount</th>
