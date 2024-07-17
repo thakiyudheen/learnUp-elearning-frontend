@@ -224,7 +224,7 @@ const InstructorChat: React.FC = () => {
                 return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
             });
             const uniqueParticipants = new Set<string>();
-            const otherParticipants = sortedData.reduce((acc: any[], chat: any) => {
+            const otherParticipants = response?.payload?.data?.reduce((acc: any[], chat: any) => {
                 chat.participants.forEach((participant: any) => {
                     if (participant?._id !== data.data?._id && !uniqueParticipants.has(participant?._id)) {
                         uniqueParticipants.add(participant?._id);
@@ -233,7 +233,7 @@ const InstructorChat: React.FC = () => {
                 });
                 return acc;
             }, []);
-
+        
             const sortedChats = otherParticipants.sort((a: any, b: any): number => {
                 return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
             });
@@ -241,7 +241,9 @@ const InstructorChat: React.FC = () => {
             setLoading(false)
         }
     };
+ 
 
+    
     useEffect(() => {
         if (socket && currentChat) {
             const handleMessageReceive = (message: any) => {
@@ -280,7 +282,7 @@ const InstructorChat: React.FC = () => {
         }
     }, [socket, currentChat]);
 
-    const onSendMessage = async (message: string, contentType?: string) => {
+    const onSendMessage =(message: string, contentType?: string) => {
         console.log('the real sender', data.data)
         if (roomId && currentChat && data?.data?._id) {
             const newMessage = {
@@ -290,12 +292,13 @@ const InstructorChat: React.FC = () => {
                 roomId,
                 contentType: contentType
             };
+            console.log('this os send message')
             socket?.emit("send-message", newMessage);
-            await dispatch(createMessageAction(newMessage));
+            // dispatch(createMessageAction(newMessage));
         }
     };
-
-
+ 
+console.log('participants ',participants )
 
     return (
         <div className="flex h-screen overflow-y-hidden dark:bg-base-300">

@@ -103,23 +103,23 @@ const userSlice = createSlice({
             state.error = action.error.message || 'Login failed';
         })
 
-        // update data handle -----------------------------------------
+        // // update data handle -----------------------------------------
         
-        .addCase(updateUserAction.pending , (state : UserState) =>{
-            console.log('update user is working')
-            state.loading = true;
-            state.error = null;
-        })
-        .addCase(updateUserAction.fulfilled , (state : UserState , action : PayloadAction<SignupFormData>) =>{
-            state.loading = false;
-            state.data = action.payload;
-            state.error = null;
-        })
-        .addCase(updateUserAction.rejected,(state : UserState , action ) =>{
-            state.loading = true ; 
-            state.data =null ;
-            state.error = action.error.message || 'updation failed';
-        })
+        // .addCase(updateUserAction.pending , (state : UserState) =>{
+        //     console.log('update user is working')
+        //     state.loading = true;
+        //     state.error = null;
+        // })
+        // .addCase(updateUserAction.fulfilled , (state : UserState , action : PayloadAction<SignupFormData>) =>{
+        //     state.loading = false;
+        //     state.data = action.payload;
+        //     state.error = null;
+        // })
+        // .addCase(updateUserAction.rejected,(state : UserState , action ) =>{
+        //     state.loading = true ; 
+        //     state.data =null ;
+        //     state.error = action.error.message || 'updation failed';
+        // })
 
     },
 });

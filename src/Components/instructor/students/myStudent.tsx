@@ -29,10 +29,10 @@ const MyStudents: React.FC = () => {
     try {
       setLoading(true);
       const studentsData = await dispatch(getMyStudentAction({ page, limit:limitPage,instructorId:data?.data?._id }));
-      console.log('data student',studentsData.payload.data)
-      if (getMyStudentAction.fulfilled.match(studentsData)) {
-        setStudents(studentsData.payload.data.students.reverse());
-        setTotalPages(Math.ceil(studentsData.payload.data.totalItems/limitPage));
+      console.log('data student',studentsData?.payload?.data)
+      if (getMyStudentAction?.fulfilled.match(studentsData)) {
+        setStudents(studentsData?.payload?.data?.students?.reverse());
+        setTotalPages(Math.ceil(studentsData?.payload?.data?.totalItems/limitPage));
       } else {
         setError('Failed to fetch students');
       }
