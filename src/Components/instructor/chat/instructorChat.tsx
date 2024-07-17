@@ -294,7 +294,7 @@ const InstructorChat: React.FC = () => {
             };
             console.log('this os send message')
             socket?.emit("send-message", newMessage);
-            // dispatch(createMessageAction(newMessage));
+            dispatch(createMessageAction(newMessage));
         }
     };
  
