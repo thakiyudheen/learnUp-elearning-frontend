@@ -267,7 +267,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                 {/* <CiVideoOn  className='text-[4vh] mr-5'/> */}
                 {/* navigate('/peervideo', { state: currentChat?.roomId }) */}
                 <FaVideo className='text-[3vh] text-gray-500 mr-5' onClick={handleClick} />
-                <IoCallOutline className='text-[3vh] text-gray-500 mr-4' />
+                {/* <IoCallOutline className='text-[3vh] text-gray-500 mr-4' /> */}
               </div>
             )}
 
