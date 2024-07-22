@@ -17,7 +17,7 @@ const Enrollment: React.FC = () => {
             alt="Enroll as a Student"
             className="mx-auto mb-2 h-[24rem]"
           />
-          <button onClick={()=>navigate('/login', { state: { role: "student" } })} className="bg-blue-600 text-white py-2 px-4 border-2 border-blue-600 hover:bg-blue-600 shadow-lg rounded-[2rem]">
+          <button onClick={()=>navigate('/signup', { state: { role: "student" } })} className="bg-blue-600 text-white py-2 px-4 border-2 border-blue-600 hover:bg-blue-600 shadow-lg rounded-[2rem]">
             Enroll as a student
           </button>
         </div>
@@ -27,7 +27,7 @@ const Enrollment: React.FC = () => {
             alt="Enroll as a Teacher"
             className="mx-auto mb-2 h-[24rem]"
           />
-          <button onClick={()=>navigate('/login',{ state: { role: "instructor" } })} className="bg-transparent border-2 border-blue-500 text-blue-500 py-2 px-4 rounded-[2rem] hover:bg-blue-600 shadow-lg hover:text-white">
+          <button onClick={()=>navigate('/signup',{ state: { role: "instructor" } })} className="bg-transparent border-2 border-blue-500 text-blue-500 py-2 px-4 rounded-[2rem] hover:bg-blue-600 shadow-lg hover:text-white">
             Enroll as a Teacher
           </button>
         </div>

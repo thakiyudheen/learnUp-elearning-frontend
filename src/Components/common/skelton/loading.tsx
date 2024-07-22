@@ -25,7 +25,7 @@ const LoadingIndicator: React.FC = () => {
     //     autoplay
     //   ></dotlottie-player> */}
       {/* <FaSpinner className="animate-spin mr-2 text-[35px] text-blue-900 " /> */}
-       <div className="spinner border-t-[4px] border-b-[4px] border-blue-700 rounded-full w-8 h-8 animate-spin"></div>
+        
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { updateCourseAction } from '@/redux/store/actions/course/updateCourseAction';
 import { RootState } from '@/redux/store';
 import { PaginationControls } from '@/Components/common/skelton';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 interface Data {
   _id: string;

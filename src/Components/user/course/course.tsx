@@ -5,8 +5,7 @@ import React, { useEffect, useState, IframeHTMLAttributes } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosShareAlt } from "react-icons/io";
 import { RootState } from '@/redux/store';
-import { toast} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { toast} from 'sonner'
 import { loadStripe } from '@stripe/stripe-js'
 import { createSessionAction } from '@/redux/store/actions/Payment/createSessionAction';
 import { storeData } from '@/utils/localStorage';
