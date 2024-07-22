@@ -68,7 +68,7 @@ const Signup: React.FC = () => {
       navigator('/');
       return;
     }
-    if(location.state.role){
+    if(location?.state){
     
     const signUpData: any = {
       role: location.state.role,
