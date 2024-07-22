@@ -114,7 +114,7 @@ const Login: React.FC = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <ErrorMessage name="email" component="div" className="text-red-500 text-[12px]" />
                 </div>
@@ -123,7 +123,7 @@ const Login: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     placeholder="Password"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEyeSlash /> : <FaEye />}

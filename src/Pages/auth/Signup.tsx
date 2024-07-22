@@ -128,7 +128,7 @@ const Signup: React.FC = () => {
                     type="text"
                     name="username"
                     placeholder="Username"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <ErrorMessage name="username" component="div" className="text-red-500 text-[12px]" />
                 </div>
@@ -137,7 +137,7 @@ const Signup: React.FC = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <ErrorMessage name="email" component="div" className="text-red-500 text-[12px]" />
                 </div>
@@ -146,7 +146,7 @@ const Signup: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     placeholder="Password"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <motion.button
                     type="button"
@@ -164,7 +164,7 @@ const Signup: React.FC = () => {
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
                     placeholder="Confirm Password"
-                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
+                    className={`w-full px-2 py-1 ${theme === 'light' ? 'bg-white' : 'bg-base-100'} border-b-[1px] focus:outline-none border-[grey] text-sm`}
                   />
                   <motion.button
                     type="button"
