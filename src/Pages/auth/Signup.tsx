@@ -68,7 +68,8 @@ const Signup: React.FC = () => {
       navigator('/');
       return;
     }
-
+    if(location.state.role){
+    
     const signUpData: any = {
       role: location.state.role,
       email: response.payload.data.email,
@@ -76,7 +77,6 @@ const Signup: React.FC = () => {
       username: response.payload.username,
       isGauth: true
     };
-    if(location.state.role){
       navigator(location.state.role === 'student' ? '/userRegister' : '/instructorRegister', { state: signUpData });
     }else {
       toast.info('Please select the role !')
