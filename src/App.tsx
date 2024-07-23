@@ -32,6 +32,7 @@ import SubscriptionSuccess from './Pages/payment/subscriptionSuccess';
 import ReApply from './Components/auth/reapply/ReApply';
 import PeerVideoComponent from './Components/instructor/chat/videoCall';
 import AboutUs from './Pages/student/aboutUs';
+import UserDetails from './Components/user/profile/UserDetails';
 
 
 
@@ -143,7 +144,7 @@ function App() {
   
         
 
-        {/* <Route path="/admin/*" element={<AdminRoutes/>} /> */}
+        <Route path="/udtl" element={<UserDetails/>} />
         {/* <Route path="/instructor/*" element={<InstructorRoutes />} /> */}
         {/* <InstructorRoutes /> */}
         <Route path="*" element={<NotFontError/>} />

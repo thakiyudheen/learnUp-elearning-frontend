@@ -258,7 +258,7 @@ const UserDetails: React.FC = () => {
     return (
         <div className="p-10 dark:bg-base-100 bg-gray-100 md:mt-[2rem]">
             <h1 className="text-xl font-semibold mb-4 ">My Profile</h1>
-            <div className="flex items-center space-x-4 mt-2 mb-3 p-3  bg-gray-300 shadow-lg dark:bg-gray-800 rounded-lg">
+            <div className="flex items-center space-x-4 mt-2 mb-3 p-3   bg-gradient-to-l from-blue-800 to-gray-900 shadow-lg dark:bg-gray-800 rounded-lg">
                 <div className="relative">
                     <img
                         src={profileImage}
@@ -286,7 +286,7 @@ const UserDetails: React.FC = () => {
                 </div>
                 <div>
                     <h2 className="text-lg font-semibold">{initialValues.firstName} {initialValues.lastName}</h2>
-                    <small className="text-sm text-gray-700 dark:text-gray-300">{initialValues.email}</small>
+                    <small className="text-sm text-gray-400 dark:text-gray-300">{initialValues.email}</small>
                 </div>
             </div>
             <hr />
