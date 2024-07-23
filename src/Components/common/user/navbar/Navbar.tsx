@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
   return (
     // Wrap the entire Navbar in a container with fixed position
     <div className="fixed top-0 left-0 right-0 z-50 font-Poppins ">
-      <div className={`wrapper flex justify-between items-center ${theme == 'light' ? 'bg-white' : 'bg-gray-800'} h-[65px] shadow-lg font-sans relative z-10`}>
+      <div className={`wrapper max-w-10xl  flex justify-between items-center ${theme == 'light' ? 'bg-white' : 'bg-gray-800'} h-[65px] shadow-lg font-sans relative z-10`}>
         <div className="logo">
           <img src={LearnUp} className="h-[70px] w-[150px] md:ml-[2rem]" alt="LearnUp Logo" />
         </div>

@@ -18,7 +18,7 @@ const Homebanner: React.FC = () => {
     const { data } = useAppSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  font-Poppins   p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen  font-Poppins max-w-10xl  p-6">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center ">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

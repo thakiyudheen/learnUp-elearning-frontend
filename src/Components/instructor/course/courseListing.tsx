@@ -131,7 +131,7 @@ const CourseListing: React.FC = () => {
             <li>
               <details className="dropdown dropdown-right">
                 <summary className="px-2 py-1 font-semibold">Category</summary>
-                <ul className="menu p-2 bg-white dark:bg-gray-800 rounded-box">
+                <ul className="menu p-2 bg-white z-10 dark:bg-gray-800 rounded-box">
                   {category.map((category: any, index: any) => (
                     <li key={index}>
                       <div className="form-control">
@@ -154,7 +154,7 @@ const CourseListing: React.FC = () => {
             <li>
               <details className="dropdown dropdown-right">
                 <summary className="px-2 py-1 font-semibold">Level</summary>
-                <ul className="menu p-2 bg-white dark:bg-gray-800 rounded-box">
+                <ul className="menu p-2 bg-white z-10 dark:bg-gray-800 rounded-box">
                   <li>
                     <div className="form-control">
                       <label htmlFor="level1" className="label cursor-pointer">
@@ -203,7 +203,7 @@ const CourseListing: React.FC = () => {
             <li>
               <details className="dropdown dropdown-right">
                 <summary className="px-2 py-1 font-semibold">Price</summary>
-                <ul className="menu p-2 bg-white dark:bg-gray-800 rounded-box">
+                <ul className="menu p-2 bg-white z-10 dark:bg-gray-800 rounded-box">
                   <li>
                     <div className="form-control">
                       <label htmlFor="priceLowToHigh" className="label cursor-pointer">

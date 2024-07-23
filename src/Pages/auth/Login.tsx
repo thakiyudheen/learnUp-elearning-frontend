@@ -61,13 +61,16 @@ const Login: React.FC = () => {
   };
 
   const googleAuthHandle = async (credentials: any) => {
+    setLoading(true)
     const response = await dispatch(googleAuthAction(credentials));
-
+    
     if (response.payload.existingUser) {
       await dispatch(getUserDataAction())
       navigator('/');
+      setLoading(false)
       return;
     } else {
+      setLoading(false)
       navigator('/enrollment');
     }
   };

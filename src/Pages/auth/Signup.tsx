@@ -69,7 +69,7 @@ const Signup: React.FC = () => {
       return;
     }
     if(location?.state){
-    
+    console.log('this is username of that',response.payload.username)
     const signUpData: any = {
       role: location.state.role,
       email: response.payload.data.email,

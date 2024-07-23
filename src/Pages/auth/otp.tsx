@@ -50,6 +50,8 @@ const OtpForm: React.FC = () => {
     values: { otp: string[] },
     actions: FormikHelpers<{ otp: string[] }>
   ) => {
+
+    setLoading(true)
     actions.setSubmitting(false);
 
     const response = await dispatch(
@@ -62,20 +64,20 @@ const OtpForm: React.FC = () => {
     } else {
       const signupData: SignupFormData = {
 
-         ...location.state
-        
-        };
+        ...location.state
 
-      console.log('this is the final result',signupData)
-      const response1 : any  = await dispatch(
+      };
+
+      console.log('this is the final result', signupData)
+      const response1: any = await dispatch(
         signupAction(signupData)
       );
-
+      setLoading(false)
       if (!response1.error && response1.payload.success) {
-        
-          navigate('/')
-        
-        
+
+        navigate('/')
+
+
       }
     }
   };
@@ -111,84 +113,81 @@ const OtpForm: React.FC = () => {
     setTimer(5);
   };
 
-      return (
-      <>
-        <Navbar />
-        <div className={`flex justify-center items-center min-h-screen p-5 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}>
-          <div className="hidden md:block md:w-1/3">
-            <img src={Otp} alt="Description" className="w-[85%] h-auto" />
-          </div>
-          {isLoading && <LoadingIndicator />}
-          <div className="w-full md:w-1/3 p-5 md:p-10 md:ml-[2rem]  rounded-lg">
-            <h1 className={`text-[20px] font-bold text-center mb-[1rem] ${theme === 'light' ? 'text-blue-900' : 'text-blue-600'}`}>
-              Verification <span className="text-blue-500">Code</span>
-            </h1>
-            <h1 className="text-[14px] mb-[1rem] text-center">{location?.state?.email}</h1>
-            <Formik
-              initialValues={{ otp: ['', '', '', ''] }}
-              validationSchema={Yup.object({
-                otp: Yup.array()
-                  .of(Yup.string().matches(/^[0-9]$/, 'Must be a digit').required('Required'))
-                  .length(4, 'Must be exactly 4 digits'),
-              })}
-              onSubmit={handleSubmit}
-            >
-              {({
-                errors,
-                touched,
-                isSubmitting,
-                setFieldValue,
-                values,
-              }: {
-                errors: any;
-                touched: any;
-                isSubmitting: any;
-                setFieldValue: any;
-                values: any;
-              }) => (
-                <Form>
-                  {isError && <small className="text-[red] md:ml-[9rem] ml-[7rem]">Incorrect OTP</small>}
-                  <div className="flex justify-center mb-6 md:mr-2">
-                    {['', '', '', ''].map((_, index) => (
-                      <input
-                        key={index}
-                        id={`otp-input-${index}`}
-                        name={`otp[${index}]`}
-                        maxLength={1}
-                        className={`w-16 h-12 text-center text-black rounded-lg border-2 ${
-                          theme === 'light' ? 'bg-white' : 'bg-gray-600'
-                        } ${touched.otp?.[index] && errors.otp?.[index] ? 'border-red-500' : 'border-gray-800'} ${
-                          index !== 3 ? 'mr-2' : ''
-                        }`}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, index, setFieldValue)}
-                      />
-                    ))}
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !values.otp.every((val: any) => val !== '')}
-                    className={`w-full md:w-[18rem] py-1 mt-4 md:ml-[2rem] rounded-md ${
-                      theme === 'light' ? 'bg-blue-600 text-white' : 'bg-blue-600 text-white'
-                    } ${isSubmitting || !values.otp.every((val: any) => val !== '') ? 'bg-gray-400' : ''}`}
-                  >
-                    Submit
-                  </button>
-                  <div className="flex justify-center mt-4">
-                    {resendAvailable ? (
-                      <button type="button" onClick={handleResendOtp} className="text-blue-600">
-                        Resend OTP
-                      </button>
-                    ) : (
-                      <span className="text-gray-600">Resend OTP in {timer} seconds</span>
-                    )}
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
+  return (
+    <>
+      <Navbar />
+      <div className={`flex justify-center items-center min-h-screen p-5 ${theme === 'light' ? 'bg-white' : 'bg-gray-800'}`}>
+        <div className="hidden md:block md:w-1/3">
+          <img src={Otp} alt="Description" className="w-[85%] h-auto" />
         </div>
-      </>
-    );
+        {isLoading && <LoadingIndicator />}
+        <div className="w-full md:w-1/3 p-5 md:p-10 md:ml-[2rem]  rounded-lg">
+          <h1 className={`text-[20px] font-bold text-center mb-[1rem] ${theme === 'light' ? 'text-blue-900' : 'text-blue-600'}`}>
+            Verification <span className="text-blue-500">Code</span>
+          </h1>
+          <h1 className="text-[14px] mb-[1rem] text-center">{location?.state?.email}</h1>
+          <Formik
+            initialValues={{ otp: ['', '', '', ''] }}
+            validationSchema={Yup.object({
+              otp: Yup.array()
+                .of(Yup.string().matches(/^[0-9]$/, 'Must be a digit').required('Required'))
+                .length(4, 'Must be exactly 4 digits'),
+            })}
+            onSubmit={handleSubmit}
+          >
+            {({
+              errors,
+              touched,
+              isSubmitting,
+              setFieldValue,
+              values,
+            }: {
+              errors: any;
+              touched: any;
+              isSubmitting: any;
+              setFieldValue: any;
+              values: any;
+            }) => (
+              <Form>
+                {isError && <small className="text-[red] md:ml-[9rem] ml-[7rem]">Incorrect OTP</small>}
+                <div className="flex justify-center mb-6 md:mr-2">
+                  {['', '', '', ''].map((_, index) => (
+                    <input
+                      key={index}
+                      id={`otp-input-${index}`}
+                      name={`otp[${index}]`}
+                      maxLength={1}
+                      className={`w-16 h-12 text-center text-black rounded-lg border-2 ${theme === 'light' ? 'bg-white' : 'bg-gray-600'
+                        } ${touched.otp?.[index] && errors.otp?.[index] ? 'border-red-500' : 'border-gray-800'} ${index !== 3 ? 'mr-2' : ''
+                        }`}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, index, setFieldValue)}
+                    />
+                  ))}
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting || !values.otp.every((val: any) => val !== '')}
+                  className={`w-full md:w-[18rem] py-1 mt-4 md:ml-[2rem] rounded-md ${theme === 'light' ? 'bg-blue-600 text-white' : 'bg-blue-600 text-white'
+                    } ${isSubmitting || !values.otp.every((val: any) => val !== '') ? 'bg-gray-400' : ''}`}
+                >
+                  Submit
+                </button>
+                <div className="flex justify-center mt-4">
+                  {resendAvailable ? (
+                    <button type="button" onClick={handleResendOtp} className="text-blue-600">
+                      Resend OTP
+                    </button>
+                  ) : (
+                    <span className="text-gray-600">Resend OTP in {timer} seconds</span>
+                  )}
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default OtpForm;
