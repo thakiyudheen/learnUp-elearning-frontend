@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooke';
 import { RootState } from '@/redux/store';
 import { updateUserAction } from '@/redux/store/actions/user/updateUserAction';
 import { getUserDataAction } from '@/redux/store/actions/auth/getUserDataAction';
+import { useTheme } from '@/Components/ui/theme-provider';
+
 
 const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg";
 
@@ -34,6 +36,7 @@ const UserDetails: React.FC = () => {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [isUploading, setUploading] = useState<boolean>(false);
+    const { theme } = useTheme()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -115,7 +118,7 @@ const UserDetails: React.FC = () => {
     return (
         <div className="p-10 dark:bg-base-100 bg-gray-100 md:mt-[2rem] font-Poppins">
             <h1 className="text-xl font-semibold mb-4 ">My Profile</h1>
-            <div className="flex items-center space-x-4 mt-2 mb-3 p-3   bg-gradient-to-l from-blue-800 to-gray-900 shadow-lg dark:bg-gray-800 rounded-lg">
+            <div className={`flex items-center space-x-4 mt-2 mb-3 p-3    ${theme=='light'?'bg-gradient-to-l from-blue-800 to-gray-900 shadow-lg':'bg-gray-800'}  rounded-lg`}>
                 <div className="relative">
                     <img
                         src={profileImage}

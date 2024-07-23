@@ -25,7 +25,7 @@ const UserSideNav: React.FC<userSideNavProps> = ({ isOpen, toggleSidebar }) => {
 
   const getNavItemClass = (isActive: boolean) => {
     const baseClass = "p-4 flex items-center hover:bg-blue-600 hover:bg-opacity-10 hover:rounded-r-full cursor-pointer";
-    const selectedClass = isActive ? `bg-blue-700 text-white bg-opacity-40 rounded-r-full ${theme === 'light' ? 'hover:text-black' : 'hover:text-white'}` : "";
+    const selectedClass = isActive ? `bg-blue-800 text-white  rounded-r-full ${theme === 'light' ? 'hover:text-black' : 'hover:text-white'}` : "";
     return `${baseClass} ${selectedClass}`;
   };
 
