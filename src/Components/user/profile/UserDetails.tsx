@@ -91,7 +91,7 @@ const UserDetails: React.FC = () => {
         if (response.payload.success) {
             console.log()
             setUser(response.payload);
-            setProfileImage(response.payload.profile?.avatar);
+            // setProfileImage(response.payload.profile?.avatar);
             toast.success('Updated Successfully!');
         }
         setLoading(false);
