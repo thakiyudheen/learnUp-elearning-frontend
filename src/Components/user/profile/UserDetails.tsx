@@ -91,7 +91,7 @@ const UserDetails: React.FC = () => {
         if (response.payload.success) {
             console.log()
             setUser(response.payload);
-            // setProfileImage(response.payload.profile?.avatar);
+            setProfileImage(response.payload.profile?.avatar);
             toast.success('Updated Successfully!');
         }
         setLoading(false);
@@ -132,7 +132,7 @@ const UserDetails: React.FC = () => {
                                     className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full  transition-opacity duration-300 cursor-pointer"
                                     onClick={handleImageClick}
                                 >
-                                   <FaSpinner className="animate-spin mr-2 text-[30px] text-blue-900 " />
+                                   <FaSpinner className="animate-spin mr-2 text-[20px] text-blue-900 " />
                                 </div>) : (
                                 <div
                                     className="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
@@ -146,7 +146,7 @@ const UserDetails: React.FC = () => {
 
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold">{initialValues.firstName} {initialValues.lastName}</h2>
+                    <h2 className="text-lg font-semibold text-gray-400 dark:text-gray-300">{initialValues.firstName} {initialValues.lastName}</h2>
                     <small className="text-sm text-gray-400 dark:text-gray-300">{initialValues.email}</small>
                 </div>
             </div>
