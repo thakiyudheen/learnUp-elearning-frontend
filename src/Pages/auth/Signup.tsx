@@ -91,7 +91,7 @@ const Signup: React.FC = () => {
         <img className="absolute md:h-[12%] h-[9%] top-0 left-0 md:left-4" src={LearnUp} alt="" />
         <img className="h-[70%]  hidden md:block" src={SignupSVG} alt="" />
         {isLoading && <LoadingIndicator />}
-        <div className={`max-w-md w-full p-10 rounded-[10px] md:shadow-md absolute md:mt-[4rem] m-3 md:relative md:space-y-4 `}>
+        <div className={`max-w-md w-full p-10 rounded-[10px]  md:shadow-md absolute md:mt-[4rem] m-3 md:relative md:space-y-4 `}>
           <motion.h2
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}

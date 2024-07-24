@@ -78,7 +78,7 @@ const Login: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="w-full flex flex-col md:flex-row items-center justify-evenly font-Poppins md:dark:bg-gray-800 h-screen font-Poppins">
+      <div className="w-full flex flex-col md:flex-row items-center justify-evenly font-Poppins  h-screen font-Poppins">
         <img className='absolute md:h-[12%] h-[9%] top-0 left-0 md:left-4' src={LearnUp} alt="" />
         <motion.img 
           className='md:h-[70%] h-[30%] md:mb-0 mb-8' 
