@@ -24,7 +24,7 @@ const LoadingIndicator: React.FC = () => {
     //     loop
     //     autoplay
     //   ></dotlottie-player> */}
-      {/* <FaSpinner className="animate-spin mr-2 text-[35px] text-blue-900 " /> */}
+      <FaSpinner className="animate-spin mr-2 text-[35px] text-blue-900 " />
         
     </div>
   );
