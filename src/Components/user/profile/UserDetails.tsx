@@ -47,7 +47,7 @@ const UserDetails: React.FC = () => {
             }
         };
         fetchUserData();
-    }, [dispatch]);
+    }, [dispatch,user]);
 
     const initialValues = {
         username: user?.username || "",
@@ -89,6 +89,7 @@ const UserDetails: React.FC = () => {
 
         const response = await dispatch(updateUserAction(updatedData));
         if (response.payload.success) {
+            console.log()
             setUser(response.payload);
             setProfileImage(response.payload.profile?.avatar);
             toast.success('Updated Successfully!');
