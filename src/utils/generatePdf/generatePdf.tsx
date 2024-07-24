@@ -1,8 +1,8 @@
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-import Img from '../../assets/enrollment/certificate-new.png'; // Path to your certificate background image
+import Img from '../../assets/enrollment/certificate-new.png'; 
 
-// Function to generate a PDF certificate
+
 export function generateCertificate(name:string, courseName:string, date:any, download = true) {
     const doc = new jsPDF({
         orientation: 'landscape',

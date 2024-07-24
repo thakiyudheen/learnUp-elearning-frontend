@@ -74,7 +74,7 @@ const Signup: React.FC = () => {
       role: location.state.role,
       email: response.payload.data.email,
       password: response.payload.data.password,
-      username: response.payload.username,
+      username: response.payload.data.username,
       isGauth: true
     };
       navigator(location.state.role === 'student' ? '/userRegister' : '/instructorRegister', { state: signUpData });
