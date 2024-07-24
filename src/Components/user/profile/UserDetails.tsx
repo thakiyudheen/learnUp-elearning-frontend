@@ -59,7 +59,7 @@ const UserDetails: React.FC = () => {
         phone: user?.contact?.phone || "",
         address: user?.address || "",
         dateOfBirth: user?.profile?.dateOfBirth ? format(new Date(user.profile.dateOfBirth), 'yyyy-MM-dd') : "",
-        avatar: user?.avatar || "",
+        avatar: user?.profile?.avatar || "",
         gender: user?.profile?.gender || "",
         social: user?.contact?.socialMedia?.linkedIn || ""
     };
