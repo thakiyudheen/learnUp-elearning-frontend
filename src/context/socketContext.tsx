@@ -32,7 +32,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       //     userId:data?.data?._id
       //   }
       // });
-      const newSocket = io('https://learnup-chat.onrender.com/api/chat', {
+      const newSocket = io('https://learnup-chat.onrender.com', {
         transports: ['websocket', 'polling'],
         query:{
           userId:data?.data?._id
