@@ -270,7 +270,7 @@ const VideoLayout: React.FC = () => {
                     </div>
                 </div>
 
-                <div className=" w-full p-4 mt-6  overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
+                <div className=" w-full p-4 mt-6 md:hidden overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
                 <h2 className="text-2xl font-bold mb-4">Course Playlists</h2>
                 <ul>
                     {course?.lessons?.map((lesson: any, index: any) => (
@@ -303,7 +303,7 @@ const VideoLayout: React.FC = () => {
                 </ul>
             </div>
             </div>
-            <div className=" w-full p-4 hidden min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
+            <div className=" w-full p-4 hidden md:block min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
                 <h2 className="text-2xl font-bold mb-4">Course Playlists</h2>
                 <ul>
                     {course?.lessons?.map((lesson: any, index: any) => (
