@@ -26,7 +26,13 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (data?.data) {
       // import.meta.env.VITE_SERVER_URL
       // , 
-      const newSocket = io('https://acecart.shop', {
+      // const newSocket = io('https://acecart.shop', {
+      //   transports: ['websocket', 'polling'],
+      //   query:{
+      //     userId:data?.data?._id
+      //   }
+      // });
+      const newSocket = io('https://learnup-chat.onrender.com/api/chat', {
         transports: ['websocket', 'polling'],
         query:{
           userId:data?.data?._id
