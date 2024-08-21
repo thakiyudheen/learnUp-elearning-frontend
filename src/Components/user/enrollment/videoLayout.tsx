@@ -269,8 +269,41 @@ const VideoLayout: React.FC = () => {
                         )}
                     </div>
                 </div>
+
+                <div className=" w-full p-4 mt-6  overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
+                <h2 className="text-2xl font-bold mb-4">Course Playlists</h2>
+                <ul>
+                    {course?.lessons?.map((lesson: any, index: any) => (
+                        <li key={index} className="mb-4">
+                            <div
+                                className={`p-2 cursor-pointer flex items-center space-x-4 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md ${activeIndex === index ? 'border-2 border-blue-500' : ''}`}
+                                onClick={() => handleLessonClick(lesson.video, lesson.title, index, lesson.description)}
+                            >
+                                <img src={course?.courseThumbnail} alt="not available" className="w-16 h-16 object-cover rounded-md" />
+                                <div>
+                                    <div className="text-lg font-semibold">{lesson.title}</div>
+                                    <small className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{lesson.description}</small>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                    {completedLessons.length === course?.lessons?.length&&(
+                        <li className='w-full flex justify-center'>
+                            {!examCompleted&& exam ?
+                            (<button onClick={()=>navigate('/student/examination',{state:course?._id})} className='border border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
+                            Take Exam
+                        </button>):(
+                            <button  onClick={async() => {generateCertificate(data.data.firstName + ' ' + data.data.lastName, 'HTML', '14/07/2024')}} className='border flex justify-center items-center border-blue-800 py-1 w-full px-7 rounded-md text-blue-700 hover:bg-blue-700 hover:text-white'>
+                               <FiDownloadCloud className='text-blue-700 mr-2 size-7' />  Certificate
+                            </button>
+                        )}
+                            
+                        </li>
+                    )}
+                </ul>
             </div>
-            <div className=" w-full p-4 min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
+            </div>
+            <div className=" w-full p-4 hidden min-h-screen overflow-y-auto md:w-[30%] rounded-lg dark:bg-gray-800 md:mt-[3.5rem] bg-gray-300 shadow-xl">
                 <h2 className="text-2xl font-bold mb-4">Course Playlists</h2>
                 <ul>
                     {course?.lessons?.map((lesson: any, index: any) => (

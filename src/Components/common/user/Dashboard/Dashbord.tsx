@@ -38,7 +38,7 @@ const Dashboard = () => {
   useEffect(() => {
 
     const getData = async () => {
-      setLoading(true)
+      // setLoading(true)
       const response: any = await dispatch(getAllInstructorsAction({}))
       const response1: any = await dispatch(getAllStudentAction({}))
       const response2 = await dispatch(getMoreEnrolledCourseAction())
@@ -56,7 +56,7 @@ const Dashboard = () => {
         setCompletedCourse(response5.payload.data.filter((el: any) => el.completionStatus == 'completed'))
         setMyStudents([...new Set(response5.payload.data.map((el: any) => el.userId))])
         console.log('the students', MyStudents)
-        setLoading(false)
+        // setLoading(false)
 
       }
     }

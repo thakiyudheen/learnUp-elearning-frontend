@@ -2,6 +2,7 @@ import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "@/common/endPoint";
 
 interface data {
     _id : string ,
@@ -16,7 +17,7 @@ export const updateCourseAction = createAsyncThunk(
     async ( data : data, { rejectWithValue }) => {
         try {
            
-            const response = await api_client.patch(`/api/course/update-course`,data, config )
+            const response = await api_client.patch(`${course}update-course`,data, config )
            
             if(response.data.success){
 

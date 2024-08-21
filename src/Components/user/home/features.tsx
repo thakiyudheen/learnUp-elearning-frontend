@@ -20,7 +20,7 @@ const Features: React.FC = () => {
   }, []);
 
   return (
-    <div className='mt-[3rem] font-Poppins p-6 md:p-0'>
+    <div className=' font-Poppins p-6 md:p-0'>
       <h1 className='text-center font-bold text-[20px]'>
         <span className='text-blue-900'>Our</span> <span className='text-blue-500'>Features</span>
       </h1>

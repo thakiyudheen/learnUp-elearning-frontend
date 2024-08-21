@@ -2,6 +2,7 @@ import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "@/common/endPoint";
 
 export const getAllCourseAction = createAsyncThunk(
     'user/get-all-course',
@@ -9,7 +10,7 @@ export const getAllCourseAction = createAsyncThunk(
         try {
             console.log('instructor data',data)
            if(data){
-            const response = await api_client.get(`/api/course/getAll-course`,{params:data})
+            const response = await api_client.get(`${course}getAll-course`,{params:data})
 
             if(response.data.success){
 

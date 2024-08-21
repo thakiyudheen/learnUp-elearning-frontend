@@ -2,13 +2,14 @@ import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "@/common/endPoint";
 
 export const getCourseByIdAction = createAsyncThunk(
     'user/get-courseById',
     async ( _id :string , { rejectWithValue }) => {
         try {
            
-            const response = await api_client.get(`/api/course/get-course-by-id/${_id}`,config)
+            const response = await api_client.get(`${course}get-course-by-id/${_id}`,config)
 
             if(response.data.success){
 

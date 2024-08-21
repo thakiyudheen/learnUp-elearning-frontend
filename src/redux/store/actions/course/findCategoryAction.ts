@@ -2,13 +2,14 @@ import { config } from "@/common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "@/common/endPoint";
 
 export const findCategoryAction = createAsyncThunk(
     'user/find-category',
     async (data:{ categoryName : string } , { rejectWithValue }) => {
         try {
            
-            const response = await api_client.get(`/api/course/find-category/${data.categoryName}`,config)
+            const response = await api_client.get(`${course}find-category/${data.categoryName}`,config)
 
             if(response.data.success){
 

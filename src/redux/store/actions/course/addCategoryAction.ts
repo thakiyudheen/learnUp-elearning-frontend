@@ -1,13 +1,14 @@
-import { config } from "@/common/configuration";
+import { config } from "../../../../common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { course } from "../../../../common/endPoint";
 
 export const addCategoryAction = createAsyncThunk(
     'user/add-category',
     async (data:{categoryName : string} , { rejectWithValue }) => {
         try {
-            const response = await api_client.post(`/api/course/add-category`,data,config)
+            const response = await api_client.post(`${course}add-category`,data,config)
 
             if(response.data.success){
 

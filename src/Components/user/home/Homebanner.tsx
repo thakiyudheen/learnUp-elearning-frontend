@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/hooke';
 import { RootState } from '@/redux/store';
 import Home from '../../../assets/homebanner/telecommuting-animate.svg';
+import Animationss from '@/Components/common/animations/animation';
 
 
 const textItem = {
@@ -17,6 +18,8 @@ const variants = {
 const Homebanner: React.FC = () => {
     const { data } = useAppSelector((state: RootState) => state.user)
   const navigate = useNavigate()
+  const text = "Grow up your skills by online courses with";
+  const brand = "learnUp";
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  font-Poppins max-w-10xl  p-6">
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center ">
@@ -26,10 +29,38 @@ const Homebanner: React.FC = () => {
           transition={{ duration: 1 }}
           className="space-y-8 mt-[6rem] md:mt-0 md:p-0 p-4"
         >
-          <h1 className="text-4xl text-[2rem]  font-bold text-gray-900 dark:text-white">
+          <Animationss>
+          {/* <h1 className="text-4xl text-[2rem]  font-bold text-gray-900 dark:text-white">
             Grow up your skills by online courses with
             <span className="text-blue-600"> learnUp</span>
-          </h1>
+          </h1> */}
+           <h1 className="text-4xl text-[2rem] font-bold text-gray-900 dark:text-white">
+      {text.split('').map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: index * 0.05 }}
+        >
+          {char}
+        </motion.span>
+      ))}
+        <span> </span>
+      <span className="text-blue-600">
+        {brand.split('').map((char, index) => (
+          <motion.span
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: (text.length + index) * 0.05 }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </span>
+    </h1>
+
+    </Animationss>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
             <small>
           Welcome to learnUp, where interactive online courses make learning engaging and effective. Designed for all learners, our courses help you achieve your goals. Join us today!

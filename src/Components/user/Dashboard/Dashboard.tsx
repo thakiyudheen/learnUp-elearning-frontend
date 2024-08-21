@@ -99,7 +99,7 @@ const Dashboard = () => {
   return (
 
     <div className="min-h-screen bg-gray-100 dark:bg-base-100 text-white p-4 mt-[4rem]">
-      {isLoading&& <LoadingIndicator/>}
+      {/* {isLoading&& <LoadingIndicator/>} */}
       <div> 
         <h1 className='font-bold mb-5 text-gray-700 dark:text-gray-400'>Dashboard</h1>
       </div>

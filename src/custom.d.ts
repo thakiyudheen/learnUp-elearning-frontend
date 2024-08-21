@@ -8,7 +8,7 @@ declare namespace JSX {
         loop?: boolean;
         className?: string;
         autoplay?: boolean;
-        [key: string]: any; // Allow any other attributes
+        [key: string]: any;
       };
     }
   }
