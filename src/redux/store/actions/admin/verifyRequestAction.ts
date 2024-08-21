@@ -2,6 +2,7 @@ import { config } from "../../../../common/configuration";
 import { api_client } from "../../../../axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { user } from "@/common/endPoint";
 
 
 interface data {
@@ -12,7 +13,7 @@ export const verifyRequestAction = createAsyncThunk(
     'user/verify-request',
     async ( data : data , { rejectWithValue }) => {
         try {
-            const response = await api_client.patch(`/api/user/verify-request`,data,config)
+            const response = await api_client.patch(`${user}verify-request`,data,config)
 
             if(response.data.success){
 
