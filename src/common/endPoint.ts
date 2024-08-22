@@ -19,6 +19,6 @@
 export const auth='https://learnup-auth.onrender.com/api/auth/' 
 export const user='https://learnup-user.onrender.com/api/user/' 
 export const course='https://learnup-course.onrender.com/api/course/' 
-export const notification='https://learnup-notification.onrender.com' 
+export const notification='https://learnup-notification.onrender.com/api/notification/' 
 export const payment='https://learnup-payment.onrender.com/api/payment/' 
 export const chat='https://learnup-chat.onrender.com/api/chat/' 
