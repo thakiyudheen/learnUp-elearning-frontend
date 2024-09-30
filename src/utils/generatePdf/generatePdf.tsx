@@ -10,16 +10,16 @@ export function generateCertificate(name:string, courseName:string, date:any, do
         format: 'a4'
     });
 
-    // Load the image and generate the PDF
+
     const img : any = new Image();
     img.onload = function() {
-        // Add image to PDF
+  
         doc.addImage(this, 'PNG', 0, 0, 297, 210);
 
-        // Add Congratulations message
+  
         doc.setFontSize(40);
-        doc.setTextColor(0, 0, 0); // Black color
-        doc.setFont('helvetica', 'bold'); // Set font to helvetica bold
+        doc.setTextColor(0, 0, 0); 
+        doc.setFont('helvetica', 'bold'); 
         doc.text('CONGRATULATIONS', 148.5, 50, { align: 'center' });
 
         // Add student name
@@ -48,13 +48,12 @@ export function generateCertificate(name:string, courseName:string, date:any, do
             // Save the PDF with the name "Certificate.pdf"
             doc.save('Certificate.pdf');
         } else {
-            // Optional: Do something else with the PDF
-            // For example, you can return the PDF data as a Blob
+            
             const pdfBlob = doc.output('blob');
-            // Perform further actions with pdfBlob, e.g., upload to server
+         
         }
     };
 
     img.crossOrigin = '';
-    img.src = Img; // Replace with the path to your certificate image
+    img.src = Img; 
 }
